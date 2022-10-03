@@ -1,0 +1,22 @@
+{
+  "name": "retro-rts-game",
+  "version": "1.0.0",
+  "description": "playing around with game building ideas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeevgl/retro-rts-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeevgl/retro-rts-game/issues"
+  },
+  "homepage": "https://github.com/zeevgl/retro-rts-game#readme",
+  "devDependencies": {
+    "prettier": "2.7.1"
+  }
+}
