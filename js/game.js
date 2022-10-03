@@ -17,8 +17,8 @@ class Game {
   draw(context) {
     context.save();
 
-    this.drawBackground(context);
-    this.drawRect(context);
+    // this.drawBackground(context);
+    // this.drawRect(context);
 
     this.players.forEach((player) => {
       player.draw(context);
