@@ -1,8 +1,9 @@
 class Player {
-  constructor(name, color) {
+  constructor(name, color, startingPoint) {
     this.name = name;
     this.color = color;
     this.units = [];
+    this.startingPoint = startingPoint;
   }
 
   update(deltaTime, timestamp) {
@@ -11,6 +12,6 @@ class Player {
 
   draw(ctx) {
     ctx.fillStyle = this.color;
-    ctx.fillRect(50, 50, 150, 150);
+    ctx.fillRect(this.startingPoint.x, this.startingPoint.y, 150, 150);
   }
 }
