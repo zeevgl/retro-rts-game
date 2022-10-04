@@ -4,7 +4,7 @@ class Player {
     this.color = color;
     this.units = [];
     this.startingPoint = startingPoint;
-    this.selectedUnit = [];
+    this.selectedUnits = [];
 
     this.addUnit(
       new Infantry(0 + this.startingPoint.x, 10 + this.startingPoint.y, color)
@@ -41,31 +41,36 @@ class Player {
     this.units.push(unit);
   }
 
-  isUnitClicked(x, y, isAction = false) {
-    if (isAction) {
-      this.selectedUnit = this.units.filter((unit) => {
-        return unit.isClicked(x, y, isAction);
-      });
-
-      return this.selectedUnit.length > 0;
-    } else {
+  isUnitClicked(x, y, isCommand = false) {
+    //TODO: maybe need to split this into two classes
+    if (!isCommand) {
       this.units.forEach((unit) => {
         unit.isSelected = false;
       });
 
-      this.selectedUnit = this.units.filter((unit) => {
-        return unit.isClicked(x, y, isAction);
+      this.selectedUnits = [];
+    }
+
+    const selectedUnits = this.units.filter((unit) => {
+      return unit.isClicked(x, y);
+    });
+
+    if (!isCommand) {
+      selectedUnits.forEach((unit) => {
+        unit.isSelected = true;
       });
 
-      return this.selectedUnit.length > 0;
+      this.selectedUnits = selectedUnits;
     }
+
+    return selectedUnits;
   }
 
-  issueCommand(x, y) {
-    if (this.selectedUnit.length) {
-      // this.selectedUnit.forEach((unit) => {
-      //   unit.issueCommand(x, y);
-      // });
+  moveSelectedUnitsToPosition(x, y) {
+    if (this.selectedUnits.length) {
+      this.selectedUnits.forEach((unit) => {
+        unit.moveTo(x, y);
+      });
     }
   }
 }

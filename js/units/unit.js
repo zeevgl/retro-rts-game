@@ -20,6 +20,8 @@ window["Unit"] = (() => {
       this.isDefending = false;
       this.isIdle = true;
       this.isSelected = false;
+      this.targetX = null;
+      this.targetY = null;
     }
 
     update(deltaTime, timestamp) {}
@@ -39,19 +41,25 @@ window["Unit"] = (() => {
       }
     }
 
-    isClicked(x, y, isAction = false) {
+    isClicked(x, y) {
       if (
         this.x <= x &&
         this.x + this.width >= x &&
         this.y <= y &&
         this.y + this.height >= y
       ) {
-        if (!isAction) {
-          this.isSelected = true;
-        }
         return true;
       }
       return false;
+    }
+
+    moveTo(x, y) {
+      this.isMoving = true;
+      this.isIdle = false;
+      this.isAttacking = false;
+      this.isDefending = false;
+      this.targetX = x;
+      this.targetY = y;
     }
   }
 

@@ -4,11 +4,8 @@ class Game {
     this.gameHeight = gameHeight;
     this.mouseHandler = new MouseHandler(this, canvas);
 
-    this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 })
-    this.AiPlayers = [
-      new Player("player 2", "#ff0000", { x: 500, y: 400 }),
-    ];
-
+    this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
+    this.AiPlayers = [new Player("player 2", "#ff0000", { x: 500, y: 400 })];
   }
 
   update(deltaTime, timestamp) {
@@ -49,15 +46,33 @@ class Game {
   }
 
   onMouseRightClicked(x, y) {
-    if (this.humanPlayer.selectedUnit) {
-      //what is clicked?
-      this.AiPlayers.forEach((player) => {
-        if (player.isUnitClicked(x, y, true)) {
-          console.log('enemy unit clicked');
-          //this.humanPlayer.selectedUnit.attack(player);
-        }
-      });
-      console.log("issue command");
+    if (this.humanPlayer.selectedUnits.length) {
+      this.whatWasClicked(x, y);
     }
+  }
+
+  whatWasClicked(x, y) {
+    //is it an enemy unit?
+    if (this.isEnemyUnitClicked(x, y)) {
+      console.log("attack = ");
+    } else {
+      //is it a terrain?
+      //move to position
+      this.humanPlayer.moveSelectedUnitsToPosition(x, y);
+    }
+    //is it a friendly unit?
+    //is it a building?
+    //is it a resource?
+    //is it a terrain?
+  }
+
+  isEnemyUnitClicked(x, y) {
+    this.AiPlayers.forEach((player) => {
+      const unit = player.isUnitClicked(x, y, true);
+      if (unit.length) {
+        console.log("enemy unit clicked", unit);
+        //this.humanPlayer.selectedUnit.attack(player);
+      }
+    });
   }
 }
