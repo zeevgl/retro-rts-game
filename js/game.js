@@ -1,7 +1,8 @@
 class Game {
-  constructor(gameWidth, gameHeight) {
+  constructor(gameWidth, gameHeight, canvas) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
+    this.mouseHandler = new MouseHandler(this, canvas);
     this.players = [
       new Player("player 1", "#00ff00", { x: 10, y: 20 }),
       //new Player("player 2", "#ff0000", { x: 500, y: 400 }),
@@ -37,5 +38,9 @@ class Game {
       context.fillStyle = i % 2 === 0 ? "#ff0000" : "#00ff00";
       context.fillRect(50 * i + i * 50, 20, 10, 800);
     }
+  }
+
+  onMouseClicked(x, y) {
+    console.log('onMouseClicked',x, y);
   }
 }

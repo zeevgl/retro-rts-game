@@ -8,7 +8,7 @@ canvas.setAttribute("height", GAME_HEIGHT);
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
-const game = new Game(GAME_WIDTH, GAME_HEIGHT);
+const game = new Game(GAME_WIDTH, GAME_HEIGHT, canvas);
 
 let lastTime = 0;
 
