@@ -5,16 +5,21 @@ class Player {
     this.units = [];
     this.startingPoint = startingPoint;
 
-    this.addUnit(new Infantry(0, 0, color));
+    this.addUnit(new Infantry(0, 10, "#0000ff"));
+    this.addUnit(new Infantry(100, 20, "#0000ff"));
+    this.addUnit(new Infantry(200, 120, "#0000ff"));
   }
 
   update(deltaTime, timestamp) {
-
+    this.units.forEach((unit) => {
+      unit.update(deltaTime, timestamp);
+    });
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.startingPoint.x, this.startingPoint.y, 150, 150);
+    this.units.forEach((unit) => {
+      unit.draw(ctx);
+    });
   }
 
   addUnit(unit) {

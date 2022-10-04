@@ -28,7 +28,7 @@ class Game {
   }
 
   drawBackground(context) {
-    context.fillStyle = "#000000";
+    context.fillStyle = "#ffffff";
     context.fillRect(0, 0, this.gameWidth, this.gameHeight);
   }
 

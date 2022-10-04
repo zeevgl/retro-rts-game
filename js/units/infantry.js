@@ -10,11 +10,12 @@ window["Infantry"] = (() => {
       super(name, x, y, width, height, color, maxHealth, attackDamage);
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      super.draw(ctx);
+    }
 
     draw(ctx) {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      super.draw(ctx);
     }
   }
   return Infantry;

@@ -11,6 +11,12 @@ class Unit {
 
     //
     this.health = maxHealth;
+    this.isAlive = true;
+    this.isAttacking = false;
+    this.isMoving = false;
+    this.isDefending = false;
+    this.isIdle = true;
+    this.isSelected = false;
   }
 
   update(deltaTime, timestamp) {}
