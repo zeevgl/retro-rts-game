@@ -19,7 +19,7 @@ class Game {
     context.save();
 
     this.drawBackground(context);
-    this.drawRect(context);
+    // this.drawRect(context);
 
     this.players.forEach((player) => {
       player.draw(context);
@@ -36,11 +36,19 @@ class Game {
   drawRect(context) {
     for (let i = 0; i < 300; i++) {
       context.fillStyle = i % 2 === 0 ? "#ff0000" : "#00ff00";
-      context.fillRect(50 * i + i * 50, 20, 10, 800);
+      context.fillRect(50 * i + i * 50, 0, 10, 800);
     }
   }
 
-  onMouseClicked(x, y) {
-    console.log('onMouseClicked',x, y);
+  onMouseLeftClicked(x, y) {
+    this.players.forEach((player) => {
+      if (player.isUnitClicked(x, y)) {
+        console.log("unit clicked");
+      }
+    });
+  }
+
+  onMouseRightClicked(x, y) {
+    console.log("right clicked", x, y);
   }
 }
