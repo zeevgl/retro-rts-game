@@ -39,14 +39,16 @@ window["Unit"] = (() => {
       }
     }
 
-    isClicked(x, y) {
+    isClicked(x, y, isAction = false) {
       if (
         this.x <= x &&
         this.x + this.width >= x &&
         this.y <= y &&
         this.y + this.height >= y
       ) {
-        this.isSelected = true;
+        if (!isAction) {
+          this.isSelected = true;
+        }
         return true;
       }
       return false;

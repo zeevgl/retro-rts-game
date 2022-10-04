@@ -3,14 +3,16 @@ class Game {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.mouseHandler = new MouseHandler(this, canvas);
-    this.players = [
-      new Player("player 1", "#00ff00", { x: 10, y: 20 }),
-      //new Player("player 2", "#ff0000", { x: 500, y: 400 }),
+
+    this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 })
+    this.AiPlayers = [
+      new Player("player 2", "#ff0000", { x: 500, y: 400 }),
     ];
+
   }
 
   update(deltaTime, timestamp) {
-    this.players.forEach((player) => {
+    [this.humanPlayer, ...this.AiPlayers].forEach((player) => {
       player.update(deltaTime, timestamp);
     });
   }
@@ -21,7 +23,7 @@ class Game {
     this.drawBackground(context);
     // this.drawRect(context);
 
-    this.players.forEach((player) => {
+    [this.humanPlayer, ...this.AiPlayers].forEach((player) => {
       player.draw(context);
     });
 
@@ -41,14 +43,21 @@ class Game {
   }
 
   onMouseLeftClicked(x, y) {
-    this.players.forEach((player) => {
-      if (player.isUnitClicked(x, y)) {
-        console.log("unit clicked");
-      }
-    });
+    if (this.humanPlayer.isUnitClicked(x, y)) {
+      console.log("unit clicked");
+    }
   }
 
   onMouseRightClicked(x, y) {
-    console.log("right clicked", x, y);
+    if (this.humanPlayer.selectedUnit) {
+      //what is clicked?
+      this.AiPlayers.forEach((player) => {
+        if (player.isUnitClicked(x, y, true)) {
+          console.log('enemy unit clicked');
+          //this.humanPlayer.selectedUnit.attack(player);
+        }
+      });
+      console.log("issue command");
+    }
   }
 }
