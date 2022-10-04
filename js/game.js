@@ -4,7 +4,7 @@ class Game {
     this.gameHeight = gameHeight;
     this.players = [
       new Player("player 1", "#00ff00", { x: 10, y: 20 }),
-      new Player("player 2", "#ff0000", { x: 500, y: 400 }),
+      //new Player("player 2", "#ff0000", { x: 500, y: 400 }),
     ];
   }
 
