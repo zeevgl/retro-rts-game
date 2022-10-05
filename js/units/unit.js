@@ -16,25 +16,21 @@ window["Unit"] = (() => {
       this.speed = 5; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
-      this.isAttacking = false;
-      this.isMoving = false;
-      this.isDefending = false;
-      this.isIdle = true;
-      this.isSelected = false;
+      this.state = UnitStates.IDLE;
       this.targetX = null;
       this.targetY = null;
+      this.isSelected = false;
     }
 
     update(deltaTime, timestamp) {
-      if (this.isMoving) {
+      if (this.state === UnitStates.MOVING) {
         const speed = this.speed;
         const dx = this.targetX - this.x;
         const dy = this.targetY - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 2) {
-          this.isMoving = false;
-          this.isIdle = true;
+        if (distance < 3) {
+          this.state = UnitStates.IDLE;
           return;
         }
 
@@ -54,6 +50,11 @@ window["Unit"] = (() => {
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
 
+      this.drawSelectionBox(ctx);
+      this.drawPath(ctx);
+    }
+
+    drawSelectionBox(ctx) {
       if (this.isSelected) {
         ctx.strokeStyle = "red";
         ctx.strokeRect(
@@ -63,13 +64,16 @@ window["Unit"] = (() => {
           this.height + selectionMargin * 2
         );
       }
+    }
 
-      // if (this.isMoving) {
-      //   ctx.beginPath();
-      //   ctx.moveTo(this.targetX, this.targetY);
-      //   ctx.lineTo(this.x, this.y);
-      //   ctx.stroke();
-      // }
+    drawPath(ctx) {
+      if (this.state === UnitStates.MOVING) {
+        ctx.beginPath();
+        ctx.moveTo(this.targetX, this.targetY);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = '#ff0000';
+        ctx.stroke();
+      }
     }
 
     isClicked(x, y) {
@@ -85,10 +89,7 @@ window["Unit"] = (() => {
     }
 
     moveTo(x, y) {
-      this.isMoving = true;
-      this.isIdle = false;
-      this.isAttacking = false;
-      this.isDefending = false;
+      this.state = UnitStates.MOVING;
       this.targetX = x;
       this.targetY = y;
     }
