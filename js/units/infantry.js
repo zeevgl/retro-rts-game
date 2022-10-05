@@ -11,7 +11,7 @@ window["Infantry"] = (() => {
     }
 
     update(deltaTime, timestamp) {
-      super.draw(ctx);
+      super.update(deltaTime, timestamp);
     }
 
     draw(ctx) {

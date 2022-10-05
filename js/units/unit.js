@@ -13,6 +13,7 @@ window["Unit"] = (() => {
       this.attackDamage = attackDamage;
 
       //
+      this.speed = 0.009; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
       this.isAttacking = false;
@@ -24,7 +25,12 @@ window["Unit"] = (() => {
       this.targetY = null;
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      if (this.isMoving) {
+        this.x+= (this.targetX - this.x) * this.speed;
+        this.y+= (this.targetY - this.y) * this.speed;
+      }
+    }
 
     draw(ctx) {
       ctx.fillStyle = this.color;
@@ -39,6 +45,13 @@ window["Unit"] = (() => {
           this.height + selectionMargin * 2
         );
       }
+
+      // if (this.isMoving) {
+      //   ctx.beginPath();
+      //   ctx.moveTo(this.targetX, this.targetY);
+      //   ctx.lineTo(this.x, this.y);
+      //   ctx.stroke();
+      // }
     }
 
     isClicked(x, y) {
