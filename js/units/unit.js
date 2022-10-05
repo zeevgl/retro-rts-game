@@ -13,7 +13,7 @@ window["Unit"] = (() => {
       this.attackDamage = attackDamage;
 
       //
-      this.speed = 0.009; //TODO used fixed speed for now
+      this.speed = 5; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
       this.isAttacking = false;
@@ -27,8 +27,26 @@ window["Unit"] = (() => {
 
     update(deltaTime, timestamp) {
       if (this.isMoving) {
-        this.x+= (this.targetX - this.x) * this.speed;
-        this.y+= (this.targetY - this.y) * this.speed;
+        const speed = this.speed;
+        const dx = this.targetX - this.x;
+        const dy = this.targetY - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 2) {
+          this.isMoving = false;
+          this.isIdle = true;
+          return;
+        }
+
+        const moves = distance / speed;
+        const xunits = (this.targetX - this.x) / moves;
+        const yunits = (this.targetY - this.y) / moves;
+        this.x += xunits;
+        this.y += yunits;
+
+        //simple move:
+        // this.x+= (this.targetX - this.x) * this.speed;
+        // this.y+= (this.targetY - this.y) * this.speed;
       }
     }
 
