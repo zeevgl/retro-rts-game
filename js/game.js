@@ -2,6 +2,7 @@ class Game {
   constructor(gameWidth, gameHeight, canvas) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
+    this.mouseAction = null;
     this.mouseHandler = new MouseHandler(this, canvas);
 
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
@@ -24,6 +25,8 @@ class Game {
       player.draw(context);
     });
 
+    this.drawMouseAction(context);
+
     context.restore();
   }
 
@@ -36,6 +39,15 @@ class Game {
     for (let i = 0; i < 300; i++) {
       context.fillStyle = i % 2 === 0 ? "#ff0000" : "#00ff00";
       context.fillRect(50 * i + i * 50, 0, 10, 800);
+    }
+  }
+
+  drawMouseAction(ctx) {
+    if (this.mouseAction !== null) {
+      ctx.beginPath();
+      ctx.arc(this.mouseAction.x, this.mouseAction.y, 10, 0, 2 * Math.PI);
+      ctx.fillStyle = "#000000";
+      ctx.stroke();
     }
   }
 
@@ -59,6 +71,13 @@ class Game {
       //is it a terrain?
       //move to position
       this.humanPlayer.moveSelectedUnitsToPosition(x, y);
+      this.mouseAction = {
+        x,
+        y,
+      };
+      window.setTimeout(() => {
+        this.mouseAction = null;
+      }, 150);
     }
     //is it a friendly unit?
     //is it a building?
