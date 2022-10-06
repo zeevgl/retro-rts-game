@@ -25,26 +25,42 @@ window["Unit"] = (() => {
 
     update(deltaTime, timestamp) {
       if (this.state === UnitStates.MOVING) {
-        const speed = this.speed;
-        const dx = this.targetX - this.x;
-        const dy = this.targetY - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        this.updateMove(deltaTime, timestamp);
+      } else if (this.state === UnitStates.ATTACK) {
+        this.updateAttack(deltaTime, timestamp);
+      }
+    }
+
+    updateMove(deltaTime, timestamp) {
+      if (this.state === UnitStates.MOVING) {
+        const distance = calcDistance(
+          this.x,
+          this.y,
+          this.targetX,
+          this.targetY
+        );
 
         if (distance < 3) {
           this.state = UnitStates.IDLE;
           return;
         }
 
-        const moves = distance / speed;
-        const xunits = (this.targetX - this.x) / moves;
-        const yunits = (this.targetY - this.y) / moves;
-        this.x += xunits;
-        this.y += yunits;
+        const moves = calcMoves(
+          this.speed,
+          distance,
+          this.x,
+          this.y,
+          this.targetX,
+          this.targetY
+        );
 
-        //simple move:
-        // this.x+= (this.targetX - this.x) * this.speed;
-        // this.y+= (this.targetY - this.y) * this.speed;
-      } else if (this.state === UnitStates.ATTACK) {
+        this.x += moves.xunits;
+        this.y += moves.yunits;
+      }
+    }
+
+    updateAttack(deltaTime, timestamp) {
+      if (this.state === UnitStates.ATTACK) {
         if (this.targetUnit.isAlive) {
           this.targetUnit.health -= this.attackDamage;
           if (this.targetUnit.health <= 0) {
@@ -58,9 +74,11 @@ window["Unit"] = (() => {
 
     draw(ctx) {
       ctx.save();
+
       if (!this.isAlive) {
         ctx.globalAlpha = 0.1;
       }
+
       this.drawUnit(ctx);
       this.drawSelectionBox(ctx);
       this.drawPath(ctx);
