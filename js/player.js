@@ -73,4 +73,13 @@ class Player {
       });
     }
   }
+
+  attack(enemyUnit) {
+    if (enemyUnit) {
+      //for now attack from anywhere
+      this.selectedUnits.forEach((unit) => {
+        unit.attack(enemyUnit);
+      });
+    }
+  }
 }

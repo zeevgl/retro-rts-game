@@ -65,8 +65,10 @@ class Game {
 
   whatWasClicked(x, y) {
     //is it an enemy unit?
-    if (this.isEnemyUnitClicked(x, y)) {
-      console.log("attack = ");
+    const unitClicked = this.getClickedEnemyUnit(x, y);
+    if (unitClicked) {
+      console.log("attack = ", unitClicked);
+      this.humanPlayer.attack(unitClicked);
     } else {
       //is it a terrain?
       //move to position
@@ -85,13 +87,14 @@ class Game {
     //is it a terrain?
   }
 
-  isEnemyUnitClicked(x, y) {
-    this.AiPlayers.forEach((player) => {
-      const unit = player.isUnitClicked(x, y, true);
-      if (unit.length) {
-        console.log("enemy unit clicked", unit);
-        //this.humanPlayer.selectedUnit.attack(player);
+  getClickedEnemyUnit(x, y) {
+    for (let i = 0; i < this.AiPlayers.length; i++) {
+      const clickedUnit = this.AiPlayers[i].isUnitClicked(x, y, true);
+      if (clickedUnit.length) {
+        return clickedUnit[0];
       }
-    });
+    }
+
+    return null;
   }
 }

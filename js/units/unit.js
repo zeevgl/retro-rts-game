@@ -20,6 +20,7 @@ window["Unit"] = (() => {
       this.targetX = null;
       this.targetY = null;
       this.isSelected = false;
+      this.targetUnit = null;
     }
 
     update(deltaTime, timestamp) {
@@ -43,6 +44,15 @@ window["Unit"] = (() => {
         //simple move:
         // this.x+= (this.targetX - this.x) * this.speed;
         // this.y+= (this.targetY - this.y) * this.speed;
+      } else if (this.state === UnitStates.ATTACK) {
+        if (this.targetUnit.isAlive) {
+          this.targetUnit.health -= this.attackDamage;
+          if (this.targetUnit.health <= 0) {
+            this.targetUnit.isAlive = false;
+          }
+        } else {
+          this.state = UnitStates.IDLE;
+        }
       }
     }
 
@@ -52,6 +62,8 @@ window["Unit"] = (() => {
 
       this.drawSelectionBox(ctx);
       this.drawPath(ctx);
+      this.drawHealthBar(ctx);
+      this.drawAttack(ctx);
     }
 
     drawSelectionBox(ctx) {
@@ -71,7 +83,33 @@ window["Unit"] = (() => {
         ctx.beginPath();
         ctx.moveTo(this.targetX, this.targetY);
         ctx.lineTo(this.x, this.y);
-        ctx.strokeStyle = '#ff0000';
+        ctx.strokeStyle = "#ff0000";
+        ctx.stroke();
+      }
+    }
+
+    drawHealthBar(ctx) {
+      ctx.fillStyle = "blue";
+      ctx.fillRect(
+        this.x,
+        this.y - 10,
+        (this.health / this.maxHealth) * this.width,
+        10
+      );
+
+      ctx.fillStyle = "white";
+      ctx.font = "10px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(this.health + "/" + this.maxHealth, this.x + 5, this.y - 2);
+    }
+
+    drawAttack(ctx) {
+      //ray attack
+      if (this.state === UnitStates.ATTACK) {
+        ctx.beginPath();
+        ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = "#000000";
         ctx.stroke();
       }
     }
@@ -92,6 +130,11 @@ window["Unit"] = (() => {
       this.state = UnitStates.MOVING;
       this.targetX = x;
       this.targetY = y;
+    }
+
+    attack(enemyUnit) {
+      this.state = UnitStates.ATTACK;
+      this.targetUnit = enemyUnit;
     }
   }
 
