@@ -57,13 +57,22 @@ window["Unit"] = (() => {
     }
 
     draw(ctx) {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-
+      ctx.save();
+      if (!this.isAlive) {
+        ctx.globalAlpha = 0.1;
+      }
+      this.drawUnit(ctx);
       this.drawSelectionBox(ctx);
       this.drawPath(ctx);
       this.drawHealthBar(ctx);
       this.drawAttack(ctx);
+
+      ctx.restore();
+    }
+
+    drawUnit(ctx) {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
     drawSelectionBox(ctx) {
