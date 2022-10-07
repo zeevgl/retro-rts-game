@@ -64,6 +64,13 @@ window["Projectile"] = (() => {
         if (this.targetUnit.health <= 0) {
           this.targetUnit.isAlive = false;
         }
+      } else if (
+        this.x < 0 ||
+        this.x > canvas.width ||
+        this.y < 0 ||
+        this.y > canvas.height
+      ) {
+        this.isActive = false;
       }
     }
   }
