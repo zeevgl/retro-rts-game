@@ -66,11 +66,15 @@ window["Unit"] = (() => {
         projectile.update(deltaTime, timestamp);
       });
 
+      this.removeInactiveProjectiles();
+
       if (this.state === UnitStates.ATTACK && !this.targetUnit.isAlive) {
         this.state = UnitStates.IDLE;
+      } else if (this.state === UnitStates.ATTACK && this.targetUnit.isAlive) {
+        this.attack(this.targetUnit);
       }
 
-      this.removeInactiveProjectiles();
+
     }
 
     removeInactiveProjectiles() {
