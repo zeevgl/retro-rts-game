@@ -28,6 +28,16 @@ class Player {
   update(deltaTime, timestamp) {
     this.units.forEach((unit) => {
       unit.update(deltaTime, timestamp);
+
+      if (!unit.isAlive) {
+        if (unit.isDecaying) {
+          //TODO: add some decay animation & timer
+          //this.units.splice(this.units.indexOf(unit), 1);
+        } else {
+          unit.isDecaying = true;
+          this.selectedUnits.splice(this.selectedUnits.indexOf(unit), 1);
+        }
+      }
     });
   }
 
@@ -52,7 +62,7 @@ class Player {
     }
 
     const selectedUnits = this.units.filter((unit) => {
-      return unit.isClicked(x, y);
+      return unit.isAlive && unit.isClicked(x, y);
     });
 
     if (!isCommand) {

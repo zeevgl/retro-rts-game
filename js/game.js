@@ -7,13 +7,20 @@ class Game {
 
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.AiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
+
+    this.AiPlayers[0].selectedUnits =[this.AiPlayers[0].units[0]];
+    this.AiPlayers[0].attack(this.humanPlayer.units[0]);
+    // this.AiPlayers[0].moveSelectedUnitsToPosition(1, 1);
   }
 
   update(deltaTime, timestamp) {
     [this.humanPlayer, ...this.AiPlayers].forEach((player) => {
       player.update(deltaTime, timestamp);
     });
+
+
   }
+
 
   draw(context) {
     context.save();

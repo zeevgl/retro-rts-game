@@ -63,6 +63,7 @@ window["Projectile"] = (() => {
         this.targetUnit.health -= this.attackDamage;
         if (this.targetUnit.health <= 0) {
           this.targetUnit.isAlive = false;
+          this.targetUnit.isSelected = false;
         }
       } else if (
         this.x < 0 ||

@@ -17,6 +17,7 @@ window["Unit"] = (() => {
       this.speed = 5; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
+      this.isDecaying = false;
       this.state = UnitStates.IDLE;
       this.targetX = null;
       this.targetY = null;
