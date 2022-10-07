@@ -3,6 +3,7 @@ window["Unit"] = (() => {
 
   class Unit {
     constructor(name, x, y, width, height, color, maxHealth, attackDamage) {
+      this.id = new Date().getTime();
       this.name = name;
       this.x = x;
       this.y = y;
@@ -21,6 +22,9 @@ window["Unit"] = (() => {
       this.targetY = null;
       this.isSelected = false;
       this.targetUnit = null;
+      this.projectiles = [];
+      this.projectiles2 = {};
+      this.projectile = null;
     }
 
     update(deltaTime, timestamp) {
@@ -29,6 +33,18 @@ window["Unit"] = (() => {
       } else if (this.state === UnitStates.ATTACK) {
         this.updateAttack(deltaTime, timestamp);
       }
+
+      Object.values(this.projectiles2).forEach((projectile) => {
+        projectile.update(deltaTime, timestamp);
+
+        if (checkCollisionBetweenProjectileAndUnit(
+          projectile,
+          this.targetUnit
+        )) {
+          projectile.isActive = false;
+        }
+
+      });
     }
 
     updateMove(deltaTime, timestamp) {
@@ -62,7 +78,7 @@ window["Unit"] = (() => {
     updateAttack(deltaTime, timestamp) {
       if (this.state === UnitStates.ATTACK) {
         if (this.targetUnit.isAlive) {
-          this.targetUnit.health -= this.attackDamage;
+          //this.targetUnit.health -= this.attackDamage;
           if (this.targetUnit.health <= 0) {
             this.targetUnit.isAlive = false;
           }
@@ -131,17 +147,23 @@ window["Unit"] = (() => {
     }
 
     drawAttack(ctx) {
-      //ray attack
-      if (this.state === UnitStates.ATTACK) {
-        ctx.beginPath();
-        ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
-        ctx.lineTo(this.x, this.y);
-        ctx.strokeStyle = "#000000";
-        ctx.stroke();
-      }
+      // //ray attack
+      // if (this.state === UnitStates.ATTACK) {
+      //   ctx.beginPath();
+      //   ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
+      //   ctx.lineTo(this.x, this.y);
+      //   ctx.strokeStyle = "#000000";
+      //   ctx.stroke();
+      // }
+      //if (this.state === UnitStates.ATTACK) {
+      Object.values(this.projectiles2).forEach((projectile) => {
+        projectile.draw(ctx);
+      });
+      //}
     }
 
     isClicked(x, y) {
+      //TODO: use checkCollision() here
       if (
         this.x <= x &&
         this.x + this.width >= x &&
@@ -162,6 +184,20 @@ window["Unit"] = (() => {
     attack(enemyUnit) {
       this.state = UnitStates.ATTACK;
       this.targetUnit = enemyUnit;
+      // this.projectiles.push(
+      //   new Bullet(this.x, this.y, enemyUnit.x, enemyUnit.y, this.attackDamage)
+      // );
+      if (!this.projectiles2[enemyUnit.id]) {
+        this.projectiles2[enemyUnit.id] = new Bullet(
+          this.x,
+          this.y,
+          enemyUnit.x,
+          enemyUnit.y,
+          this.attackDamage
+        );
+      }
+
+      //this.projectile = new Bullet(this.x, this.y, enemyUnit.x, enemyUnit.y, this.attackDamage);
     }
   }
 

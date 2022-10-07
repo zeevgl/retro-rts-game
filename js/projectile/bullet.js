@@ -1,23 +1,22 @@
-window["Bulet"] = (() => {
+window["Bullet"] = (() => {
+  const name = "bullet";
+  const width = 10;
+  const height = 10;
+  const color = "black";
 
-    const name = "bullet";
-    const width = 10;
-    const height = 10;
-
-    class Bullet extends Projectile {
-        constructor(x, y, color, attackDamage) {
-            super(name, x, y, width, height, color, attackDamage);
-        }
-
-        update(deltaTime, timestamp) {
-            super.update(deltaTime, timestamp);
-        }
-
-        draw(ctx) {
-            super.draw(deltaTime, timestamp);
-        }
-
+  class Bullet extends Projectile {
+    constructor(x, y, targetX, targetY, attackDamage) {
+      super(name, x, y, targetX, targetY, width, height, color, attackDamage, 1);
     }
 
-    return Bullet;
+    update(deltaTime, timestamp) {
+      super.update(deltaTime, timestamp);
+    }
+
+    draw(ctx) {
+      super.draw(ctx);
+    }
+  }
+
+  return Bullet;
 })();
