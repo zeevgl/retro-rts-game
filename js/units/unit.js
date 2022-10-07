@@ -153,7 +153,6 @@ window["Unit"] = (() => {
     }
 
     isClicked(x, y) {
-      //TODO: use checkCollision() here
       if (
         this.x <= x &&
         this.x + this.width >= x &&
