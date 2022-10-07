@@ -1,3 +1,2 @@
-# game-dev
-
-playing around with game building ideas
+# Retro Valina RTS game like dune & c&c
+build vanilla RTS from scratch suing Javascript HTML5 Canvas
