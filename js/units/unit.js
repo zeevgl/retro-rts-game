@@ -3,7 +3,7 @@ window["Unit"] = (() => {
 
   class Unit {
     constructor(name, x, y, width, height, color, maxHealth, attackDamage) {
-      this.id = new Date().getTime();
+      this.id = uuidv4();
       this.name = name;
       this.x = x;
       this.y = y;
@@ -22,29 +22,15 @@ window["Unit"] = (() => {
       this.targetY = null;
       this.isSelected = false;
       this.targetUnit = null;
-      this.projectiles = [];
-      this.projectiles2 = {};
-      this.projectile = null;
+      this.projectiles = {};
     }
 
     update(deltaTime, timestamp) {
       if (this.state === UnitStates.MOVING) {
         this.updateMove(deltaTime, timestamp);
-      } else if (this.state === UnitStates.ATTACK) {
-        this.updateAttack(deltaTime, timestamp);
       }
 
-      Object.values(this.projectiles2).forEach((projectile) => {
-        projectile.update(deltaTime, timestamp);
-
-        if (checkCollisionBetweenProjectileAndUnit(
-          projectile,
-          this.targetUnit
-        )) {
-          projectile.isActive = false;
-        }
-
-      });
+      this.updateAttack(deltaTime, timestamp);
     }
 
     updateMove(deltaTime, timestamp) {
@@ -76,16 +62,23 @@ window["Unit"] = (() => {
     }
 
     updateAttack(deltaTime, timestamp) {
-      if (this.state === UnitStates.ATTACK) {
-        if (this.targetUnit.isAlive) {
-          //this.targetUnit.health -= this.attackDamage;
-          if (this.targetUnit.health <= 0) {
-            this.targetUnit.isAlive = false;
-          }
-        } else {
-          this.state = UnitStates.IDLE;
-        }
+      Object.values(this.projectiles).forEach((projectile) => {
+        projectile.update(deltaTime, timestamp);
+      });
+
+      if (this.state === UnitStates.ATTACK && !this.targetUnit.isAlive) {
+        this.state = UnitStates.IDLE;
       }
+
+      this.removeInactiveProjectiles();
+    }
+
+    removeInactiveProjectiles() {
+      Object.values(this.projectiles).forEach((projectile) => {
+        if (projectile.isActive === false) {
+          delete this.projectiles[projectile.targetUnit.id];
+        }
+      });
     }
 
     draw(ctx) {
@@ -155,11 +148,10 @@ window["Unit"] = (() => {
       //   ctx.strokeStyle = "#000000";
       //   ctx.stroke();
       // }
-      //if (this.state === UnitStates.ATTACK) {
-      Object.values(this.projectiles2).forEach((projectile) => {
+
+      Object.values(this.projectiles).forEach((projectile) => {
         projectile.draw(ctx);
       });
-      //}
     }
 
     isClicked(x, y) {
@@ -184,20 +176,14 @@ window["Unit"] = (() => {
     attack(enemyUnit) {
       this.state = UnitStates.ATTACK;
       this.targetUnit = enemyUnit;
-      // this.projectiles.push(
-      //   new Bullet(this.x, this.y, enemyUnit.x, enemyUnit.y, this.attackDamage)
-      // );
-      if (!this.projectiles2[enemyUnit.id]) {
-        this.projectiles2[enemyUnit.id] = new Bullet(
+      if (!this.projectiles[enemyUnit.id]) {
+        this.projectiles[enemyUnit.id] = new Bullet(
           this.x,
           this.y,
-          enemyUnit.x,
-          enemyUnit.y,
+          enemyUnit,
           this.attackDamage
         );
       }
-
-      //this.projectile = new Bullet(this.x, this.y, enemyUnit.x, enemyUnit.y, this.attackDamage);
     }
   }
 

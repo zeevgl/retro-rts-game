@@ -4,8 +4,7 @@ window["Projectile"] = (() => {
       name,
       x,
       y,
-      targetX,
-      targetY,
+      targetUnit,
       width,
       height,
       color,
@@ -15,8 +14,7 @@ window["Projectile"] = (() => {
       this.name = name;
       this.x = x;
       this.y = y;
-      this.targetX = targetX;
-      this.targetY = targetY;
+      this.targetUnit = targetUnit;
       this.width = width;
       this.height = height;
       this.color = color;
@@ -24,14 +22,19 @@ window["Projectile"] = (() => {
       this.speed = speed;
       this.isActive = true;
 
-      const distance = calcDistance(this.x, this.y, this.targetX, this.targetY);
+      const distance = calcDistance(
+        this.x,
+        this.y,
+        this.targetUnit.x,
+        this.targetUnit.y
+      );
       this.moves = calcMoves(
         this.speed,
         distance,
         this.x,
         this.y,
-        this.targetX,
-        this.targetY
+        this.targetUnit.x,
+        this.targetUnit.y
       );
     }
 
@@ -39,6 +42,7 @@ window["Projectile"] = (() => {
       if (this.isActive) {
         this.x += this.moves.xunits;
         this.y += this.moves.yunits;
+        this.checkHitTarget();
       }
     }
 
@@ -50,6 +54,16 @@ window["Projectile"] = (() => {
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.restore();
+      }
+    }
+
+    checkHitTarget() {
+      if (checkCollisionBetweenProjectileAndUnit(this, this.targetUnit)) {
+        this.isActive = false;
+        this.targetUnit.health -= this.attackDamage;
+        if (this.targetUnit.health <= 0) {
+          this.targetUnit.isAlive = false;
+        }
       }
     }
   }

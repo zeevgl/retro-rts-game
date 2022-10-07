@@ -5,8 +5,8 @@ window["Bullet"] = (() => {
   const color = "black";
 
   class Bullet extends Projectile {
-    constructor(x, y, targetX, targetY, attackDamage) {
-      super(name, x, y, targetX, targetY, width, height, color, attackDamage, 1);
+    constructor(x, y, targetUnit, attackDamage) {
+      super(name, x, y, targetUnit, width, height, color, attackDamage, 8);
     }
 
     update(deltaTime, timestamp) {
