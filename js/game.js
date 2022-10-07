@@ -6,7 +6,7 @@ class Game {
     this.mouseHandler = new MouseHandler(this, canvas);
 
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
-    this.AiPlayers = [new Player("player 2", "#ff0000", { x: 500, y: 400 })];
+    this.AiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
   }
 
   update(deltaTime, timestamp) {
@@ -67,7 +67,6 @@ class Game {
     //is it an enemy unit?
     const unitClicked = this.getClickedEnemyUnit(x, y);
     if (unitClicked) {
-      console.log("attack = ", unitClicked);
       this.humanPlayer.attack(unitClicked);
     } else {
       //is it a terrain?
