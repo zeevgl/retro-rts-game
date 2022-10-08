@@ -2,7 +2,18 @@ window["Unit"] = (() => {
   const selectionMargin = 5;
 
   class Unit {
-    constructor(name, x, y, width, height, color, maxHealth, attackDamage) {
+    constructor(
+      name,
+      x,
+      y,
+      width,
+      height,
+      color,
+      maxHealth,
+      attackDamage,
+      visionRange,
+      attackRange
+    ) {
       this.id = uuidv4();
       this.name = name;
       this.x = x;
@@ -12,6 +23,8 @@ window["Unit"] = (() => {
       this.color = color;
       this.maxHealth = maxHealth;
       this.attackDamage = attackDamage;
+      this.visionRange = visionRange;
+      this.attackRange = attackRange;
 
       //
       this.speed = 5; //TODO used fixed speed for now
@@ -91,6 +104,8 @@ window["Unit"] = (() => {
       this.drawSelectionBox(ctx);
       this.drawPath(ctx);
       this.drawHealthBar(ctx);
+      this.drawAttackRange(ctx);
+      this.drawVisionRange(ctx);
       this.drawAttack(ctx);
 
       ctx.restore();
@@ -150,6 +165,37 @@ window["Unit"] = (() => {
 
       if (this.projectiles.length) {
         this.projectiles[0].draw(ctx);
+      }
+    }
+
+    drawAttackRange(ctx) {
+      if (DEBUG_MODE) {
+        ctx.beginPath();
+        ctx.arc(
+          this.x + this.width / 2,
+          this.y + this.height / 2,
+          this.attackRange,
+          0,
+          2 * Math.PI
+        );
+        ctx.strokeStyle = "gray";
+        ctx.stroke();
+      }
+    }
+
+    drawVisionRange(ctx) {
+      if (DEBUG_MODE) {
+        ctx.setLineDash([5, 3])
+        ctx.beginPath();
+        ctx.arc(
+          this.x + this.width / 2,
+          this.y + this.height / 2,
+          this.visionRange,
+          0,
+          2 * Math.PI
+        );
+        ctx.strokeStyle = "purple";
+        ctx.stroke();
       }
     }
 

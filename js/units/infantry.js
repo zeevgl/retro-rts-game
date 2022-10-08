@@ -4,10 +4,23 @@ window["Infantry"] = (() => {
   const width = 25;
   const height = 25;
   const attackDamage = 8;
+  const visionRange = 200;
+  const attackRange = 150;
 
   class Infantry extends Unit {
     constructor(x, y, color) {
-      super(name, x, y, width, height, color, maxHealth, attackDamage);
+      super(
+        name,
+        x,
+        y,
+        width,
+        height,
+        color,
+        maxHealth,
+        attackDamage,
+        visionRange,
+        attackRange
+      );
     }
 
     update(deltaTime, timestamp) {

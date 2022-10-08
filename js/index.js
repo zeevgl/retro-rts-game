@@ -1,6 +1,6 @@
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 630;
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 const canvas = document.getElementById("gameScreen");
 canvas.setAttribute("width", GAME_WIDTH);
