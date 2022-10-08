@@ -7,10 +7,6 @@ class Game {
 
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.AiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
-
-    this.AiPlayers[0].selectedUnits =[this.AiPlayers[0].units[0]];
-    this.AiPlayers[0].attack(this.humanPlayer.units[0]);
-    // this.AiPlayers[0].moveSelectedUnitsToPosition(1, 1);
   }
 
   update(deltaTime, timestamp) {
@@ -18,9 +14,8 @@ class Game {
       player.update(deltaTime, timestamp);
     });
 
-
+    this.performAI();
   }
-
 
   draw(context) {
     context.save();
@@ -102,5 +97,40 @@ class Game {
     }
 
     return null;
+  }
+
+  performAI() {
+    //POC - simple AI: each AI unit attack closest human unit
+    this.AiPlayers.forEach((aiPlayer) => {
+      aiPlayer.units.forEach((aiUnit) => {
+        if (aiUnit.isAlive) {
+          let closestHumanUnit = null;
+          this.humanPlayer.units.forEach((humanUnit) => {
+            if (humanUnit.isAlive) {
+              const distance = calcDistance(
+                aiUnit.x,
+                aiUnit.y,
+                humanUnit.x,
+                humanUnit.y
+              );
+              if (
+                closestHumanUnit === null ||
+                distance < closestHumanUnit.distance
+              ) {
+                closestHumanUnit = {
+                  unit: humanUnit,
+                  distance,
+                };
+              }
+            }
+          });
+
+          if (closestHumanUnit) {
+            aiPlayer.selectedUnits = [aiUnit];
+            aiPlayer.attack(closestHumanUnit.unit);
+          }
+        }
+      });
+    });
   }
 }
