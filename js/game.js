@@ -113,9 +113,11 @@ class Game {
                 humanUnit.x,
                 humanUnit.y
               );
+
               if (
-                closestHumanUnit === null ||
-                distance < closestHumanUnit.distance
+                distance <= aiUnit.visionRange &&
+                (closestHumanUnit === null ||
+                  distance < closestHumanUnit.distance)
               ) {
                 closestHumanUnit = {
                   unit: humanUnit,
@@ -128,6 +130,16 @@ class Game {
           if (closestHumanUnit) {
             aiPlayer.selectedUnits = [aiUnit];
             aiPlayer.attack(closestHumanUnit.unit);
+          } else {
+            //move to random position ? seek resource ? seek out human player?
+            // const randomPosition = {
+            //     x: Math.floor(Math.random() * this.gameWidth),
+            //     y: Math.floor(Math.random() * this.gameHeight),
+            //
+            // }
+            // aiPlayer.selectedUnits = [aiUnit];
+            // aiPlayer.moveSelectedUnitsToPosition(randomPosition.x, randomPosition.y);
+
           }
         }
       });

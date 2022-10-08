@@ -34,12 +34,16 @@ window["Unit"] = (() => {
       this.state = UnitStates.IDLE;
       this.targetX = null;
       this.targetY = null;
+      this.targetUnitOutOfRange = null;
       this.isSelected = false;
       this.projectiles = [];
     }
 
     update(deltaTime, timestamp) {
-      if (this.state === UnitStates.MOVING) {
+      if (
+        this.state === UnitStates.MOVING ||
+        this.state === UnitStates.MOVING_TO_ATTACK
+      ) {
         this.updateMove(deltaTime, timestamp);
       }
 
@@ -49,7 +53,12 @@ window["Unit"] = (() => {
     updateMove(deltaTime, timestamp) {
       const distance = calcDistance(this.x, this.y, this.targetX, this.targetY);
 
-      if (distance < 3) {
+      if (
+        this.state === UnitStates.MOVING_TO_ATTACK &&
+        distance <= this.attackRange
+      ) {
+        this.attack(this.targetUnitOutOfRange);
+      } else if (distance < 3) {
         this.state = UnitStates.IDLE;
         return;
       }
@@ -185,7 +194,7 @@ window["Unit"] = (() => {
 
     drawVisionRange(ctx) {
       if (DEBUG_MODE) {
-        ctx.setLineDash([5, 3])
+        ctx.setLineDash([5, 3]);
         ctx.beginPath();
         ctx.arc(
           this.x + this.width / 2,
@@ -217,16 +226,29 @@ window["Unit"] = (() => {
       this.targetY = y;
     }
 
+    moveToAttack(x, y) {
+      this.state = UnitStates.MOVING_TO_ATTACK;
+      this.targetX = x;
+      this.targetY = y;
+    }
+
     attack(enemyUnit) {
-      this.state = UnitStates.ATTACK;
+      const distance = calcDistance(this.x, this.y, enemyUnit.x, enemyUnit.y);
+      if (distance <= this.attackRange) {
+        this.targetUnitOutOfRange = null;
+        this.state = UnitStates.ATTACK;
 
-      if (this.projectiles.length > 1) {
-        this.projectiles = this.projectiles.slice(0, 1);
+        if (this.projectiles.length > 1) {
+          this.projectiles = this.projectiles.slice(0, 1);
+        }
+
+        this.projectiles.push(
+          new Bullet(this.x, this.y, enemyUnit, this.attackDamage)
+        );
+      } else {
+        this.targetUnitOutOfRange = enemyUnit;
+        this.moveToAttack(enemyUnit.x, enemyUnit.y);
       }
-
-      this.projectiles.push(
-        new Bullet(this.x, this.y, enemyUnit, this.attackDamage)
-      );
     }
   }
 
