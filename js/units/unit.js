@@ -244,15 +244,14 @@ window["Unit"] = (() => {
     }
 
     isClicked(x, y) {
-      if (
-        this.x <= x &&
-        this.x + this.width >= x &&
-        this.y <= y &&
-        this.y + this.height >= y
-      ) {
-        return true;
-      }
-      return false;
+      const margin = 20;  //so it will be easier to click moving units
+      return (
+        x >= this.x - margin &&
+        x <= this.x + this.width + margin &&
+        y >= this.y - margin &&
+        y <= this.y + this.height + margin
+      );
+
     }
 
     moveTo(x, y) {
