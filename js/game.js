@@ -6,15 +6,16 @@ class Game {
     this.mouseHandler = new MouseHandler(this, canvas);
 
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
-    this.AiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
+    this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
+    this.enemyAI = new EnemyAI(this);
   }
 
   update(deltaTime, timestamp) {
-    [this.humanPlayer, ...this.AiPlayers].forEach((player) => {
+    [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
       player.update(deltaTime, timestamp);
     });
 
-    this.performAI();
+    this.enemyAI.performAI();
   }
 
   draw(context) {
@@ -23,7 +24,7 @@ class Game {
     this.drawBackground(context);
     // this.drawRect(context);
 
-    [this.humanPlayer, ...this.AiPlayers].forEach((player) => {
+    [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
       player.draw(context);
     });
 
@@ -89,60 +90,13 @@ class Game {
   }
 
   getClickedEnemyUnit(x, y) {
-    for (let i = 0; i < this.AiPlayers.length; i++) {
-      const clickedUnit = this.AiPlayers[i].isUnitClicked(x, y, true);
+    for (let i = 0; i < this.aiPlayers.length; i++) {
+      const clickedUnit = this.aiPlayers[i].isUnitClicked(x, y, true);
       if (clickedUnit.length) {
         return clickedUnit[0];
       }
     }
 
     return null;
-  }
-
-  performAI() {
-    //POC - simple AI: each AI unit attack closest human unit
-    this.AiPlayers.forEach((aiPlayer) => {
-      aiPlayer.units.forEach((aiUnit) => {
-        if (aiUnit.isAlive && aiUnit.state === UnitStates.IDLE || aiUnit.state === UnitStates.MOVING) {
-          let closestHumanUnit = null;
-          this.humanPlayer.units.forEach((humanUnit) => {
-            if (humanUnit.isAlive) {
-              const distance = calcDistance(
-                aiUnit.x,
-                aiUnit.y,
-                humanUnit.x,
-                humanUnit.y
-              );
-
-              if (
-                distance <= aiUnit.visionRange &&
-                (closestHumanUnit === null ||
-                  distance < closestHumanUnit.distance)
-              ) {
-                closestHumanUnit = {
-                  unit: humanUnit,
-                  distance,
-                };
-              }
-            }
-          });
-
-          if (closestHumanUnit) {
-            aiPlayer.selectedUnits = [aiUnit];
-            aiPlayer.attack(closestHumanUnit.unit);
-          } else if (aiUnit.state === UnitStates.IDLE) {
-            const randomPosition = {
-              x: Math.floor(Math.random() * this.gameWidth),
-              y: Math.floor(Math.random() * this.gameHeight),
-            };
-            aiPlayer.selectedUnits = [aiUnit];
-            aiPlayer.moveSelectedUnitsToPosition(
-              randomPosition.x,
-              randomPosition.y
-            );
-          }
-        }
-      });
-    });
   }
 }
