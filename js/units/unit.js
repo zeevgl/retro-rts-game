@@ -12,7 +12,8 @@ window["Unit"] = (() => {
       maxHealth,
       attackDamage,
       visionRange,
-      attackRange
+      attackRange,
+      attackCooldown
     ) {
       this.id = uuidv4();
       this.name = name;
@@ -25,8 +26,10 @@ window["Unit"] = (() => {
       this.attackDamage = attackDamage;
       this.visionRange = visionRange;
       this.attackRange = attackRange;
+      this.attackCooldown = attackCooldown;
 
       //
+      this.attackCooldownInProgress = 0;
       this.speed = 5; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
@@ -83,6 +86,7 @@ window["Unit"] = (() => {
     }
 
     updateAttack(deltaTime, timestamp) {
+      this.updateAttackCoolDown(deltaTime, timestamp);
       if (this.projectiles.length) {
         const activeProjectile = this.projectiles[0];
         activeProjectile.update(deltaTime, timestamp);
@@ -100,9 +104,20 @@ window["Unit"] = (() => {
           !activeProjectile.isActive
         ) {
           // target is still alive, but current projectile is not active
+          //auto attack again or next target
+          if (this.attackCooldownInProgress > 0) {
+            return;
+          }
+
           this.projectiles.shift(); //remove dead projectile
           this.attack(this.targetUnit); //attack again
         }
+      }
+    }
+
+    updateAttackCoolDown(deltaTime, timestamp) {
+      if (this.attackCooldownInProgress > 0) {
+        this.attackCooldownInProgress -= deltaTime;
       }
     }
 
@@ -264,6 +279,7 @@ window["Unit"] = (() => {
         this.projectiles.push(
           new Bullet(this.x, this.y, enemyUnit, this.attackDamage)
         );
+        this.attackCooldownInProgress = this.attackCooldown;
       } else {
         this.moveToAttack(enemyUnit.x, enemyUnit.y);
       }

@@ -13,6 +13,10 @@ const game = new Game(GAME_WIDTH, GAME_HEIGHT, canvas);
 let lastTime = 0;
 
 function gameLoop(timestamp) {
+  /*
+    deltaTime - milliseconds since last frame
+    deltaTime / 1000 - seconds since last frame
+   */
   let deltaTime = timestamp - lastTime;
   lastTime = timestamp;
 
