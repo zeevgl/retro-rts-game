@@ -32,9 +32,9 @@ window["Unit"] = (() => {
       this.isAlive = true;
       this.isDecaying = false;
       this.state = UnitStates.IDLE;
-      this.targetX = null;
-      this.targetY = null;
-      this.targetUnitOutOfRange = null;
+      this.moveTargetX = null;
+      this.moveTargetY = null;
+      this.targetUnit = null;
       this.isSelected = false;
       this.projectiles = [];
     }
@@ -51,25 +51,31 @@ window["Unit"] = (() => {
     }
 
     updateMove(deltaTime, timestamp) {
-      const distance = calcDistance(this.x, this.y, this.targetX, this.targetY);
+      const distance = calcDistance(
+        this.x,
+        this.y,
+        this.moveTargetX,
+        this.moveTargetY
+      );
 
       if (
         this.state === UnitStates.MOVING_TO_ATTACK &&
         distance <= this.attackRange
       ) {
-        this.attack(this.targetUnitOutOfRange);
+        this.attack(this.targetUnit);
       } else if (distance < 3) {
         this.state = UnitStates.IDLE;
         return;
       }
 
+      //TODO: if unit is moving to location, why reclac each time? only recalc when attacking...
       const moves = calcMoves(
         this.speed,
         distance,
         this.x,
         this.y,
-        this.targetX,
-        this.targetY
+        this.moveTargetX,
+        this.moveTargetY
       );
 
       this.x += moves.xunits;
@@ -85,6 +91,7 @@ window["Unit"] = (() => {
           this.state === UnitStates.ATTACK &&
           !activeProjectile.targetUnit.isAlive
         ) {
+          // target is dead
           this.state = UnitStates.IDLE;
           this.projectiles = [];
         } else if (
@@ -92,12 +99,9 @@ window["Unit"] = (() => {
           activeProjectile.targetUnit.isAlive &&
           !activeProjectile.isActive
         ) {
-          if (this.projectiles.length > 1) {
-            this.projectiles.shift();
-          } else {
-            const target = this.projectiles.shift();
-            this.attack(target.targetUnit);
-          }
+          // target is still alive, but current projectile is not active
+          this.projectiles.shift(); //remove dead projectile
+          this.attack(this.targetUnit); //attack again
         }
       }
     }
@@ -115,6 +119,7 @@ window["Unit"] = (() => {
       this.drawHealthBar(ctx);
       this.drawAttackRange(ctx);
       this.drawVisionRange(ctx);
+      this.drawTargeting(ctx);
       this.drawAttack(ctx);
 
       ctx.restore();
@@ -140,7 +145,7 @@ window["Unit"] = (() => {
     drawPath(ctx) {
       if (this.state === UnitStates.MOVING) {
         ctx.beginPath();
-        ctx.moveTo(this.targetX, this.targetY);
+        ctx.moveTo(this.moveTargetX, this.moveTargetY);
         ctx.lineTo(this.x, this.y);
         ctx.strokeStyle = "#ff0000";
         ctx.stroke();
@@ -174,6 +179,21 @@ window["Unit"] = (() => {
 
       if (this.projectiles.length) {
         this.projectiles[0].draw(ctx);
+      }
+    }
+
+    drawTargeting(ctx) {
+      if (
+        DEBUG_MODE &&
+        this.targetUnit &&
+        (this.state === UnitStates.ATTACK ||
+          this.state === UnitStates.MOVING_TO_ATTACK)
+      ) {
+        ctx.beginPath();
+        ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = "#ff0000";
+        ctx.stroke();
       }
     }
 
@@ -222,31 +242,29 @@ window["Unit"] = (() => {
 
     moveTo(x, y) {
       this.state = UnitStates.MOVING;
-      this.targetX = x;
-      this.targetY = y;
+      this.moveTargetX = x;
+      this.moveTargetY = y;
     }
 
     moveToAttack(x, y) {
       this.state = UnitStates.MOVING_TO_ATTACK;
-      this.targetX = x;
-      this.targetY = y;
+      this.moveTargetX = x;
+      this.moveTargetY = y;
     }
 
     attack(enemyUnit) {
+      this.targetUnit = enemyUnit;
+
       const distance = calcDistance(this.x, this.y, enemyUnit.x, enemyUnit.y);
       if (distance <= this.attackRange) {
-        this.targetUnitOutOfRange = null;
         this.state = UnitStates.ATTACK;
-
         if (this.projectiles.length > 1) {
           this.projectiles = this.projectiles.slice(0, 1);
         }
-
         this.projectiles.push(
           new Bullet(this.x, this.y, enemyUnit, this.attackDamage)
         );
       } else {
-        this.targetUnitOutOfRange = enemyUnit;
         this.moveToAttack(enemyUnit.x, enemyUnit.y);
       }
     }
