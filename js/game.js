@@ -103,7 +103,7 @@ class Game {
     //POC - simple AI: each AI unit attack closest human unit
     this.AiPlayers.forEach((aiPlayer) => {
       aiPlayer.units.forEach((aiUnit) => {
-        if (aiUnit.isAlive) {
+        if (aiUnit.isAlive && aiUnit.state === UnitStates.IDLE || aiUnit.state === UnitStates.MOVING) {
           let closestHumanUnit = null;
           this.humanPlayer.units.forEach((humanUnit) => {
             if (humanUnit.isAlive) {
