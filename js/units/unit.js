@@ -162,7 +162,7 @@ window["Unit"] = (() => {
         ctx.beginPath();
         ctx.moveTo(this.moveTargetX, this.moveTargetY);
         ctx.lineTo(this.x, this.y);
-        ctx.strokeStyle = "#ff0000";
+        ctx.strokeStyle = "#00FF00";
         ctx.stroke();
       }
     }
