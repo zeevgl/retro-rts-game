@@ -4,7 +4,7 @@ class Game {
     this.gameHeight = gameHeight;
     this.mouseAction = null;
     this.mouseHandler = new MouseHandler(this, canvas);
-
+    this.hud = new Hud(this.gameWidth, this.gameHeight);
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
@@ -22,13 +22,14 @@ class Game {
     context.save();
 
     this.drawBackground(context);
-    // this.drawRect(context);
 
     [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
       player.draw(context);
     });
 
     this.drawMouseAction(context);
+
+    this.hud.draw(context);
 
     context.restore();
   }
