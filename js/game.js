@@ -8,6 +8,7 @@ class Game {
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
+    this.map = new Map();
 
     this.camera = {
       x: 0,
@@ -22,17 +23,16 @@ class Game {
 
     //this.enemyAI.performAI();
     this.hud.update(deltaTime, timestamp);
-    //this.camera.y+=0.1;
   }
 
   draw(context) {
     context.save();
+    this.drawCamera(context);
 
     this.drawBackground(context);
 
 
     this.drawMouseAction(context);
-    this.drawCamera(context);
 
     [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
       player.draw(context);
