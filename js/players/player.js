@@ -18,7 +18,7 @@ class Player {
     );
     this.addUnit(
       new Infantry(
-        200 + this.startingPoint.x,
+        270 + this.startingPoint.x,
         120 + this.startingPoint.y,
         color
       )

@@ -15,7 +15,8 @@ class Game {
       player.update(deltaTime, timestamp);
     });
 
-    //this.enemyAI.performAI();
+    this.enemyAI.performAI();
+    this.hud.update(deltaTime, timestamp);
   }
 
   draw(context) {
