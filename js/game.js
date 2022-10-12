@@ -31,7 +31,6 @@ class Game {
 
     this.drawBackground(context);
 
-
     this.drawMouseAction(context);
 
     [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
@@ -55,12 +54,12 @@ class Game {
   }
 
   drawRect(context) {
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < this.map.mapWidth; i++) {
       context.fillStyle = i % 2 === 0 ? "#ff0000" : "#00ff00";
       context.fillRect(50 * i + i * 50, 0, 10, 800);
     }
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < this.map.mapHeight; i++) {
       context.fillStyle = i % 2 === 0 ? "yellow" : "black";
       context.fillRect(0, 50 * i + i * 50, 800, 10);
     }
@@ -119,5 +118,24 @@ class Game {
     }
 
     return null;
+  }
+
+  handleMouseMove(x, y) {
+    if (x >= this.camera.x + this.gameWidth - 100) {
+      this.camera.x += 10;
+    } else if (x <= this.camera.x + 100) {
+      this.camera.x -= 10;
+    } else if (y >= this.camera.y + this.gameHeight - 100) {
+      this.camera.y += 10;
+    } else if (y <= this.camera.y + 100) {
+      this.camera.y -= 10;
+    }
+
+    if (this.camera.x < 0) {
+      this.camera.x = 0;
+    }
+    if (this.camera.y < 0) {
+      this.camera.y = 0;
+    }
   }
 }
