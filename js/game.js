@@ -4,7 +4,7 @@ class Game {
     this.gameHeight = gameHeight;
     this.mouseAction = null;
     this.mouseHandler = new MouseHandler(this, canvas);
-    this.hud = new Hud(this.gameWidth, this.gameHeight);
+    this.hud = new Hud(this);
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
@@ -15,7 +15,7 @@ class Game {
       player.update(deltaTime, timestamp);
     });
 
-    this.enemyAI.performAI();
+    //this.enemyAI.performAI();
   }
 
   draw(context) {

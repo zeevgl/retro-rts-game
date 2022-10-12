@@ -1,12 +1,11 @@
 window["Hud"] = (() => {
   class Hud {
-    constructor(gameWidth, gameHeight) {
-      this.gameWidth = gameWidth;
-      this.gameHeight = gameHeight;
-      this.hudWidth = this.gameWidth * 0.33;
-      this.hudHeight = this.gameHeight;
-      this.hudX = this.gameWidth - this.hudWidth;
-      this.hudY = this.gameHeight - this.hudHeight;
+    constructor(game) {
+      this.game = game;
+      this.hudWidth = this.game.gameWidth * 0.33;
+      this.hudHeight = this.game.gameHeight;
+      this.hudX = this.game.gameWidth - this.hudWidth;
+      this.hudY = this.game.gameHeight - this.hudHeight;
 
       this.minimapWidth = this.hudWidth * 0.9;
       this.minimapHeight = this.hudHeight * 0.4;
