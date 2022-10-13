@@ -75,6 +75,10 @@ window["UserInput"] = (() => {
     onMouseMove(x, y) {
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
+      } else if (this.game.humanPlayer.isUnitClicked(x, y, true).length) {
+        this.mouseHandler.setMouseSelect();
+      } else if (this.getClickedEnemyUnit(x, y)) {
+        this.mouseHandler.setMouseAttack();
       } else {
         this.mouseHandler.setMouseDefault();
       }

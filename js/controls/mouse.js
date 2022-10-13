@@ -34,6 +34,10 @@ window["MouseHandler"] = (() => {
       this.game.canvas.style.cursor = "crosshair";
     }
 
+    setMouseSelect() {
+      this.game.canvas.style.cursor = "grab";
+    }
+
     setMouseDefault() {
       this.game.canvas.style.cursor = "default";
     }
