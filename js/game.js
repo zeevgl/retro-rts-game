@@ -4,17 +4,13 @@ class Game {
     this.gameHeight = gameHeight;
     this.canvas = canvas;
 
+    this.camera = new Camera(this);
     this.userInput = new UserInput(this);
     this.hud = new Hud(this);
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
     this.map = new Map();
-
-    this.camera = {
-      x: 0,
-      y: 0,
-    };
   }
 
   update(deltaTime, timestamp) {
@@ -28,7 +24,7 @@ class Game {
 
   draw(context) {
     context.save();
-    this.drawCamera(context);
+    this.camera.draw(context);
 
     this.drawBackground(context);
 
@@ -50,10 +46,6 @@ class Game {
     context.fillRect(0, 0, this.gameWidth, this.gameHeight);
 
     DEBUG_MODE && this.drawRect(context);
-  }
-
-  drawCamera(context) {
-    context.translate(-this.camera.x, -this.camera.y);
   }
 
   drawRect(context) {

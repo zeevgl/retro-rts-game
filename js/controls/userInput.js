@@ -77,11 +77,16 @@ window["UserInput"] = (() => {
       const scrollSpeed = 5;
       const { camera, hud, map } = this.game;
 
+      //check what is hovering over
+
+      //check if mouse is at the edge of the screen
+
       if (
         x >= camera.x + hud.viewport.width - margin &&
         x <= camera.x + hud.viewport.width
       ) {
         camera.x += scrollSpeed;
+        this.mouseHandler.setMouseScroll()
       } else if (x <= camera.x + margin && x >= camera.x) {
         camera.x -= scrollSpeed;
       }

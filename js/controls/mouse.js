@@ -17,17 +17,29 @@ window["MouseHandler"] = (() => {
         "mousemove",
         this.handleMouseMove.bind(this)
       );
+
+      this.setMouseDefault();
     }
 
-    draw(context) {
-
-    }
+    draw(context) {}
 
     getXY(event) {
       const rect = this.game.canvas.getBoundingClientRect();
       const x = this.game.camera.x + event.clientX - rect.left;
       const y = this.game.camera.y + event.clientY - rect.top;
       return { x, y };
+    }
+
+    setMouseAttack() {
+      this.game.canvas.style.cursor = "crosshair";
+    }
+
+    setMouseDefault() {
+      this.game.canvas.style.cursor = "default";
+    }
+
+    setMouseScroll() {
+      this.game.canvas.style.cursor = "all-scroll";
     }
 
     onClick(event) {
