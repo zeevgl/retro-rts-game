@@ -5,8 +5,8 @@ window["Infantry"] = (() => {
   const height = 25;
   const attackDamage = 8;
   const visionRange = 150;
-  const attackRange = 70;
-  const attackCooldown = 2000;
+  const attackRange = 100;
+  const attackCooldown = 900;
 
   class Infantry extends Unit {
     constructor(x, y, color) {

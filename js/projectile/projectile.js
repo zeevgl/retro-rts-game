@@ -15,6 +15,7 @@ window["Projectile"] = (() => {
       this.x = x;
       this.y = y;
       this.targetUnit = targetUnit;
+      this.targetUnitLocked = { ...targetUnit };
       this.width = width;
       this.height = height;
       this.color = color;
@@ -66,10 +67,7 @@ window["Projectile"] = (() => {
           this.targetUnit.isSelected = false;
         }
       } else if (
-        this.x < 0 ||
-        this.x > canvas.width ||
-        this.y < 0 ||
-        this.y > canvas.height
+        checkCollisionBetweenProjectileAndUnit(this, this.targetUnitLocked)
       ) {
         this.isActive = false;
       }
