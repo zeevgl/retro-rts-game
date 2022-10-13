@@ -133,9 +133,15 @@ class Game {
 
     if (this.camera.x < 0) {
       this.camera.x = 0;
+    } else if (this.camera.x > this.map.mapWidth) {
+      this.camera.x = this.map.mapWidth;
     }
+
+    console.log("this.camera.y = ", this.camera.y);
     if (this.camera.y < 0) {
       this.camera.y = 0;
+    } else if (this.camera.y + this.gameHeight > this.map.mapHeight) {
+      this.camera.y = this.map.mapHeight; //- this.gameHeight / 2;
     }
   }
 }

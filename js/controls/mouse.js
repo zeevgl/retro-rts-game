@@ -21,6 +21,7 @@ window["MouseHandler"] = (() => {
 
       const rect = canvas.getBoundingClientRect();
       const { x, y } = this.getXY(event);
+      console.log('x,y', x, y);
       if (event.button === 0) {
         this.game.onMouseLeftClicked(x, y);
       } else if (event.button === 2) {
