@@ -12,7 +12,6 @@ window["Hud"] = (() => {
         height: this.game.gameHeight,
       };
 
-
       this.hudWidth = this.game.gameWidth - this.viewport.width;
       this.hudHeight = this.game.gameHeight;
       this.hudX = this.game.gameWidth - this.hudWidth;
@@ -76,26 +75,31 @@ window["Hud"] = (() => {
     }
 
     drawViewport(context) {
-      context.beginPath();
-      context.rect(
+      if (DEBUG_MODE) {
+        context.beginPath();
+        context.rect(
           this.viewport.x,
           this.viewport.y,
           this.viewport.width,
           this.viewport.height
-      );
-      context.strokeStyle = "red";
-      context.stroke();
+        );
+        context.strokeStyle = "red";
+        context.stroke();
+      }
     }
 
     drawViewPortMiniMap(ctx) {
       ctx.save();
-
       ctx.beginPath();
       ctx.rect(
-        this.minimapX + this.viewport.x,
-        this.minimapY + this.viewport.y,
-        this.viewport.width / this.game.map.mapWidth * this.minimapWidth,
-        this.viewport.height / this.game.map.mapHeight * this.minimapHeight
+        this.minimapX +
+          this.viewport.x +
+          (this.game.camera.x / game.map.mapWidth) * this.minimapWidth,
+        this.minimapY +
+          this.viewport.y +
+          (this.game.camera.y / game.map.mapHeight) * this.minimapHeight,
+        (this.viewport.width / this.game.map.mapWidth) * this.minimapWidth,
+        (this.viewport.height / this.game.map.mapHeight) * this.minimapHeight
       );
       ctx.lineWidth = "3";
       ctx.strokeStyle = "white";

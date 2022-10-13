@@ -199,11 +199,11 @@ window["Unit"] = (() => {
 
     drawTargeting(ctx) {
       if (
-        DEBUG_MODE &&
         this.targetUnit &&
         (this.state === UnitStates.ATTACK ||
           this.state === UnitStates.MOVING_TO_ATTACK)
       ) {
+        ctx.setLineDash([5, 3]);
         ctx.beginPath();
         ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
         ctx.lineTo(this.x, this.y);
@@ -244,14 +244,13 @@ window["Unit"] = (() => {
     }
 
     isClicked(x, y) {
-      const margin = 20;  //so it will be easier to click moving units
+      const margin = 20; //so it will be easier to click moving units
       return (
         x >= this.x - margin &&
         x <= this.x + this.width + margin &&
         y >= this.y - margin &&
         y <= this.y + this.height + margin
       );
-
     }
 
     moveTo(x, y) {

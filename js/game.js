@@ -39,6 +39,8 @@ class Game {
 
     this.hud.draw(context);
 
+    this.map.draw(context);
+
     context.restore();
   }
 
@@ -121,27 +123,38 @@ class Game {
   }
 
   handleMouseMove(x, y) {
-    if (x >= this.camera.x + this.gameWidth - 100) {
-      this.camera.x += 10;
-    } else if (x <= this.camera.x + 100) {
-      this.camera.x -= 10;
-    } else if (y >= this.camera.y + this.gameHeight - 100) {
-      this.camera.y += 10;
-    } else if (y <= this.camera.y + 100) {
-      this.camera.y -= 10;
+    //TODO: move this to the mouse handler
+    const margin = 25;
+    const scrollSpeed = 5;
+
+    if (
+      x >= this.camera.x + this.hud.viewport.width - margin &&
+      x <= this.camera.x + this.hud.viewport.width
+    ) {
+      this.camera.x += scrollSpeed;
+    } else if (x <= this.camera.x + margin && x >= this.camera.x) {
+      this.camera.x -= scrollSpeed;
+    }
+
+    if (
+      y >= this.camera.y + this.hud.viewport.height - margin &&
+      y <= this.camera.y + this.hud.viewport.height
+    ) {
+      this.camera.y += scrollSpeed;
+    } else if (y <= this.camera.y + margin && y >= this.camera.y) {
+      this.camera.y -= scrollSpeed;
     }
 
     if (this.camera.x < 0) {
       this.camera.x = 0;
-    } else if (this.camera.x > this.map.mapWidth) {
-      this.camera.x = this.map.mapWidth;
+    } else if (this.camera.x + this.hud.viewport.width > this.map.mapWidth) {
+      this.camera.x = this.map.mapWidth - this.hud.viewport.width;
     }
 
-    console.log("this.camera.y = ", this.camera.y);
     if (this.camera.y < 0) {
       this.camera.y = 0;
-    } else if (this.camera.y + this.gameHeight > this.map.mapHeight) {
-      this.camera.y = this.map.mapHeight; //- this.gameHeight / 2;
+    } else if (this.camera.y + this.hud.viewport.height > this.map.mapHeight) {
+      this.camera.y = this.map.mapHeight - this.hud.viewport.height;
     }
   }
 }
