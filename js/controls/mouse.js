@@ -1,16 +1,30 @@
 window["MouseHandler"] = (() => {
-  class MouseHandler {
-    constructor(game, canvas) {
-      this.game = game;
-      this.canvas = canvas;
+  const LEFT_BUTTON = 0;
+  const RIGHT_BUTTON = 2;
 
-      canvas.addEventListener("click", this.onClick.bind(this));
-      canvas.addEventListener("contextmenu", this.onClick.bind(this));
-      canvas.addEventListener("mousemove", this.handleMouseMove.bind(this));
+  class MouseHandler {
+    constructor(game) {
+      this.game = game;
+      this.handlers = {
+        onMouseLeftClicked: null,
+        onMouseRightClicked: null,
+        onMouseMove: null,
+      };
+
+      this.game.canvas.addEventListener("click", this.onClick.bind(this));
+      this.game.canvas.addEventListener("contextmenu", this.onClick.bind(this));
+      this.game.canvas.addEventListener(
+        "mousemove",
+        this.handleMouseMove.bind(this)
+      );
+    }
+
+    draw(context) {
+
     }
 
     getXY(event) {
-      const rect = canvas.getBoundingClientRect();
+      const rect = this.game.canvas.getBoundingClientRect();
       const x = this.game.camera.x + event.clientX - rect.left;
       const y = this.game.camera.y + event.clientY - rect.top;
       return { x, y };
@@ -18,20 +32,17 @@ window["MouseHandler"] = (() => {
 
     onClick(event) {
       event.preventDefault();
-
-      const rect = canvas.getBoundingClientRect();
       const { x, y } = this.getXY(event);
-      console.log('x,y', x, y);
-      if (event.button === 0) {
-        this.game.onMouseLeftClicked(x, y);
-      } else if (event.button === 2) {
-        this.game.onMouseRightClicked(x, y);
+      if (event.button === LEFT_BUTTON) {
+        this.handlers.onMouseLeftClicked?.(x, y);
+      } else if (event.button === RIGHT_BUTTON) {
+        this.handlers.onMouseRightClicked?.(x, y);
       }
     }
 
     handleMouseMove(event) {
       const { x, y } = this.getXY(event);
-      this.game.handleMouseMove(x, y);
+      this.handlers.onMouseMove?.(x, y);
     }
   }
   return MouseHandler;
