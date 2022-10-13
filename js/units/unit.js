@@ -243,8 +243,7 @@ window["Unit"] = (() => {
       }
     }
 
-    isClicked(x, y) {
-      //TODO: this is not "isClicked" it is is XY over unit
+    inPointInUnit(x, y) {
       const margin = 20; //so it will be easier to click moving units
       return (
         x >= this.x - margin &&

@@ -25,13 +25,12 @@ window["UserInput"] = (() => {
     }
 
     onMouseLeftClicked(x, y) {
-      if (this.game.humanPlayer.isUnitClicked(x, y)) {
+      if (this.game.humanPlayer.attemptToClickUnitAtPoint(x, y)) {
         console.log("unit clicked");
       }
     }
 
     onMouseRightClicked(x, y) {
-      console.log("sdsdsd");
       if (this.game.humanPlayer.selectedUnits.length) {
         this.whatWasClicked(x, y);
       }
@@ -39,7 +38,7 @@ window["UserInput"] = (() => {
 
     whatWasClicked(x, y) {
       //is it an enemy unit?
-      const unitClicked = this.getClickedEnemyUnit(x, y);
+      const unitClicked = this.getEnemyUnitInPoint(x, y);
       if (unitClicked) {
         this.game.humanPlayer.attack(unitClicked);
       } else {
@@ -57,15 +56,16 @@ window["UserInput"] = (() => {
       //is it a friendly unit?
       //is it a building?
       //is it a resource?
+      //is it a resource?
       //is it a terrain?
     }
 
-    getClickedEnemyUnit(x, y) {
+    getEnemyUnitInPoint(x, y) {
       const aiPlayers = this.game.aiPlayers;
       for (let i = 0; i < aiPlayers.length; i++) {
-        const clickedUnit = aiPlayers[i].isUnitClicked(x, y, true);
-        if (clickedUnit.length) {
-          return clickedUnit[0];
+        const unit = aiPlayers[i].getUnitsInPoint(x, y);
+        if (unit.length) {
+          return unit[0];
         }
       }
 
@@ -75,9 +75,9 @@ window["UserInput"] = (() => {
     onMouseMove(x, y) {
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
-      } else if (this.game.humanPlayer.isUnitClicked(x, y, true).length) {
+      } else if (this.game.humanPlayer.getUnitsInPoint(x, y).length) {
         this.mouseHandler.setMouseSelect();
-      } else if (this.getClickedEnemyUnit(x, y)) {
+      } else if (this.getEnemyUnitInPoint(x, y)) {
         this.mouseHandler.setMouseAttack();
       } else {
         this.mouseHandler.setMouseDefault();

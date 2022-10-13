@@ -16,12 +16,7 @@ class Player {
         color
       )
     );
-    this.addUnit(
-      new Infantry(
-        2000,2000,
-        color
-      )
-    );
+    this.addUnit(new Infantry(2000, 2000, color));
   }
 
   update(deltaTime, timestamp) {
@@ -50,29 +45,32 @@ class Player {
     this.units.push(unit);
   }
 
-  isUnitClicked(x, y, isCommand = false) {
-    //TODO: maybe need to split this into two classes
-    if (!isCommand) {
-      this.units.forEach((unit) => {
-        unit.isSelected = false;
-      });
+  attemptToClickUnitAtPoint(x, y) {
+    this.deselectAllUnits();
 
-      this.selectedUnits = [];
-    }
+    const selectedUnits = this.getUnitsInPoint(x, y);
 
-    const selectedUnits = this.units.filter((unit) => {
-      return unit.isAlive && unit.isClicked(x, y);
+    selectedUnits.forEach((unit) => {
+      unit.isSelected = true;
     });
 
-    if (!isCommand) {
-      selectedUnits.forEach((unit) => {
-        unit.isSelected = true;
-      });
-
-      this.selectedUnits = selectedUnits;
-    }
+    this.selectedUnits = selectedUnits;
 
     return selectedUnits;
+  }
+
+  getUnitsInPoint(x, y) {
+    return this.units.filter((unit) => {
+      return unit.isAlive && unit.inPointInUnit(x, y);
+    });
+  }
+
+  deselectAllUnits() {
+    this.selectedUnits.forEach((unit) => {
+      unit.isSelected = false;
+    });
+
+    this.selectedUnits = [];
   }
 
   moveSelectedUnitsToPosition(x, y) {
