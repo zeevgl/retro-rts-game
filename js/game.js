@@ -20,6 +20,7 @@ class Game {
 
     //this.enemyAI.performAI();
     this.hud.update(deltaTime, timestamp);
+    this.camera.update(deltaTime, timestamp);
   }
 
   draw(context) {

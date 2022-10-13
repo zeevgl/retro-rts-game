@@ -73,43 +73,10 @@ window["UserInput"] = (() => {
     }
 
     onMouseMove(x, y) {
-      const margin = 25;
-      const scrollSpeed = 5;
-      const { camera, hud, map } = this.game;
-
-      //check what is hovering over
-
-      //check if mouse is at the edge of the screen
-
-      if (
-        x >= camera.x + hud.viewport.width - margin &&
-        x <= camera.x + hud.viewport.width
-      ) {
-        camera.x += scrollSpeed;
-        this.mouseHandler.setMouseScroll()
-      } else if (x <= camera.x + margin && x >= camera.x) {
-        camera.x -= scrollSpeed;
-      }
-
-      if (
-        y >= camera.y + hud.viewport.height - margin &&
-        y <= camera.y + hud.viewport.height
-      ) {
-        camera.y += scrollSpeed;
-      } else if (y <= camera.y + margin && y >= camera.y) {
-        camera.y -= scrollSpeed;
-      }
-
-      if (camera.x < 0) {
-        camera.x = 0;
-      } else if (camera.x + hud.viewport.width > map.mapWidth) {
-        camera.x = map.mapWidth - hud.viewport.width;
-      }
-
-      if (camera.y < 0) {
-        camera.y = 0;
-      } else if (camera.y + hud.viewport.height > map.mapHeight) {
-        camera.y = map.mapHeight - hud.viewport.height;
+      if (this.game.camera.scrollCamera(x, y)) {
+        this.mouseHandler.setMouseScroll();
+      } else {
+        this.mouseHandler.setMouseDefault();
       }
     }
   }
