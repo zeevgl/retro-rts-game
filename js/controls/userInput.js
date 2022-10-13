@@ -15,7 +15,7 @@ window["UserInput"] = (() => {
       this.mouseHandler.handlers.onMouseMove = this.onMouseMove.bind(this);
     }
 
-    draw(context) {
+    draw(ctx) {
       if (this.targetXY !== null) {
         ctx.beginPath();
         ctx.arc(this.targetXY.x, this.targetXY.y, 10, 0, 2 * Math.PI);

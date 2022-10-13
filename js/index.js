@@ -1,31 +1,44 @@
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 630;
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
-const canvas = document.getElementById("gameScreen");
-canvas.setAttribute("width", GAME_WIDTH);
-canvas.setAttribute("height", GAME_HEIGHT);
-const ctx = canvas.getContext("2d");
-ctx.imageSmoothingEnabled = false;
+window.addEventListener(
+  "resize",
+  function (event) {
+    console.log("resize");
+    initGame();
+  },
+  true
+);
 
-const game = new Game(GAME_WIDTH, GAME_HEIGHT, canvas);
+function initGame() {
+  const GAME_WIDTH = window.innerWidth;
+  const GAME_HEIGHT = window.innerHeight;
 
-let lastTime = 0;
+  const canvas = document.getElementById("gameScreen");
+  canvas.setAttribute("width", GAME_WIDTH.toString());
+  canvas.setAttribute("height", GAME_HEIGHT.toString());
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  const game = new Game(GAME_WIDTH, GAME_HEIGHT, canvas);
 
-function gameLoop(timestamp) {
-  /*
-    deltaTime - milliseconds since last frame
-    deltaTime / 1000 - seconds since last frame
-   */
-  let deltaTime = timestamp - lastTime;
-  lastTime = timestamp;
+  let lastTime = 0;
 
-  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+  function gameLoop(timestamp) {
+    /*
+      deltaTime - milliseconds since last frame
+      deltaTime / 1000 - seconds since last frame
+     */
+    let deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
 
-  game.update(deltaTime, timestamp);
-  game.draw(ctx);
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+    game.update(deltaTime, timestamp);
+    game.draw(ctx);
+
+    requestAnimationFrame(gameLoop);
+  }
 
   requestAnimationFrame(gameLoop);
 }
 
-requestAnimationFrame(gameLoop);
+initGame();

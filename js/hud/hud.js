@@ -28,7 +28,7 @@ window["Hud"] = (() => {
     draw(ctx) {
       ctx.save();
       ctx.translate(this.game.camera.x, this.game.camera.y);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillStyle = "grey";
       ctx.fillRect(this.hudX, this.hudY, this.hudWidth, this.hudHeight);
 
       this.drawMinimap(ctx);
@@ -94,10 +94,10 @@ window["Hud"] = (() => {
       ctx.rect(
         this.minimapX +
           this.viewport.x +
-          (this.game.camera.x / game.map.mapWidth) * this.minimapWidth,
+          (this.game.camera.x / this.game.map.mapWidth) * this.minimapWidth,
         this.minimapY +
           this.viewport.y +
-          (this.game.camera.y / game.map.mapHeight) * this.minimapHeight,
+          (this.game.camera.y / this.game.map.mapHeight) * this.minimapHeight,
         (this.viewport.width / this.game.map.mapWidth) * this.minimapWidth,
         (this.viewport.height / this.game.map.mapHeight) * this.minimapHeight
       );
