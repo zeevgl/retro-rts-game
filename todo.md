@@ -1,0 +1,36 @@
+# Tasks
+- [ ] AI
+  - [ ] Player AI
+  - [ ] Unit AI support
+- [ ] Add more units
+  - [x] Infantry
+  - [ ] Rocket
+  - [ ] Tank
+  - [ ] Harvester
+  - [ ] Aircraft
+  - [ ] APC
+  - [ ] Artillery
+- [ ] Building
+  - [ ] Building Types
+    - [ ] Contraction Yard
+    - [ ] Barracks
+    - [ ] Refinery
+    - [ ] Power Plant
+    - [ ] War Factory
+    - [ ] Silo
+    - [ ] Radar Dome
+  - [ ] Building placement
+  - [ ] Building construction
+  - [ ] Building destruction
+  - [ ] Building repair
+  - [ ] Building upgrades
+- [ ] Minimap
+  - [ ] Render buildings
+  - [ ] Drag view port
+  - [ ] Click on minimap
+- [ ] Mining resources
+  - [ ] Spice
+- [ ] Spice Fields
+  - [ ] Spice Fields
+  - [ ] Spice Blooms
+- [ ] Hud Menu
