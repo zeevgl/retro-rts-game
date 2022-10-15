@@ -21,7 +21,7 @@ window["Projectile"] = (() => {
       this.color = color;
       this.attackDamage = attackDamage;
       this.speed = speed;
-      this.isActive = true;
+      this.state = ProjectileStates.FLYING;
 
       const distance = calcDistance(
         this.x,
@@ -40,37 +40,64 @@ window["Projectile"] = (() => {
     }
 
     update(deltaTime, timestamp) {
-      if (this.isActive) {
+      if (this.state === ProjectileStates.FLYING) {
         this.x += this.moves.xunits;
         this.y += this.moves.yunits;
         this.checkHitTarget();
+      } else if (this.state === ProjectileStates.EXPLODING) {
+        this.state = ProjectileStates.INACTIVE;
       }
     }
 
     draw(ctx) {
-      if (this.isActive) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.restore();
+      ctx.save();
+      switch (this.state) {
+        case ProjectileStates.FLYING:
+          this.drawProjectile(ctx);
+          break;
+        case ProjectileStates.EXPLODING:
+          this.drawExplosion(ctx);
+          break;
       }
+      ctx.restore();
+    }
+
+    drawProjectile(ctx) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+
+    drawExplosion(ctx) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 30, 0, 2 * Math.PI);
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.closePath();
     }
 
     checkHitTarget() {
       if (checkCollisionBetweenProjectileAndUnit(this, this.targetUnit)) {
-        this.isActive = false;
+        this.state = ProjectileStates.EXPLODING;
         this.targetUnit.health -= this.attackDamage;
         if (this.targetUnit.health <= 0) {
           this.targetUnit.isAlive = false;
           this.targetUnit.isSelected = false;
         }
+        return true;
       } else if (
         checkCollisionBetweenProjectileAndUnit(this, this.targetUnitLocked)
       ) {
-        this.isActive = false;
+        this.state = ProjectileStates.EXPLODING;
+        return true;
       }
+
+      return false;
+    }
+
+    get isActive() {
+      return this.state !== ProjectileStates.INACTIVE;
     }
   }
 

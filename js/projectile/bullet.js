@@ -1,7 +1,7 @@
 window["Bullet"] = (() => {
   const name = "bullet";
-  const width = 10;
-  const height = 10;
+  const width = 5;
+  const height = 5;
   const color = "black";
   const speed = 8;
 
