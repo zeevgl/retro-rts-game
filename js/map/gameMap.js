@@ -1,5 +1,5 @@
-window["Map"] = (() => {
-  class Map {
+window["GameMap"] = (() => {
+  class GameMap {
     constructor() {
       this.mapWidth = 2000;
       this.mapHeight = 2000;
@@ -20,5 +20,5 @@ window["Map"] = (() => {
     }
   }
 
-  return Map;
+  return GameMap;
 })();

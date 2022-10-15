@@ -1,4 +1,5 @@
 # Tasks
+- [ ] init player with units from game scenario
 - [ ] AI
   - [ ] Player AI
   - [ ] Unit AI support

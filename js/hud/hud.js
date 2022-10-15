@@ -94,12 +94,12 @@ window["Hud"] = (() => {
       ctx.rect(
         this.minimapX +
           this.viewport.x +
-          (this.game.camera.x / this.game.map.mapWidth) * this.minimapWidth,
+          (this.game.camera.x / this.game.gameMap.mapWidth) * this.minimapWidth,
         this.minimapY +
           this.viewport.y +
-          (this.game.camera.y / this.game.map.mapHeight) * this.minimapHeight,
-        (this.viewport.width / this.game.map.mapWidth) * this.minimapWidth,
-        (this.viewport.height / this.game.map.mapHeight) * this.minimapHeight
+          (this.game.camera.y / this.game.gameMap.mapHeight) * this.minimapHeight,
+        (this.viewport.width / this.game.gameMap.mapWidth) * this.minimapWidth,
+        (this.viewport.height / this.game.gameMap.mapHeight) * this.minimapHeight
       );
       ctx.lineWidth = "3";
       ctx.strokeStyle = "white";

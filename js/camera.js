@@ -51,18 +51,18 @@ window["Camera"] = (() => {
     }
 
     validateCameraEdges() {
-      const { hud, map } = this.game;
+      const { hud, gameMap } = this.game;
 
       if (this.x < 0) {
         this.x = 0;
-      } else if (this.x + hud.viewport.width > map.mapWidth) {
-        this.x = map.mapWidth - hud.viewport.width;
+      } else if (this.x + hud.viewport.width > gameMap.mapWidth) {
+        this.x = gameMap.mapWidth - hud.viewport.width;
       }
 
       if (this.y < 0) {
         this.y = 0;
-      } else if (this.y + hud.viewport.height > map.mapHeight) {
-        this.y = map.mapHeight - hud.viewport.height;
+      } else if (this.y + hud.viewport.height > gameMap.mapHeight) {
+        this.y = gameMap.mapHeight - hud.viewport.height;
       }
     }
 

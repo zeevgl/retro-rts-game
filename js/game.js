@@ -10,7 +10,7 @@ class Game {
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
-    this.map = new Map();
+    this.gameMap = new GameMap();
   }
 
   update(deltaTime, timestamp) {
@@ -37,7 +37,7 @@ class Game {
 
     this.hud.draw(context);
 
-    this.map.draw(context);
+    this.gameMap.draw(context);
 
     context.restore();
   }
@@ -50,12 +50,12 @@ class Game {
   }
 
   drawRect(context) {
-    for (let i = 0; i < this.map.mapWidth; i++) {
+    for (let i = 0; i < this.gameMap.mapWidth; i++) {
       context.fillStyle = i % 2 === 0 ? "#ff0000" : "#00ff00";
       context.fillRect(50 * i + i * 50, 0, 10, 800);
     }
 
-    for (let i = 0; i < this.map.mapHeight; i++) {
+    for (let i = 0; i < this.gameMap.mapHeight; i++) {
       context.fillStyle = i % 2 === 0 ? "yellow" : "black";
       context.fillRect(0, 50 * i + i * 50, 800, 10);
     }
