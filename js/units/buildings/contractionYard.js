@@ -1,21 +1,12 @@
-window["Infantry"] = (() => {
-  const maxHealth = 100;
-  const name = "infantry";
-  const width = 25;
-  const height = 25;
-  const attackDamage = {
-    [UnitTypes.LIGHT]: 8,
-    [UnitTypes.MEDIUM]: 7,
-    [UnitTypes.HEAVY]: 1,
-    [UnitTypes.BUILDING]: 6,
-  };
+window["ContractionYard"] = (() => {
+  const maxHealth = 1000;
+  const name = "ContractionYard";
+  const width = 100;
+  const height = 75;
   const visionRange = 150;
-  const attackRange = 100;
-  const attackCooldown = 700;
-  const type = UnitTypes.LIGHT;
-  const speed = 5;
+  const type = UnitTypes.BUILDING;
 
-  class Infantry extends Unit {
+  class ContractionYard extends Unit {
     constructor(x, y, color) {
       super(
         name,
@@ -25,12 +16,12 @@ window["Infantry"] = (() => {
         height,
         color,
         maxHealth,
-        attackDamage,
+        null,
         visionRange,
-        attackRange,
-        attackCooldown,
+        0,
+        null,
         type,
-        speed
+        0
       );
     }
 
@@ -50,5 +41,5 @@ window["Infantry"] = (() => {
       );
     }
   }
-  return Infantry;
+  return ContractionYard;
 })();

@@ -10,4 +10,5 @@ const UnitTypes = {
   LIGHT: "LIGHT",
   MEDIUM: "MEDIUM",
   HEAVY: "HEAVY",
+  BUILDING: "BUILDING",
 };

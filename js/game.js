@@ -7,7 +7,7 @@ class Game {
     this.camera = new Camera(this);
     this.userInput = new UserInput(this);
     this.hud = new Hud(this);
-    this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
+    this.humanPlayer = new Player("player 1", "#00ff00", { x: 50, y: 80 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
     this.gameMap = new GameMap(this);

@@ -30,15 +30,23 @@ window["GameMap"] = (() => {
     initHumanPlayer() {
       const { humanPlayer } = this.game;
       humanPlayer.addUnit(
+          new ContractionYard(
+              humanPlayer.startingPoint.x,
+              humanPlayer.startingPoint.y,
+              humanPlayer.color
+          )
+      );
+
+      humanPlayer.addUnit(
         new Infantry(
-          30 + humanPlayer.startingPoint.x,
-          40 + humanPlayer.startingPoint.y,
+          130 + humanPlayer.startingPoint.x,
+          140 + humanPlayer.startingPoint.y,
           humanPlayer.color
         )
       );
       humanPlayer.addUnit(
         new Rocket(
-          100 + humanPlayer.startingPoint.x,
+          160 + humanPlayer.startingPoint.x,
           100 + humanPlayer.startingPoint.y,
           humanPlayer.color
         )
@@ -49,15 +57,23 @@ window["GameMap"] = (() => {
       const { aiPlayers } = this.game;
       aiPlayers.forEach((player) => {
         player.addUnit(
+            new ContractionYard(
+                player.startingPoint.x,
+                player.startingPoint.y,
+                player.color
+            )
+        );
+
+        player.addUnit(
           new Rocket(
-            30 + player.startingPoint.x,
-            40 + player.startingPoint.y,
+             player.startingPoint.x - 100,
+             player.startingPoint.y,
             player.color
           )
         );
         player.addUnit(
           new Rocket(
-            100 + player.startingPoint.x,
+             player.startingPoint.x - 150,
             100 + player.startingPoint.y,
             player.color
           )

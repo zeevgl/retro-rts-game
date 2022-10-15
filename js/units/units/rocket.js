@@ -7,6 +7,7 @@ window["Rocket"] = (() => {
     [UnitTypes.LIGHT]: 6,
     [UnitTypes.MEDIUM]: 25,
     [UnitTypes.HEAVY]: 25,
+    [UnitTypes.BUILDING]: 30,
   };
   const visionRange = 150;
   const attackRange = 140;
