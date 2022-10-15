@@ -14,7 +14,7 @@ window["Unit"] = (() => {
       visionRange,
       attackRange,
       attackCooldown,
-      type,
+      unitClass,
       speed
     ) {
       this.id = uuidv4();
@@ -29,7 +29,7 @@ window["Unit"] = (() => {
       this.visionRange = visionRange;
       this.attackRange = attackRange;
       this.attackCooldown = attackCooldown;
-      this.unitClass = type;
+      this.unitClass = unitClass;
       this.speed = speed;
 
       //
