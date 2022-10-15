@@ -14,7 +14,8 @@ window["Unit"] = (() => {
       visionRange,
       attackRange,
       attackCooldown,
-      type
+      type,
+      speed
     ) {
       this.id = uuidv4();
       this.name = name;
@@ -29,10 +30,10 @@ window["Unit"] = (() => {
       this.attackRange = attackRange;
       this.attackCooldown = attackCooldown;
       this.type = type;
+      this.speed = speed;
 
       //
       this.attackCooldownInProgress = 0;
-      this.speed = 5; //TODO used fixed speed for now
       this.health = maxHealth;
       this.isAlive = true;
       this.isDecaying = false;
