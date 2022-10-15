@@ -47,8 +47,8 @@ window["Hud"] = (() => {
       );
 
       //draw units on minimap
-      this.game.humanPlayer.units.forEach((unit) =>
-        this.drawUnitOnMiniMap(ctx, unit)
+      this.game.humanPlayer.units.forEach(
+        (unit) => unit.isAlive && this.drawUnitOnMiniMap(ctx, unit)
       );
 
       this.game.aiPlayers.forEach((aiPlayer) => {
