@@ -6,7 +6,7 @@ const UnitStates = {
   DEFEND: "DEFEND",
 };
 
-const UnitTypes = {
+const UnitClasses = {
   LIGHT: "LIGHT",
   MEDIUM: "MEDIUM",
   HEAVY: "HEAVY",

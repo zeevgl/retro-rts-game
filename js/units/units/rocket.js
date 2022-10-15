@@ -4,15 +4,15 @@ window["Rocket"] = (() => {
   const width = 20;
   const height = 20;
   const attackDamage = {
-    [UnitTypes.LIGHT]: 6,
-    [UnitTypes.MEDIUM]: 25,
-    [UnitTypes.HEAVY]: 25,
-    [UnitTypes.BUILDING]: 30,
+    [UnitClasses.LIGHT]: 6,
+    [UnitClasses.MEDIUM]: 25,
+    [UnitClasses.HEAVY]: 25,
+    [UnitClasses.BUILDING]: 30,
   };
   const visionRange = 150;
   const attackRange = 140;
   const attackCooldown = 2500;
-  const unitClass = UnitTypes.LIGHT;
+  const unitClass = UnitClasses.LIGHT;
   const speed = 4;
 
   class Rocket extends Unit {

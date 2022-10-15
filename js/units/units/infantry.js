@@ -4,15 +4,15 @@ window["Infantry"] = (() => {
   const width = 25;
   const height = 25;
   const attackDamage = {
-    [UnitTypes.LIGHT]: 8,
-    [UnitTypes.MEDIUM]: 7,
-    [UnitTypes.HEAVY]: 1,
-    [UnitTypes.BUILDING]: 6,
+    [UnitClasses.LIGHT]: 8,
+    [UnitClasses.MEDIUM]: 7,
+    [UnitClasses.HEAVY]: 1,
+    [UnitClasses.BUILDING]: 6,
   };
   const visionRange = 150;
   const attackRange = 100;
   const attackCooldown = 700;
-  const unitClass = UnitTypes.LIGHT;
+  const unitClass = UnitClasses.LIGHT;
   const speed = 5;
 
   class Infantry extends Unit {
