@@ -4,7 +4,7 @@
   - [ ] Unit AI support
 - [ ] Add more units
   - [x] Infantry
-  - [ ] Rocket
+  - [x] Rocket
   - [ ] Tank
   - [ ] Harvester
   - [ ] Aircraft

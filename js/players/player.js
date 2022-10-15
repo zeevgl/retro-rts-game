@@ -10,7 +10,7 @@ class Player {
       new Infantry(0 + this.startingPoint.x, 10 + this.startingPoint.y, color)
     );
     this.addUnit(
-      new Infantry(
+      new Rocket(
         100 + this.startingPoint.x,
         100 + this.startingPoint.y,
         color

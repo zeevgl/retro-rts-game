@@ -1,14 +1,14 @@
-window["Infantry"] = (() => {
+window["Rocket"] = (() => {
   const maxHealth = 100;
-  const name = "infantry";
-  const width = 25;
-  const height = 25;
-  const attackDamage = 8;
+  const name = "rocket";
+  const width = 20;
+  const height = 20;
+  const attackDamage = 16;
   const visionRange = 150;
-  const attackRange = 100;
-  const attackCooldown = 700;
+  const attackRange = 140;
+  const attackCooldown = 2500;
 
-  class Infantry extends Unit {
+  class Rocket extends Unit {
     constructor(x, y, color) {
       super(
         name,
@@ -41,5 +41,5 @@ window["Infantry"] = (() => {
       );
     }
   }
-  return Infantry;
+  return Rocket;
 })();
