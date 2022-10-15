@@ -3,10 +3,15 @@ window["Infantry"] = (() => {
   const name = "infantry";
   const width = 25;
   const height = 25;
-  const attackDamage = 8;
+  const attackDamage = {
+    [UnitTypes.LIGHT]: 8,
+    [UnitTypes.MEDIUM]: 7,
+    [UnitTypes.HEAVY]: 1,
+  };
   const visionRange = 150;
   const attackRange = 100;
   const attackCooldown = 700;
+  const type = UnitTypes.LIGHT;
 
   class Infantry extends Unit {
     constructor(x, y, color) {
@@ -21,7 +26,8 @@ window["Infantry"] = (() => {
         attackDamage,
         visionRange,
         attackRange,
-        attackCooldown
+        attackCooldown,
+        type
       );
     }
 

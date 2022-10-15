@@ -3,10 +3,15 @@ window["Rocket"] = (() => {
   const name = "rocket";
   const width = 20;
   const height = 20;
-  const attackDamage = 16;
+  const attackDamage = {
+    [UnitTypes.LIGHT]: 6,
+    [UnitTypes.MEDIUM]: 25,
+    [UnitTypes.HEAVY]: 25,
+  };
   const visionRange = 150;
   const attackRange = 140;
   const attackCooldown = 2500;
+  const type = UnitTypes.LIGHT;
 
   class Rocket extends Unit {
     constructor(x, y, color) {
@@ -21,7 +26,8 @@ window["Rocket"] = (() => {
         attackDamage,
         visionRange,
         attackRange,
-        attackCooldown
+        attackCooldown,
+        type
       );
     }
 
