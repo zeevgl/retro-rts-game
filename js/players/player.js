@@ -5,18 +5,6 @@ class Player {
     this.units = [];
     this.startingPoint = startingPoint;
     this.selectedUnits = [];
-
-    this.addUnit(
-      new Infantry(0 + this.startingPoint.x, 10 + this.startingPoint.y, color)
-    );
-    this.addUnit(
-      new Rocket(
-        100 + this.startingPoint.x,
-        100 + this.startingPoint.y,
-        color
-      )
-    );
-    this.addUnit(new Infantry(2000, 2000, color));
   }
 
   update(deltaTime, timestamp) {

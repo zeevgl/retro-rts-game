@@ -10,7 +10,7 @@ class Game {
     this.humanPlayer = new Player("player 1", "#00ff00", { x: 0, y: 0 });
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
-    this.gameMap = new GameMap();
+    this.gameMap = new GameMap(this);
   }
 
   update(deltaTime, timestamp) {

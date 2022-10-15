@@ -67,10 +67,10 @@ window["Hud"] = (() => {
     calcUnitPositionOnMiniMap(unit) {
       return {
         x:
-          this.minimapX + (unit.x / this.game.map.mapWidth) * this.minimapWidth,
+          this.minimapX + (unit.x / this.game.gameMap.mapWidth) * this.minimapWidth,
         y:
           this.minimapY +
-          (unit.y / this.game.map.mapHeight) * this.minimapHeight,
+          (unit.y / this.game.gameMap.mapHeight) * this.minimapHeight,
       };
     }
 
