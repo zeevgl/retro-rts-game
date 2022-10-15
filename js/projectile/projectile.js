@@ -71,8 +71,17 @@ window["Projectile"] = (() => {
 
     drawExplosion(ctx) {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 30, 0, 2 * Math.PI);
-      ctx.fillStyle = "red";
+      const randomPaddingX = Math.floor(Math.random() * 10) - 10;
+      const randomPaddingY = Math.floor(Math.random() * 10) - 10;
+      ctx.arc(
+        this.x + randomPaddingX,
+        this.y + randomPaddingY,
+        30,
+        0,
+        2 * Math.PI
+      );
+
+      ctx.fillStyle = "black";
       ctx.fill();
       ctx.closePath();
     }
