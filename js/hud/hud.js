@@ -21,6 +21,11 @@ window["Hud"] = (() => {
       this.minimapHeight = this.hudHeight * 0.4;
       this.minimapX = this.hudX + this.hudWidth * 0.045;
       this.minimapY = this.hudY + this.hudHeight * 0.015;
+
+      this.actionMenuWidth = this.minimapWidth;
+      this.actionMenuHeight = this.hudHeight - this.minimapHeight;
+      this.actionMenuX = this.minimapX;
+      this.actionMenuY = this.minimapY + this.minimapHeight + 10;
     }
 
     update(deltaTime, timestamp) {}
@@ -33,7 +38,71 @@ window["Hud"] = (() => {
 
       this.drawMinimap(ctx);
       this.drawViewport(ctx);
+      this.drawActionMenu(ctx);
       ctx.restore();
+    }
+
+    drawActionMenu(ctx) {
+      const unit = this.game.humanPlayer?.selectedUnits?.[0];
+      if (unit) {
+        this.drawUnitInfo(ctx, unit);
+      } else {
+        //this.drawActionMenuOptions(ctx);
+      }
+    }
+
+    drawUnitInfo(ctx) {
+      const unit = this.game.humanPlayer?.selectedUnits?.[0];
+      //draw green rectangle
+      ctx.fillStyle = "#b7bd93";
+      // ctx.shadowColor = "black";
+      // ctx.shadowBlur = 10;
+      // ctx.shadowOffsetX = 5;
+      // ctx.shadowOffsetY = 5;
+      ctx.fillRect(
+        this.actionMenuX,
+        this.actionMenuY,
+        this.actionMenuWidth,
+        this.actionMenuHeight
+      );
+
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        unit.name,
+        this.actionMenuX + this.actionMenuWidth / 2,
+        this.actionMenuY + 40
+      );
+
+      //draw unit name and health bar
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "green";
+      ctx.fillRect(
+        this.actionMenuX + 10,
+        this.actionMenuY + 60,
+        (unit.health / unit.maxHealth) * this.actionMenuWidth - 20,
+        30
+      );
+      //
+      ctx.fillStyle = "white";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        unit.health + "/" + unit.maxHealth,
+        this.actionMenuX + this.actionMenuWidth / 2,
+        this.actionMenuY + 80
+      );
+
+      //draw unit attack and defense
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        "Attack: " + "unit.attackDamage[UnitClasses.LIGHT]",
+        this.actionMenuX + this.actionMenuWidth / 2,
+        this.actionMenuY + 120
+      );
     }
 
     drawMinimap(ctx) {
@@ -67,7 +136,8 @@ window["Hud"] = (() => {
     calcUnitPositionOnMiniMap(unit) {
       return {
         x:
-          this.minimapX + (unit.x / this.game.gameMap.mapWidth) * this.minimapWidth,
+          this.minimapX +
+          (unit.x / this.game.gameMap.mapWidth) * this.minimapWidth,
         y:
           this.minimapY +
           (unit.y / this.game.gameMap.mapHeight) * this.minimapHeight,
@@ -97,9 +167,11 @@ window["Hud"] = (() => {
           (this.game.camera.x / this.game.gameMap.mapWidth) * this.minimapWidth,
         this.minimapY +
           this.viewport.y +
-          (this.game.camera.y / this.game.gameMap.mapHeight) * this.minimapHeight,
+          (this.game.camera.y / this.game.gameMap.mapHeight) *
+            this.minimapHeight,
         (this.viewport.width / this.game.gameMap.mapWidth) * this.minimapWidth,
-        (this.viewport.height / this.game.gameMap.mapHeight) * this.minimapHeight
+        (this.viewport.height / this.game.gameMap.mapHeight) *
+          this.minimapHeight
       );
       ctx.lineWidth = "3";
       ctx.strokeStyle = "white";
