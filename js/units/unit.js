@@ -43,6 +43,10 @@ window["Unit"] = (() => {
     }
 
     update(deltaTime, timestamp) {
+      if (!this.isAlive) {
+        return;
+      }
+
       if (
         this.state === UnitStates.MOVING ||
         this.state === UnitStates.MOVING_TO_ATTACK
@@ -124,23 +128,26 @@ window["Unit"] = (() => {
     draw(ctx) {
       ctx.save();
 
-      if (!this.isAlive) {
-        ctx.globalAlpha = 0.1;
-      }
-
       this.drawUnit(ctx);
-      this.drawSelectionBox(ctx);
-      this.drawPath(ctx);
-      this.drawHealthBar(ctx);
-      this.drawAttackRange(ctx);
-      this.drawVisionRange(ctx);
-      this.drawTargeting(ctx);
-      this.drawAttack(ctx);
+
+      if (this.isAlive) {
+        this.drawSelectionBox(ctx);
+        this.drawPath(ctx);
+        this.drawHealthBar(ctx);
+        this.drawAttackRange(ctx);
+        this.drawVisionRange(ctx);
+        this.drawTargeting(ctx);
+        this.drawAttack(ctx);
+      }
 
       ctx.restore();
     }
 
     drawUnit(ctx) {
+      if (!this.isAlive) {
+        ctx.globalAlpha = 0.1;
+      }
+
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
@@ -266,6 +273,10 @@ window["Unit"] = (() => {
     }
 
     attack(enemyUnit) {
+      if (!this.isAlive) {
+        return;
+      }
+
       this.targetUnit = enemyUnit;
 
       const distance = calcDistance(this.x, this.y, enemyUnit.x, enemyUnit.y);
