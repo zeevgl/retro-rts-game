@@ -89,7 +89,7 @@ window["Projectile"] = (() => {
     checkHitTarget() {
       if (checkCollisionBetweenProjectileAndUnit(this, this.targetUnit)) {
         this.state = ProjectileStates.EXPLODING;
-        this.targetUnit.health -= this.attackDamage[this.targetUnit.type];
+        this.targetUnit.health -= this.attackDamage[this.targetUnit.unitClass];
         if (this.targetUnit.health <= 0) {
           this.targetUnit.isAlive = false;
           this.targetUnit.isSelected = false;

@@ -12,7 +12,7 @@ window["Infantry"] = (() => {
   const visionRange = 150;
   const attackRange = 100;
   const attackCooldown = 700;
-  const type = UnitTypes.LIGHT;
+  const unitClass = UnitTypes.LIGHT;
   const speed = 5;
 
   class Infantry extends Unit {
@@ -29,7 +29,7 @@ window["Infantry"] = (() => {
         visionRange,
         attackRange,
         attackCooldown,
-        type,
+        unitClass,
         speed
       );
     }

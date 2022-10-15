@@ -29,7 +29,7 @@ window["Unit"] = (() => {
       this.visionRange = visionRange;
       this.attackRange = attackRange;
       this.attackCooldown = attackCooldown;
-      this.type = type;
+      this.unitClass = type;
       this.speed = speed;
 
       //
