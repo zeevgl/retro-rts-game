@@ -37,13 +37,13 @@ window["GameMap"] = (() => {
         )
       );
 
-      humanPlayer.addUnit(
-        new Barracks(
-          humanPlayer.startingPoint.x + 120,
-          humanPlayer.startingPoint.y + 10,
-          humanPlayer.color
-        )
-      );
+      // humanPlayer.addUnit(
+      //   new Barracks(
+      //     humanPlayer.startingPoint.x + 120,
+      //     humanPlayer.startingPoint.y + 10,
+      //     humanPlayer.color
+      //   )
+      // );
 
       humanPlayer.addUnit(
         new Infantry(

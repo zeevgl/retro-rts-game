@@ -71,32 +71,32 @@ window["ActionMenu"] = (() => {
     }
 
     renderBuildings(ctx) {
-      const buildings = [
-        new ContractionYard(),
-        new ContractionYard(),
-        new ContractionYard(),
-      ];
+      const buildings = this.game.humanPlayer.techTree.buildings;
 
-      buildings.forEach((building, index) => {
-        const y = this.y + index * this.itemWidth;
-        this.renderItem(
-          ctx,
-          building,
-          this.x,
-          y,
-          this.itemWidth,
-          this.itemWidth
-        );
-      });
+      buildings
+        .filter((building) => building.isVisible)
+        .forEach((building, index) => {
+          const y = this.y + index * this.itemWidth;
+          this.renderItem(
+            ctx,
+            building.unit,
+            this.x,
+            y,
+            this.itemWidth,
+            this.itemWidth
+          );
+        });
     }
 
     renderUnits(ctx) {
-      const units = [new Infantry(), new Rocket(), new Infantry()];
+      const units = this.game.humanPlayer.techTree.units;
       const x = this.x + this.itemWidth;
-      units.forEach((unit, index) => {
-        const y = this.y + index * this.itemWidth;
-        this.renderItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
-      });
+      units
+        .filter((unit) => unit.isVisible)
+        .forEach((unit, index) => {
+          const y = this.y + index * this.itemWidth;
+          this.renderItem(ctx, unit.unit, x, y, this.itemWidth, this.itemWidth);
+        });
     }
 
     renderItem(ctx, item, x, y, width, height) {
