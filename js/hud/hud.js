@@ -58,6 +58,7 @@ window["Hud"] = (() => {
     }
 
     drawActionMenu(ctx) {
+      //TODO: extract into its own class
       const unit = this.game.humanPlayer?.selectedUnits?.[0];
       if (unit) {
         this.drawUnitInfo(ctx, unit);
@@ -66,21 +67,15 @@ window["Hud"] = (() => {
       }
     }
 
-    drawUnitInfo(ctx) {
-      const unit = this.game.humanPlayer?.selectedUnits?.[0];
-      //draw green rectangle
+    drawUnitInfo(ctx, unit) {
+      //TODO: render it better later..
       ctx.fillStyle = "#b7bd93";
-      // ctx.shadowColor = "black";
-      // ctx.shadowBlur = 10;
-      // ctx.shadowOffsetX = 5;
-      // ctx.shadowOffsetY = 5;
       ctx.fillRect(
         this.actionMenuX,
         this.actionMenuY,
         this.actionMenuWidth,
         this.actionMenuHeight
       );
-
       ctx.fillStyle = "black";
       ctx.font = "20px Arial";
       ctx.textAlign = "center";
@@ -99,7 +94,7 @@ window["Hud"] = (() => {
         (unit.health / unit.maxHealth) * this.actionMenuWidth - 20,
         30
       );
-      //
+
       ctx.fillStyle = "white";
       ctx.font = "12px Arial";
       ctx.textAlign = "center";
@@ -114,7 +109,7 @@ window["Hud"] = (() => {
       ctx.font = "20px Arial";
       ctx.textAlign = "center";
       ctx.fillText(
-        "Attack: " + "unit.attackDamage[UnitClasses.LIGHT]",
+        "Attack: " + JSON.stringify(unit.attackDamage),
         this.actionMenuX + this.actionMenuWidth / 2,
         this.actionMenuY + 120
       );
