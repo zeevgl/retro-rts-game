@@ -1,5 +1,6 @@
 window["Hud"] = (() => {
   const viewPortWidthPercent = 0.66;
+  const miniMapHeight = 0.4;
 
   class Hud {
     constructor(game) {
@@ -31,7 +32,7 @@ window["Hud"] = (() => {
 
       //minimap
       this.minimapWidth = this.innerHudWidth;
-      this.minimapHeight = this.innerHudHeight * 0.4;
+      this.minimapHeight = this.innerHudHeight * miniMapHeight;
       this.minimapX = this.innerHudX;
       this.minimapY = this.innerHudY;
 
