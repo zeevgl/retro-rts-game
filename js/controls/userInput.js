@@ -29,6 +29,24 @@ window["UserInput"] = (() => {
 
       if (actionMenuItem) {
         console.log("clicked on menu", actionMenuItem.unit.name);
+        if (actionMenuItem.unit.unitClass === UnitClasses.BUILDING) {
+          //
+        } else {
+          if (this.game.hud.actionMenu.isTrainingInProgress()) {
+            this.game.hud.actionMenu.buildAUnit(actionMenuItem);
+          }
+        }
+
+
+        //start construction of unit: timer, deduct cost...
+        //when it is done add it to the game
+
+
+
+        //add unit to player
+        // const newUnit = new actionMenuItem.class(0, 0, this.game.humanPlayer.color);
+        // this.game.humanPlayer.addUnit(newUnit);
+        //this.game.humanPlayer.buildAUnit(actionMenuItem);
         return;
       }
 

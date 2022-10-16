@@ -11,6 +11,8 @@ window["ActionMenu"] = (() => {
       this.y = wrapperDimensions.y;
 
       this.itemWidth = this.width / 2;
+
+      //this.unitBuildQueue = [];
     }
 
     update(deltaTime, timestamp) {}
@@ -141,6 +143,20 @@ window["ActionMenu"] = (() => {
       }
 
       return null;
+    }
+
+    buildAUnit(item) {
+      console.log("build a unit", item.unit.name);
+    }
+
+    isBuildingInProgress() {
+      //
+      return false;
+    }
+
+    isTrainingInProgress() {
+      //
+      return false;
     }
   }
 

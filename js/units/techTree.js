@@ -9,6 +9,7 @@ window["TechTree"] = (() => {
       this.buildings = [
         {
           unit: new Barracks(),
+          class: Barracks,
           isVisible: true,
           isUnlocked: true,
           exists: true,
@@ -18,11 +19,13 @@ window["TechTree"] = (() => {
       this.units = [
         {
           unit: new Infantry(),
+          class: Infantry,
           isVisible: true,
           isUnlocked: this.hasBarracks(),
         },
         {
           unit: new Rocket(),
+          class: Rocket,
           isVisible: true,
           isUnlocked: this.hasBarracks(),
         },
