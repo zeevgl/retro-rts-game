@@ -79,7 +79,7 @@ window["ActionMenu"] = (() => {
           const y = this.y + index * this.itemWidth;
           this.renderItem(
             ctx,
-            building.unit,
+            building,
             this.x,
             y,
             this.itemWidth,
@@ -95,12 +95,16 @@ window["ActionMenu"] = (() => {
         .filter((unit) => unit.isVisible)
         .forEach((unit, index) => {
           const y = this.y + index * this.itemWidth;
-          this.renderItem(ctx, unit.unit, x, y, this.itemWidth, this.itemWidth);
+          this.renderItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
         });
     }
 
     renderItem(ctx, item, x, y, width, height) {
+      ctx.save();
       ctx.beginPath();
+      if (!item.isUnlocked) {
+        ctx.globalAlpha = 0.2;
+      }
       ctx.fillStyle = "#b7bd93";
       ctx.rect(x, y, width, height);
       ctx.fill();
@@ -111,7 +115,8 @@ window["ActionMenu"] = (() => {
       ctx.fillStyle = "black";
       ctx.font = "12px Arial";
       ctx.textAlign = "center";
-      ctx.fillText(item.name, x + width / 2, y + height / 2);
+      ctx.fillText(item.unit.name, x + width / 2, y + height / 2);
+      ctx.restore();
     }
   }
 

@@ -1,8 +1,6 @@
 window["TechTree"] = (() => {
   class TechTree {
     constructor(player) {
-      //contains all the possible units and building a player can build
-
       this.player = player;
       this.init();
     }
@@ -12,7 +10,8 @@ window["TechTree"] = (() => {
         {
           unit: new Barracks(),
           isVisible: true,
-          isUnlocked: false,
+          isUnlocked: true,
+          exists: true,
         },
       ];
 
@@ -20,22 +19,21 @@ window["TechTree"] = (() => {
         {
           unit: new Infantry(),
           isVisible: true,
-          isUnlocked: false,
+          isUnlocked: this.hasBarracks(),
         },
         {
           unit: new Rocket(),
           isVisible: true,
-          isUnlocked: false,
+          isUnlocked: this.hasBarracks(),
         },
       ];
     }
 
-    update(deltaTime, timestamp) {}
-
-    draw(ctx) {
-      ctx.save();
-
-      ctx.restore();
+    hasBarracks() {
+      //TODO not sure if it is the best way to check if a building exists
+      return this.buildings.some((building) => {
+        return building.unit instanceof Barracks && building.exists;
+      });
     }
   }
 
