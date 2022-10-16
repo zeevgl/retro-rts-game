@@ -12,23 +12,32 @@ window["Hud"] = (() => {
         height: this.game.gameHeight,
       };
 
+      this.initDimensions();
+    }
+
+    initDimensions() {
+      //TODO:change some ofd them to constants
+      //outer hud rectangle
       this.hudWidth = this.game.gameWidth - this.viewport.width;
       this.hudHeight = this.game.gameHeight;
       this.hudX = this.game.gameWidth - this.hudWidth;
       this.hudY = this.game.gameHeight - this.hudHeight;
 
+      //inner hud rectangle
       this.innerHudWidth = this.hudWidth * 0.9;
-      this.innerHudHeight = this.hudHeight * 0.9;
+      this.innerHudHeight = this.hudHeight * 0.96;
       this.innerHudX = this.hudX + this.hudWidth * 0.045;
       this.innerHudY = this.hudY + this.hudHeight * 0.015;
 
+      //minimap
       this.minimapWidth = this.innerHudWidth;
-      this.minimapHeight = this.hudHeight * 0.4;
+      this.minimapHeight = this.innerHudHeight * 0.4;
       this.minimapX = this.innerHudX;
       this.minimapY = this.innerHudY;
 
+      //action menu
       this.actionMenuWidth = this.innerHudWidth;
-      this.actionMenuHeight = this.hudHeight - this.minimapHeight;
+      this.actionMenuHeight = this.innerHudHeight - this.minimapHeight;
       this.actionMenuX = this.innerHudX;
       this.actionMenuY = this.minimapY + this.minimapHeight + 10;
     }
