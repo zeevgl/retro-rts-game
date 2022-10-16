@@ -1,6 +1,5 @@
 window["Hud"] = (() => {
   const viewPortWidthPercent = 0.66;
-  const miniMapHeight = 0.4;
 
   class Hud {
     constructor(game) {
