@@ -5,6 +5,7 @@ class Player {
     this.units = [];
     this.startingPoint = startingPoint;
     this.selectedUnits = [];
+    this.techTree = new TechTree(this);
   }
 
   update(deltaTime, timestamp) {
