@@ -39,7 +39,6 @@ window["Hud"] = (() => {
     }
 
     initDimensions() {
-      //TODO:change some ofd them to constants
       //outer hud rectangle
       this.hudWidth = this.game.gameWidth - this.viewport.width;
       this.hudHeight = this.game.gameHeight;
