@@ -12,10 +12,24 @@ window["ActionMenu"] = (() => {
 
       this.itemWidth = this.width / 2;
 
-      //this.unitBuildQueue = [];
+      this.buildingBuild = {
+        item: null,
+        timePassedMil: 0,
+      };
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      if (this.isBuildingInProgress()) {
+        this.buildingBuild.timePassedMil += deltaTime;
+        if (
+          this.buildingBuild.timePassedMil >
+          this.buildingBuild.item.unit.buildTime
+        ) {
+          this.buildingBuild.timePassedMil = 0;
+          this.buildingBuild.item = null;
+        }
+      }
+    }
 
     draw(ctx) {
       ctx.save();
@@ -104,9 +118,15 @@ window["ActionMenu"] = (() => {
     renderItem(ctx, item, x, y, width, height) {
       ctx.save();
       ctx.beginPath();
-      if (!item.isUnlocked) {
+
+      if (
+        !item.isUnlocked ||
+        (this.isBuildingInProgress() &&
+          this.buildingBuild.item.unit.name !== item.unit.name)
+      ) {
         ctx.globalAlpha = 0.2;
       }
+
       ctx.fillStyle = "#b7bd93";
       ctx.rect(x, y, width, height);
       ctx.fill();
@@ -118,7 +138,42 @@ window["ActionMenu"] = (() => {
       ctx.font = "12px Arial";
       ctx.textAlign = "center";
       ctx.fillText(item.unit.name, x + width / 2, y + height / 2);
+
+      this.drawBuildingInProgress(ctx, item, x, y, width, height);
       ctx.restore();
+    }
+
+    drawBuildingInProgress(ctx, item, x, y, width, height) {
+      if (
+        this.isBuildingInProgress() &&
+        this.buildingBuild.item.unit.name === item.unit.name
+      ) {
+        const progress = this.buildingBuild.timePassedMil / item.unit.buildTime;
+        const progressPercent = Math.round(progress * 100);
+        const paddingX = 10;
+        const paddingY = 40;
+
+        ctx.fillStyle = "grey";
+        ctx.fillRect(
+          x + paddingX,
+          y + height - paddingY,
+          width - paddingX * 2,
+          30
+        );
+
+        ctx.fillStyle = "green";
+        ctx.fillRect(
+          x + paddingX,
+          y + height - paddingY,
+          progress * (width - paddingX * 2),
+          30
+        );
+
+        ctx.fillStyle = "white";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${progressPercent}%`, x + width / 2, y + height - 20);
+      }
     }
 
     isXYInside(x, y) {
@@ -146,12 +201,14 @@ window["ActionMenu"] = (() => {
     }
 
     buildAUnit(item) {
-      console.log("build a unit", item.unit.name);
+      this.buildingBuild = {
+        item: item,
+        timePassedMil: 0,
+      };
     }
 
     isBuildingInProgress() {
-      //
-      return false;
+      return !!this.buildingBuild?.item;
     }
 
     isTrainingInProgress() {

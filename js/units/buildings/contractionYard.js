@@ -5,6 +5,7 @@ window["ContractionYard"] = (() => {
   const height = 75;
   const visionRange = 150;
   const unitClass = UnitClasses.BUILDING;
+  const buildTime = 10000;
 
   class ContractionYard extends Unit {
     constructor(x, y, color) {
@@ -21,7 +22,8 @@ window["ContractionYard"] = (() => {
         0,
         null,
         unitClass,
-        0
+        0,
+        buildTime
       );
     }
 

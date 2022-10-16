@@ -5,6 +5,7 @@ window["Barracks"] = (() => {
   const height = 75;
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
+  const buildTime = 3000;
 
   class Barracks extends Unit {
     constructor(x, y, color) {
@@ -21,7 +22,8 @@ window["Barracks"] = (() => {
         0,
         null,
         unitClass,
-        0
+        0,
+        buildTime
       );
     }
 

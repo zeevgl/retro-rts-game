@@ -52,7 +52,9 @@ window["Hud"] = (() => {
       this.innerHudY = this.hudY + this.hudHeight * 0.015;
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      this.actionMenu.update(deltaTime, timestamp);
+    }
 
     draw(ctx) {
       ctx.save();
