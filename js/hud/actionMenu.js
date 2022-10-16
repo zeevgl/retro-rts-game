@@ -1,3 +1,9 @@
+const BuildingBuildStates = {
+  IDLE: "IDLE",
+  BUILDING: "BUILDING",
+  READY: "READY",
+};
+
 window["ActionMenu"] = (() => {
   class ActionMenu {
     constructor(game, wrapperDimensions, viewport) {
@@ -15,6 +21,7 @@ window["ActionMenu"] = (() => {
       this.buildingBuild = {
         item: null,
         timePassedMil: 0,
+        state: BuildingBuildStates.IDLE,
       };
     }
 
@@ -25,8 +32,9 @@ window["ActionMenu"] = (() => {
           this.buildingBuild.timePassedMil >
           this.buildingBuild.item.unit.buildTime
         ) {
-          this.buildingBuild.timePassedMil = 0;
-          this.buildingBuild.item = null;
+          // this.buildingBuild.timePassedMil = 0;
+          // this.buildingBuild.item = null;
+          this.buildingBuild.state = BuildingBuildStates.READY;
         }
       }
     }
@@ -83,7 +91,7 @@ window["ActionMenu"] = (() => {
 
     drawActionMenuOptions(ctx) {
       this.renderBuildings(ctx);
-      this.renderUnits(ctx);
+      this.drawUnits(ctx);
     }
 
     renderBuildings(ctx) {
@@ -93,7 +101,7 @@ window["ActionMenu"] = (() => {
         .filter((building) => building.isVisible)
         .forEach((building, index) => {
           const y = this.y + index * this.itemWidth;
-          this.renderItem(
+          this.drawItem(
             ctx,
             building,
             this.x,
@@ -104,18 +112,18 @@ window["ActionMenu"] = (() => {
         });
     }
 
-    renderUnits(ctx) {
+    drawUnits(ctx) {
       const units = this.game.humanPlayer.techTree.units;
       const x = this.x + this.itemWidth;
       units
         .filter((unit) => unit.isVisible)
         .forEach((unit, index) => {
           const y = this.y + index * this.itemWidth;
-          this.renderItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
+          this.drawItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
         });
     }
 
-    renderItem(ctx, item, x, y, width, height) {
+    drawItem(ctx, item, x, y, width, height) {
       ctx.save();
       ctx.beginPath();
 
@@ -140,6 +148,7 @@ window["ActionMenu"] = (() => {
       ctx.fillText(item.unit.name, x + width / 2, y + height / 2);
 
       this.drawBuildingInProgress(ctx, item, x, y, width, height);
+      this.drawBuildingReadyToPlace(ctx, item, x, y, width, height);
       ctx.restore();
     }
 
@@ -176,6 +185,29 @@ window["ActionMenu"] = (() => {
       }
     }
 
+    drawBuildingReadyToPlace(ctx, item, x, y, width, height) {
+      if (
+        this.isBuildingReadyToPlace() &&
+        this.buildingBuild.item.unit.name === item.unit.name
+      ) {
+        ctx.save();
+        ctx.globalAlpha = 0.6;
+        ctx.fillStyle = "grey";
+        ctx.fillRect(x, y, width, height);
+        ctx.restore();
+
+        drawText(
+          ctx,
+          "Click to place",
+          x + width / 2,
+          y + height / 3,
+          "red",
+          "center",
+          "18px Arial"
+        );
+      }
+    }
+
     isXYInside(x, y) {
       return (
         x > this.x &&
@@ -204,11 +236,16 @@ window["ActionMenu"] = (() => {
       this.buildingBuild = {
         item: item,
         timePassedMil: 0,
+        state: BuildingBuildStates.BUILDING,
       };
     }
 
     isBuildingInProgress() {
-      return !!this.buildingBuild?.item;
+      return this.buildingBuild.state === BuildingBuildStates.BUILDING;
+    }
+
+    isBuildingReadyToPlace() {
+      return this.buildingBuild.state === BuildingBuildStates.READY;
     }
 
     isTrainingInProgress() {

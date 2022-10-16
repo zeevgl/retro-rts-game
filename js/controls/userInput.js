@@ -30,7 +30,9 @@ window["UserInput"] = (() => {
       if (actionMenuItem) {
         console.log("clicked on menu", actionMenuItem.unit.name);
         if (actionMenuItem.unit.unitClass === UnitClasses.BUILDING) {
-          if (!this.game.hud.actionMenu.isBuildingInProgress()) {
+          if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
+            console.log('place building', actionMenuItem);
+          } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
             this.game.hud.actionMenu.buildAUnit(actionMenuItem);
           }
         } else {
