@@ -24,6 +24,17 @@ window["Hud"] = (() => {
         },
         this.viewport
       );
+
+      this.actionMenu = new ActionMenu(
+          this.game,
+          {
+            width: this.innerHudWidth,
+            height: this.innerHudHeight - this.miniMap.minimapHeight,
+            x: this.innerHudX,
+            y: this.miniMap.minimapY + this.miniMap.minimapHeight + 10,
+          },
+          this.viewport
+      );
     }
 
     initDimensions() {
@@ -39,12 +50,6 @@ window["Hud"] = (() => {
       this.innerHudHeight = this.hudHeight * 0.96;
       this.innerHudX = this.hudX + this.hudWidth * 0.045;
       this.innerHudY = this.hudY + this.hudHeight * 0.015;
-
-      //action menu
-      this.actionMenuWidth = this.innerHudWidth;
-      this.actionMenuHeight = this.innerHudHeight - this.minimapHeight;
-      this.actionMenuX = this.innerHudX;
-      this.actionMenuY = this.minimapY + this.minimapHeight + 10;
     }
 
     update(deltaTime, timestamp) {}
@@ -57,66 +62,8 @@ window["Hud"] = (() => {
 
       this.miniMap.draw(ctx);
       this.drawViewport(ctx);
-      // this.drawActionMenu(ctx);
+      this.actionMenu.draw(ctx);
       ctx.restore();
-    }
-
-    drawActionMenu(ctx) {
-      //TODO: extract into its own class
-      const unit = this.game.humanPlayer?.selectedUnits?.[0];
-      if (unit) {
-        this.drawUnitInfo(ctx, unit);
-      } else {
-        //this.drawActionMenuOptions(ctx);
-      }
-    }
-
-    drawUnitInfo(ctx, unit) {
-      //TODO: render it better later..
-      ctx.fillStyle = "#b7bd93";
-      ctx.fillRect(
-        this.actionMenuX,
-        this.actionMenuY,
-        this.actionMenuWidth,
-        this.actionMenuHeight
-      );
-      ctx.fillStyle = "black";
-      ctx.font = "20px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        unit.name,
-        this.actionMenuX + this.actionMenuWidth / 2,
-        this.actionMenuY + 40
-      );
-
-      //draw unit name and health bar
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "green";
-      ctx.fillRect(
-        this.actionMenuX + 10,
-        this.actionMenuY + 60,
-        (unit.health / unit.maxHealth) * this.actionMenuWidth - 20,
-        30
-      );
-
-      ctx.fillStyle = "white";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        unit.health + "/" + unit.maxHealth,
-        this.actionMenuX + this.actionMenuWidth / 2,
-        this.actionMenuY + 80
-      );
-
-      //draw unit attack and defense
-      ctx.fillStyle = "black";
-      ctx.font = "20px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        "Attack: " + JSON.stringify(unit.attackDamage),
-        this.actionMenuX + this.actionMenuWidth / 2,
-        this.actionMenuY + 120
-      );
     }
 
     drawViewport(context) {
