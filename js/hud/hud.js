@@ -1,5 +1,6 @@
 window["Hud"] = (() => {
   const viewPortWidthPercent = 0.66;
+  const miniMapHeight = 0.4;
 
   class Hud {
     constructor(game) {
@@ -18,7 +19,7 @@ window["Hud"] = (() => {
         this.game,
         {
           width: this.innerHudWidth,
-          height: this.innerHudHeight,
+          height: this.innerHudHeight * miniMapHeight,
           x: this.innerHudX,
           y: this.innerHudY,
         },
@@ -26,14 +27,14 @@ window["Hud"] = (() => {
       );
 
       this.actionMenu = new ActionMenu(
-          this.game,
-          {
-            width: this.innerHudWidth,
-            height: this.innerHudHeight - this.miniMap.minimapHeight,
-            x: this.innerHudX,
-            y: this.miniMap.minimapY + this.miniMap.minimapHeight + 10,
-          },
-          this.viewport
+        this.game,
+        {
+          width: this.innerHudWidth,
+          height: this.innerHudHeight - this.miniMap.height,
+          x: this.innerHudX,
+          y: this.miniMap.y + this.miniMap.height + 10,
+        },
+        this.viewport
       );
     }
 

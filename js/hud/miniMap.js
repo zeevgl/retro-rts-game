@@ -1,15 +1,15 @@
 window["MiniMap"] = (() => {
-  const miniMapHeight = 0.4;
+
 
   class MiniMap {
     constructor(game, wrapperDimensions, viewport) {
       this.game = game;
 
       this.viewport = viewport;
-      this.minimapWidth = wrapperDimensions.width;
-      this.minimapHeight = wrapperDimensions.height * miniMapHeight;
-      this.minimapX = wrapperDimensions.x;
-      this.minimapY = wrapperDimensions.y;
+      this.width = wrapperDimensions.width;
+      this.height = wrapperDimensions.height;
+      this.x = wrapperDimensions.x;
+      this.y = wrapperDimensions.y;
     }
 
     update(deltaTime, timestamp) {}
@@ -23,12 +23,7 @@ window["MiniMap"] = (() => {
 
     drawMinimap(ctx) {
       ctx.fillStyle = "#000000";
-      ctx.fillRect(
-        this.minimapX,
-        this.minimapY,
-        this.minimapWidth,
-        this.minimapHeight
-      );
+      ctx.fillRect(this.x, this.y, this.width, this.height);
 
       this.drawUnitsOnMiniMap(ctx);
       this.drawViewPortMiniMap(ctx);
@@ -52,12 +47,8 @@ window["MiniMap"] = (() => {
 
     calcUnitPositionOnMiniMap(unit) {
       return {
-        x:
-          this.minimapX +
-          (unit.x / this.game.gameMap.mapWidth) * this.minimapWidth,
-        y:
-          this.minimapY +
-          (unit.y / this.game.gameMap.mapHeight) * this.minimapHeight,
+        x: this.x + (unit.x / this.game.gameMap.mapWidth) * this.width,
+        y: this.y + (unit.y / this.game.gameMap.mapHeight) * this.height,
       };
     }
 
@@ -65,16 +56,14 @@ window["MiniMap"] = (() => {
       ctx.save();
       ctx.beginPath();
       ctx.rect(
-        this.minimapX +
+        this.x +
           this.viewport.x +
-          (this.game.camera.x / this.game.gameMap.mapWidth) * this.minimapWidth,
-        this.minimapY +
+          (this.game.camera.x / this.game.gameMap.mapWidth) * this.width,
+        this.y +
           this.viewport.y +
-          (this.game.camera.y / this.game.gameMap.mapHeight) *
-            this.minimapHeight,
-        (this.viewport.width / this.game.gameMap.mapWidth) * this.minimapWidth,
-        (this.viewport.height / this.game.gameMap.mapHeight) *
-          this.minimapHeight
+          (this.game.camera.y / this.game.gameMap.mapHeight) * this.height,
+        (this.viewport.width / this.game.gameMap.mapWidth) * this.width,
+        (this.viewport.height / this.game.gameMap.mapHeight) * this.height
       );
       ctx.lineWidth = "3";
       ctx.strokeStyle = "white";
