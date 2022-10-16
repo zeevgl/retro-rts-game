@@ -118,6 +118,30 @@ window["ActionMenu"] = (() => {
       ctx.fillText(item.unit.name, x + width / 2, y + height / 2);
       ctx.restore();
     }
+
+    isXYInside(x, y) {
+      return (
+        x > this.x &&
+        x < this.x + this.width &&
+        y > this.y &&
+        y < this.y + this.height
+      );
+    }
+
+    getItemAtXy(x, y) {
+      if (this.isXYInside(x, y)) {
+        const itemX = x - this.x;
+        const itemY = y - this.y;
+        const itemIndex = Math.floor(itemY / this.itemWidth);
+        const isBuilding = itemX < this.itemWidth;
+        const units = this.game.humanPlayer.techTree.units;
+        const buildings = this.game.humanPlayer.techTree.buildings;
+        const items = isBuilding ? buildings : units;
+        return items[itemIndex];
+      }
+
+      return null;
+    }
   }
 
   return ActionMenu;

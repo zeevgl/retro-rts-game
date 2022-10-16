@@ -25,8 +25,17 @@ window["UserInput"] = (() => {
     }
 
     onMouseLeftClicked(x, y) {
-      if (this.game.humanPlayer.attemptToClickUnitAtPoint(x, y)) {
+      const actionMenuItem = this.game.hud.actionMenu.getItemAtXy(x, y);
+
+      if (actionMenuItem) {
+        console.log("clicked on menu", actionMenuItem.unit.name);
+        return;
+      }
+
+      const units = this.game.humanPlayer.attemptToClickUnitAtPoint(x, y);
+      if (units.length) {
         console.log("unit clicked");
+        return;
       }
     }
 

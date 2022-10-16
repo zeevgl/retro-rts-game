@@ -32,6 +32,7 @@ class Player {
 
   addUnit(unit) {
     this.units.push(unit);
+    //TODO: update tech tree
   }
 
   attemptToClickUnitAtPoint(x, y) {
