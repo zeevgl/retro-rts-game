@@ -9,18 +9,19 @@ window["ActionMenu"] = (() => {
       this.height = wrapperDimensions.height;
       this.x = wrapperDimensions.x;
       this.y = wrapperDimensions.y;
+
+      this.itemWidth = this.width / 2;
     }
 
     update(deltaTime, timestamp) {}
 
     draw(ctx) {
       ctx.save();
-      //TODO: extract into its own class
       const unit = this.game.humanPlayer?.selectedUnits?.[0];
       if (unit) {
         this.drawUnitInfo(ctx, unit);
       } else {
-        //this.drawActionMenuOptions(ctx);
+        this.drawActionMenuOptions(ctx);
       }
       ctx.restore();
     }
@@ -62,6 +63,55 @@ window["ActionMenu"] = (() => {
         this.x + this.width / 2,
         this.y + 120
       );
+    }
+
+    drawActionMenuOptions(ctx) {
+      this.renderBuildings(ctx);
+      this.renderUnits(ctx);
+    }
+
+    renderBuildings(ctx) {
+      const buildings = [
+        new ContractionYard(),
+        new ContractionYard(),
+        new ContractionYard(),
+      ];
+
+      buildings.forEach((building, index) => {
+        const y = this.y + index * this.itemWidth;
+        this.renderItem(
+          ctx,
+          building,
+          this.x,
+          y,
+          this.itemWidth,
+          this.itemWidth
+        );
+      });
+    }
+
+    renderUnits(ctx) {
+      const units = [new Infantry(), new Rocket(), new Infantry()];
+      const x = this.x + this.itemWidth;
+      units.forEach((unit, index) => {
+        const y = this.y + index * this.itemWidth;
+        this.renderItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
+      });
+    }
+
+    renderItem(ctx, item, x, y, width, height) {
+      ctx.beginPath();
+      ctx.fillStyle = "#b7bd93";
+      ctx.rect(x, y, width, height);
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
+      ctx.stroke();
+
+      ctx.fillStyle = "black";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(item.name, x + width / 2, y + height / 2);
     }
   }
 
