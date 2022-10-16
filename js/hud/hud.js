@@ -17,14 +17,19 @@ window["Hud"] = (() => {
       this.hudX = this.game.gameWidth - this.hudWidth;
       this.hudY = this.game.gameHeight - this.hudHeight;
 
-      this.minimapWidth = this.hudWidth * 0.9;
-      this.minimapHeight = this.hudHeight * 0.4;
-      this.minimapX = this.hudX + this.hudWidth * 0.045;
-      this.minimapY = this.hudY + this.hudHeight * 0.015;
+      this.innerHudWidth = this.hudWidth * 0.9;
+      this.innerHudHeight = this.hudHeight * 0.9;
+      this.innerHudX = this.hudX + this.hudWidth * 0.045;
+      this.innerHudY = this.hudY + this.hudHeight * 0.015;
 
-      this.actionMenuWidth = this.minimapWidth;
+      this.minimapWidth = this.innerHudWidth;
+      this.minimapHeight = this.hudHeight * 0.4;
+      this.minimapX = this.innerHudX;
+      this.minimapY = this.innerHudY;
+
+      this.actionMenuWidth = this.innerHudWidth;
       this.actionMenuHeight = this.hudHeight - this.minimapHeight;
-      this.actionMenuX = this.minimapX;
+      this.actionMenuX = this.innerHudX;
       this.actionMenuY = this.minimapY + this.minimapHeight + 10;
     }
 
