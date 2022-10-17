@@ -113,7 +113,7 @@ window["ActionMenu"] = (() => {
 
       if (
         !item.isUnlocked() ||
-        (this.isBuildingInProgress() &&
+        (item.unit.isBuilding() && this.isBuildingInProgress() &&
           this.buildingBuild.item.unit.name !== item.unit.name)
       ) {
         ctx.globalAlpha = 0.2;
