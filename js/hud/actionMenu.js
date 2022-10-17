@@ -20,20 +20,15 @@ window["ActionMenu"] = (() => {
 
       this.buildingBuild = {
         item: null,
-        timePassedMil: 0,
+        tick: 0,
         state: BuildingBuildStates.IDLE,
       };
     }
 
     update(deltaTime, timestamp) {
       if (this.isBuildingInProgress()) {
-        this.buildingBuild.timePassedMil += deltaTime;
-        if (
-          this.buildingBuild.timePassedMil >
-          this.buildingBuild.item.unit.buildTime
-        ) {
-          // this.buildingBuild.timePassedMil = 0;
-          // this.buildingBuild.item = null;
+        this.buildingBuild.tick += deltaTime;
+        if (this.buildingBuild.tick > this.buildingBuild.item.unit.buildTime) {
           this.buildingBuild.state = BuildingBuildStates.READY;
         }
       }
@@ -90,11 +85,11 @@ window["ActionMenu"] = (() => {
     }
 
     drawActionMenuOptions(ctx) {
-      this.renderBuildings(ctx);
-      this.drawUnits(ctx);
+      this.drawBuildingsCol(ctx);
+      this.drawUnitsCol(ctx);
     }
 
-    renderBuildings(ctx) {
+    drawBuildingsCol(ctx) {
       const buildings = this.game.humanPlayer.techTree.getVisibleBuildings();
 
       buildings.forEach((building, index) => {
@@ -103,7 +98,7 @@ window["ActionMenu"] = (() => {
       });
     }
 
-    drawUnits(ctx) {
+    drawUnitsCol(ctx) {
       const units = this.game.humanPlayer.techTree.getVisibleUnits();
       const x = this.x + this.itemWidth;
       units.forEach((unit, index) => {
@@ -131,10 +126,7 @@ window["ActionMenu"] = (() => {
       ctx.strokeStyle = "black";
       ctx.stroke();
 
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(item.unit.name, x + width / 2, y + height / 2);
+      drawText(ctx, item.unit.name, x + width / 2, y + height / 2, "black");
 
       this.drawBuildingInProgress(ctx, item, x, y, width, height);
       this.drawBuildingReadyToPlace(ctx, item, x, y, width, height);
@@ -146,7 +138,7 @@ window["ActionMenu"] = (() => {
         this.isBuildingInProgress() &&
         this.buildingBuild.item.unit.name === item.unit.name
       ) {
-        const progress = this.buildingBuild.timePassedMil / item.unit.buildTime;
+        const progress = this.buildingBuild.tick / item.unit.buildTime;
         const progressPercent = Math.round(progress * 100);
         const paddingX = 10;
         const paddingY = 40;
@@ -167,10 +159,13 @@ window["ActionMenu"] = (() => {
           30
         );
 
-        ctx.fillStyle = "white";
-        ctx.font = "12px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(`${progressPercent}%`, x + width / 2, y + height - 20);
+        drawText(
+          ctx,
+          `${progressPercent}%`,
+          x + width / 2,
+          y + height - 20,
+          "white"
+        );
       }
     }
 
@@ -224,7 +219,7 @@ window["ActionMenu"] = (() => {
     buildAUnit(item) {
       this.buildingBuild = {
         item: item,
-        timePassedMil: 0,
+        tick: 0,
         state: BuildingBuildStates.BUILDING,
       };
     }
@@ -232,7 +227,7 @@ window["ActionMenu"] = (() => {
     buildingWasPlaced() {
       this.buildingBuild = {
         item: null,
-        timePassedMil: 0,
+        tick: 0,
         state: BuildingBuildStates.IDLE,
       };
     }

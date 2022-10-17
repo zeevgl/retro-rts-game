@@ -42,59 +42,18 @@ window["UserInput"] = (() => {
       const actionMenuItem = this.game.hud.actionMenu.getItemAtXy(x, y);
 
       if (actionMenuItem) {
-        console.log("clicked on menu", actionMenuItem.unit.name);
-        if (actionMenuItem.unit.unitClass === UnitClasses.BUILDING) {
-          if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
-            console.log("place building", actionMenuItem);
-            this.state = UserInputStates.PLACE_BUILDING;
-            //this is wrong. it will add any building and not the one selected
-            //const newUnit = new actionMenuItem.class(0, 0, this.game.humanPlayer.color);
-            //this.game.humanPlayer.addUnit(newUnit);
-          } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
-            this.game.hud.actionMenu.buildAUnit(actionMenuItem);
-          }
-        } else {
-          // if (this.game.hud.actionMenu.isTrainingInProgress()) {
-          //   this.game.hud.actionMenu.buildAUnit(actionMenuItem);
-          // }
+        this.handleActionMenuItem(actionMenuItem);
+      } else if (this.state === UserInputStates.PLACE_BUILDING) {
+        this.placeBuilding(x, y);
+      } else {
+        const units = this.game.humanPlayer.attemptToClickUnitAtPoint(x, y);
+        if (units.length) {
+          console.log("unit clicked");
         }
-
-        //start construction of unit: timer, deduct cost...
-        //when it is done add it to the game
-
-        //add unit to player
-        // const newUnit = new actionMenuItem.class(0, 0, this.game.humanPlayer.color);
-        // this.game.humanPlayer.addUnit(newUnit);
-        //this.game.humanPlayer.buildAUnit(actionMenuItem);
-        return;
-      }
-
-      if (this.state === UserInputStates.PLACE_BUILDING) {
-        console.log("place building here", x, y);
-        const newUnit = new this.game.hud.actionMenu.buildingBuild.item.class(
-          x,
-          y,
-          this.game.humanPlayer.color
-        );
-        this.game.humanPlayer.addUnit(newUnit);
-        this.state = UserInputStates.IDLE;
-        this.game.hud.actionMenu.buildingWasPlaced();
-        return;
-      }
-
-      const units = this.game.humanPlayer.attemptToClickUnitAtPoint(x, y);
-      if (units.length) {
-        console.log("unit clicked");
-        return;
       }
     }
 
     onMouseRightClicked(x, y) {
-      if (this.state === UserInputStates.PLACE_BUILDING) {
-        this.state = UserInputStates.IDLE;
-        return;
-      }
-
       if (this.game.humanPlayer.selectedUnits.length) {
         this.whatWasClicked(x, y);
       }
@@ -137,17 +96,6 @@ window["UserInput"] = (() => {
     }
 
     onMouseMove(x, y) {
-      //place building
-      if (this.state === UserInputStates.PLACE_BUILDING) {
-        console.log(
-          "place building",
-          this.game.hud.actionMenu.buildingBuild.item.unit.name
-        );
-        //this.game.hud.actionMenu.placeBuilding(x, y);
-        return;
-      }
-
-      //move map
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
       } else if (this.game.humanPlayer.getUnitsInPoint(x, y).length) {
@@ -157,6 +105,31 @@ window["UserInput"] = (() => {
       } else {
         this.mouseHandler.setMouseDefault();
       }
+    }
+
+    handleActionMenuItem(actionMenuItem) {
+      if (actionMenuItem.unit.isBuilding()) {
+        if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
+          this.state = UserInputStates.PLACE_BUILDING;
+        } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
+          this.game.hud.actionMenu.buildAUnit(actionMenuItem);
+        } else {
+          console.log("unable to comply building in progress");
+        }
+      } else {
+        //TODO: train a unit
+      }
+    }
+
+    placeBuilding(x, y) {
+      const newUnit = new this.game.hud.actionMenu.buildingBuild.item.class(
+        x,
+        y,
+        this.game.humanPlayer.color
+      );
+      this.game.humanPlayer.addUnit(newUnit);
+      this.state = UserInputStates.IDLE;
+      this.game.hud.actionMenu.buildingWasPlaced();
     }
   }
   return UserInput;

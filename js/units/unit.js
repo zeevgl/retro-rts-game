@@ -298,6 +298,10 @@ window["Unit"] = (() => {
         this.moveToAttack(enemyUnit.x, enemyUnit.y);
       }
     }
+
+    isBuilding() {
+      return this.unitClass === UnitClasses.BUILDING;
+    }
   }
 
   return Unit;
