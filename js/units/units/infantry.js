@@ -1,4 +1,5 @@
 window["Infantry"] = (() => {
+  //TODO: change all these consts into static properties of the class
   const maxHealth = 100;
   const name = "infantry";
   const width = 25;
