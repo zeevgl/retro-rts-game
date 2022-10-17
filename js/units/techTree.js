@@ -45,6 +45,14 @@ window["TechTree"] = (() => {
         return building.unit instanceof Barracks && building.exists;
       });
     }
+
+    getVisibleUnits() {
+      return this.units.filter((unit) => unit.isVisible);
+    }
+
+    getVisibleBuildings() {
+      return this.buildings.filter((building) => building.isVisible);
+    }
   }
 
   return TechTree;

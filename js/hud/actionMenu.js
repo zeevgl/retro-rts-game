@@ -95,32 +95,21 @@ window["ActionMenu"] = (() => {
     }
 
     renderBuildings(ctx) {
-      const buildings = this.game.humanPlayer.techTree.buildings;
+      const buildings = this.game.humanPlayer.techTree.getVisibleBuildings();
 
-      buildings
-        .filter((building) => building.isVisible)
-        .forEach((building, index) => {
-          const y = this.y + index * this.itemWidth;
-          this.drawItem(
-            ctx,
-            building,
-            this.x,
-            y,
-            this.itemWidth,
-            this.itemWidth
-          );
-        });
+      buildings.forEach((building, index) => {
+        const y = this.y + index * this.itemWidth;
+        this.drawItem(ctx, building, this.x, y, this.itemWidth, this.itemWidth);
+      });
     }
 
     drawUnits(ctx) {
-      const units = this.game.humanPlayer.techTree.units;
+      const units = this.game.humanPlayer.techTree.getVisibleUnits();
       const x = this.x + this.itemWidth;
-      units
-        .filter((unit) => unit.isVisible)
-        .forEach((unit, index) => {
-          const y = this.y + index * this.itemWidth;
-          this.drawItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
-        });
+      units.forEach((unit, index) => {
+        const y = this.y + index * this.itemWidth;
+        this.drawItem(ctx, unit, x, y, this.itemWidth, this.itemWidth);
+      });
     }
 
     drawItem(ctx, item, x, y, width, height) {
@@ -223,10 +212,10 @@ window["ActionMenu"] = (() => {
         const itemY = y - this.y;
         const itemIndex = Math.floor(itemY / this.itemWidth);
         const isBuilding = itemX < this.itemWidth;
-        const units = this.game.humanPlayer.techTree.units;
-        const buildings = this.game.humanPlayer.techTree.buildings;
-        const items = isBuilding ? buildings : units;
-        return items.filter(i=> i.isVisible) [itemIndex];
+        const items = isBuilding
+          ? this.game.humanPlayer.techTree.getVisibleBuildings()
+          : this.game.humanPlayer.techTree.getVisibleUnits();
+        return items.filter((i) => i.isVisible)[itemIndex];
       }
 
       return null;
