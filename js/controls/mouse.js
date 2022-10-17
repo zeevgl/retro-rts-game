@@ -5,6 +5,7 @@ window["MouseHandler"] = (() => {
   class MouseHandler {
     constructor(game) {
       this.game = game;
+      this.position = { x: 0, y: 0 };
       this.handlers = {
         onMouseLeftClicked: null,
         onMouseRightClicked: null,
@@ -58,6 +59,10 @@ window["MouseHandler"] = (() => {
 
     handleMouseMove(event) {
       const { x, y } = this.getXY(event);
+      this.position = {
+        x,
+        y,
+      };
       this.handlers.onMouseMove?.(x, y);
     }
   }

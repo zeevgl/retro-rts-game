@@ -240,6 +240,14 @@ window["ActionMenu"] = (() => {
       };
     }
 
+    buildingWasPlaced() {
+      this.buildingBuild = {
+        item: null,
+        timePassedMil: 0,
+        state: BuildingBuildStates.IDLE,
+      };
+    }
+
     isBuildingInProgress() {
       return this.buildingBuild.state === BuildingBuildStates.BUILDING;
     }

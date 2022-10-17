@@ -1,9 +1,15 @@
+const UserInputStates = {
+  IDLE: "IDLE",
+  PLACE_BUILDING: "PLACE_BUILDING",
+};
+
 window["UserInput"] = (() => {
   class UserInput {
     constructor(game) {
       this.game = game;
       this.mouseHandler = new MouseHandler(game);
       this.targetXY = null;
+      this.state = UserInputStates.IDLE;
       this.initMouseHandlers();
     }
 
@@ -22,6 +28,14 @@ window["UserInput"] = (() => {
         ctx.fillStyle = "#000000";
         ctx.stroke();
       }
+
+      if (this.state === UserInputStates.PLACE_BUILDING) {
+        const newUnit = this.game.hud.actionMenu.buildingBuild.item.unit;
+        newUnit.color = "gray";
+        newUnit.x = this.mouseHandler.position.x;
+        newUnit.y = this.mouseHandler.position.y;
+        newUnit.draw(ctx);
+      }
     }
 
     onMouseLeftClicked(x, y) {
@@ -31,7 +45,11 @@ window["UserInput"] = (() => {
         console.log("clicked on menu", actionMenuItem.unit.name);
         if (actionMenuItem.unit.unitClass === UnitClasses.BUILDING) {
           if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
-            console.log('place building', actionMenuItem);
+            console.log("place building", actionMenuItem);
+            this.state = UserInputStates.PLACE_BUILDING;
+            //this is wrong. it will add any building and not the one selected
+            //const newUnit = new actionMenuItem.class(0, 0, this.game.humanPlayer.color);
+            //this.game.humanPlayer.addUnit(newUnit);
           } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
             this.game.hud.actionMenu.buildAUnit(actionMenuItem);
           }
@@ -41,16 +59,26 @@ window["UserInput"] = (() => {
           // }
         }
 
-
         //start construction of unit: timer, deduct cost...
         //when it is done add it to the game
-
-
 
         //add unit to player
         // const newUnit = new actionMenuItem.class(0, 0, this.game.humanPlayer.color);
         // this.game.humanPlayer.addUnit(newUnit);
         //this.game.humanPlayer.buildAUnit(actionMenuItem);
+        return;
+      }
+
+      if (this.state === UserInputStates.PLACE_BUILDING) {
+        console.log("place building here", x, y);
+        const newUnit = new this.game.hud.actionMenu.buildingBuild.item.class(
+          x,
+          y,
+          this.game.humanPlayer.color
+        );
+        this.game.humanPlayer.addUnit(newUnit);
+        this.state = UserInputStates.IDLE;
+        this.game.hud.actionMenu.buildingWasPlaced();
         return;
       }
 
@@ -62,6 +90,11 @@ window["UserInput"] = (() => {
     }
 
     onMouseRightClicked(x, y) {
+      if (this.state === UserInputStates.PLACE_BUILDING) {
+        this.state = UserInputStates.IDLE;
+        return;
+      }
+
       if (this.game.humanPlayer.selectedUnits.length) {
         this.whatWasClicked(x, y);
       }
@@ -104,6 +137,17 @@ window["UserInput"] = (() => {
     }
 
     onMouseMove(x, y) {
+      //place building
+      if (this.state === UserInputStates.PLACE_BUILDING) {
+        console.log(
+          "place building",
+          this.game.hud.actionMenu.buildingBuild.item.unit.name
+        );
+        //this.game.hud.actionMenu.placeBuilding(x, y);
+        return;
+      }
+
+      //move map
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
       } else if (this.game.humanPlayer.getUnitsInPoint(x, y).length) {

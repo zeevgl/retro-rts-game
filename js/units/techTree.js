@@ -8,7 +8,14 @@ window["TechTree"] = (() => {
     init() {
       this.buildings = [
         {
-          unit: new Barracks(),
+          unit: new ContractionYard(0, 0, "gray"),
+          class: ContractionYard,
+          isVisible: true,
+          isUnlocked: true,
+          exists: true,
+        },
+        {
+          unit: new Barracks(0, 0, "gray"),
           class: Barracks,
           isVisible: true,
           isUnlocked: true,
