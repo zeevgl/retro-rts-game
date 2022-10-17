@@ -15,6 +15,7 @@ window["Infantry"] = (() => {
   const attackCooldown = 700;
   const unitClass = UnitClasses.LIGHT;
   const speed = 5;
+  const buildTime = 500;
 
   class Infantry extends Unit {
     constructor(x, y, color) {
@@ -31,7 +32,8 @@ window["Infantry"] = (() => {
         attackRange,
         attackCooldown,
         unitClass,
-        speed
+        speed,
+        buildTime
       );
     }
 

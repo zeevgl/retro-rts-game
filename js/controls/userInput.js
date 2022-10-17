@@ -117,7 +117,11 @@ window["UserInput"] = (() => {
           console.log("unable to comply building in progress");
         }
       } else {
-        //TODO: train a unit
+        if (!this.game.hud.actionMenu.isTrainingInProgress()) {
+          this.game.hud.actionMenu.trainAUnit(actionMenuItem);
+        } else {
+          console.log("unable to comply training in progress");
+        }
       }
     }
 

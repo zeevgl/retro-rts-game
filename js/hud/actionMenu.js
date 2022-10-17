@@ -4,6 +4,12 @@ const BuildingBuildStates = {
   READY: "READY",
 };
 
+const UnitTrainingStates = {
+  IDLE: "IDLE",
+  TRAINING: "TRAINING",
+  READY: "READY",
+};
+
 window["ActionMenu"] = (() => {
   class ActionMenu {
     constructor(game, wrapperDimensions, viewport) {
@@ -23,6 +29,12 @@ window["ActionMenu"] = (() => {
         tick: 0,
         state: BuildingBuildStates.IDLE,
       };
+
+      this.unitTraining = {
+        item: null,
+        tick: 0,
+        state: BuildingBuildStates.IDLE,
+      };
     }
 
     update(deltaTime, timestamp) {
@@ -30,6 +42,11 @@ window["ActionMenu"] = (() => {
         this.buildingBuild.tick += deltaTime;
         if (this.buildingBuild.tick > this.buildingBuild.item.unit.buildTime) {
           this.buildingBuild.state = BuildingBuildStates.READY;
+        }
+      } else if (this.isTrainingInProgress()) {
+        this.unitTraining.tick += deltaTime;
+        if (this.unitTraining.tick > this.unitTraining.item.unit.buildTime) {
+          this.unitTraining.state = UnitTrainingStates.READY;
         }
       }
     }
@@ -113,8 +130,12 @@ window["ActionMenu"] = (() => {
 
       if (
         !item.isUnlocked() ||
-        (item.unit.isBuilding() && this.isBuildingInProgress() &&
-          this.buildingBuild.item.unit.name !== item.unit.name)
+        (item.unit.isBuilding() &&
+          this.isBuildingInProgress() &&
+          this.buildingBuild.item.unit.name !== item.unit.name) ||
+        (!item.unit.isBuilding() &&
+          this.isTrainingInProgress() &&
+          this.unitTraining.item.unit.name !== item.unit.name)
       ) {
         ctx.globalAlpha = 0.2;
       }
@@ -128,45 +149,57 @@ window["ActionMenu"] = (() => {
 
       drawText(ctx, item.unit.name, x + width / 2, y + height / 2, "black");
 
-      this.drawBuildingInProgress(ctx, item, x, y, width, height);
+      this.drawItemInProgress(ctx, item, x, y, width, height);
       this.drawBuildingReadyToPlace(ctx, item, x, y, width, height);
       ctx.restore();
     }
 
-    drawBuildingInProgress(ctx, item, x, y, width, height) {
+    drawItemInProgress(ctx, item, x, y, width, height) {
       if (
+        item.unit.isBuilding() &&
         this.isBuildingInProgress() &&
         this.buildingBuild.item.unit.name === item.unit.name
       ) {
         const progress = this.buildingBuild.tick / item.unit.buildTime;
-        const progressPercent = Math.round(progress * 100);
-        const paddingX = 10;
-        const paddingY = 40;
-
-        ctx.fillStyle = "grey";
-        ctx.fillRect(
-          x + paddingX,
-          y + height - paddingY,
-          width - paddingX * 2,
-          30
-        );
-
-        ctx.fillStyle = "green";
-        ctx.fillRect(
-          x + paddingX,
-          y + height - paddingY,
-          progress * (width - paddingX * 2),
-          30
-        );
-
-        drawText(
-          ctx,
-          `${progressPercent}%`,
-          x + width / 2,
-          y + height - 20,
-          "white"
-        );
+        this.drawItemProgressBar(ctx, item, x, y, width, height, progress);
+      } else if (
+        !item.unit.isBuilding() &&
+        this.isTrainingInProgress() &&
+        this.unitTraining.item.unit.name === item.unit.name
+      ) {
+        const progress = this.unitTraining.tick / item.unit.buildTime;
+        this.drawItemProgressBar(ctx, item, x, y, width, height, progress);
       }
+    }
+
+    drawItemProgressBar(ctx, item, x, y, width, height, progress) {
+      const progressPercent = Math.round(progress * 100);
+      const paddingX = 10;
+      const paddingY = 40;
+
+      ctx.fillStyle = "grey";
+      ctx.fillRect(
+        x + paddingX,
+        y + height - paddingY,
+        width - paddingX * 2,
+        30
+      );
+
+      ctx.fillStyle = "green";
+      ctx.fillRect(
+        x + paddingX,
+        y + height - paddingY,
+        progress * (width - paddingX * 2),
+        30
+      );
+
+      drawText(
+        ctx,
+        `${progressPercent}%`,
+        x + width / 2,
+        y + height - 20,
+        "white"
+      );
     }
 
     drawBuildingReadyToPlace(ctx, item, x, y, width, height) {
@@ -224,6 +257,14 @@ window["ActionMenu"] = (() => {
       };
     }
 
+    trainAUnit(item) {
+      this.unitTraining = {
+        item: item,
+        tick: 0,
+        state: UnitTrainingStates.TRAINING,
+      };
+    }
+
     buildingWasPlaced() {
       this.buildingBuild = {
         item: null,
@@ -241,8 +282,7 @@ window["ActionMenu"] = (() => {
     }
 
     isTrainingInProgress() {
-      //
-      return false;
+      return this.unitTraining.state === UnitTrainingStates.TRAINING;
     }
   }
 
