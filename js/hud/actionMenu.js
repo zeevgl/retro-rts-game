@@ -226,7 +226,7 @@ window["ActionMenu"] = (() => {
         const units = this.game.humanPlayer.techTree.units;
         const buildings = this.game.humanPlayer.techTree.buildings;
         const items = isBuilding ? buildings : units;
-        return items[itemIndex];
+        return items.filter(i=> i.isVisible) [itemIndex];
       }
 
       return null;
