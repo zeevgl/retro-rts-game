@@ -33,7 +33,8 @@ window["Infantry"] = (() => {
         attackCooldown,
         unitClass,
         speed,
-        buildTime
+        buildTime,
+        Barracks
       );
     }
 

@@ -16,7 +16,8 @@ window["Unit"] = (() => {
       attackCooldown,
       unitClass,
       speed,
-      buildTime
+      buildTime,
+      buildAt
     ) {
       this.id = uuidv4();
       this.name = name;
@@ -33,6 +34,7 @@ window["Unit"] = (() => {
       this.unitClass = unitClass;
       this.speed = speed;
       this.buildTime = buildTime || 2000;
+      this.buildAt = buildAt || ContractionYard;
 
       //
       this.attackCooldownInProgress = 0;

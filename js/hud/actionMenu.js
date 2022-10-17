@@ -46,7 +46,24 @@ window["ActionMenu"] = (() => {
       } else if (this.isTrainingInProgress()) {
         this.unitTraining.tick += deltaTime;
         if (this.unitTraining.tick > this.unitTraining.item.unit.buildTime) {
-          this.unitTraining.state = UnitTrainingStates.READY;
+          //TODO: move this to a better place
+
+          const building = this.game.humanPlayer.units.find((unit) => {
+            if (
+              unit.isBuilding() &&
+              unit instanceof this.unitTraining.item.unit.buildAt
+            ) {
+              return unit;
+            }
+          });
+
+          const newUnit = new this.unitTraining.item.class(
+            building.x + building.width / 2,
+            building.y + building.height + 10,
+            this.game.humanPlayer.color
+          );
+          this.game.humanPlayer.addUnit(newUnit);
+          this.unitTraining.state = UnitTrainingStates.IDLE;
         }
       }
     }
