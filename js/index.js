@@ -1,13 +1,13 @@
 const DEBUG_MODE = false;
 
-window.addEventListener(
-  "resize",
-  function (event) {
-    console.log("resize");
-    initGame();
-  },
-  true
-);
+// window.addEventListener(
+//   "resize",
+//   function (event) {
+//     console.log("resize");
+//     initGame();
+//   },
+//   true
+// );
 
 function initGame() {
   const GAME_WIDTH = window.innerWidth;
