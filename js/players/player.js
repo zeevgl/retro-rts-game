@@ -32,7 +32,7 @@ class Player {
 
   addUnit(unit) {
     this.units.push(unit);
-    //TODO: update tech tree
+    this.techTree.updateTechTree(unit);
   }
 
   attemptToClickUnitAtPoint(x, y) {

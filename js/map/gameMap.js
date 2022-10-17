@@ -73,11 +73,11 @@ window["GameMap"] = (() => {
         );
 
         player.addUnit(
-            new Barracks(
-                player.startingPoint.x + 120,
-                player.startingPoint.y + 10,
-                player.color
-            )
+          new Barracks(
+            player.startingPoint.x + 120,
+            player.startingPoint.y + 10,
+            player.color
+          )
         );
 
         player.addUnit(

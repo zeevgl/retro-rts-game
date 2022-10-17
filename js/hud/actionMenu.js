@@ -112,7 +112,7 @@ window["ActionMenu"] = (() => {
       ctx.beginPath();
 
       if (
-        !item.isUnlocked ||
+        !item.isUnlocked() ||
         (this.isBuildingInProgress() &&
           this.buildingBuild.item.unit.name !== item.unit.name)
       ) {
