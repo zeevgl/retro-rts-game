@@ -1,5 +1,6 @@
 window["Camera"] = (() => {
   const scrollSpeed = 5;
+  const hoverOnEdgeTime = 200;
   class Camera {
     constructor(game) {
       this.game = game;
@@ -9,14 +10,19 @@ window["Camera"] = (() => {
       this.isScrolling = true;
       this.scrollDirectionVertical = 0;
       this.scrollDirectionHorizontal = 0;
+      this.hoverOnEdgeTick = 0;
     }
 
     update(deltaTime, timestamp) {
       if (this.isScrolling) {
-        this.x += this.scrollDirectionHorizontal * scrollSpeed;
-        this.y += this.scrollDirectionVertical * scrollSpeed;
+        if (this.hoverOnEdgeTick < hoverOnEdgeTime) {
+          this.hoverOnEdgeTick += deltaTime;
+        } else {
+          this.x += this.scrollDirectionHorizontal * scrollSpeed;
+          this.y += this.scrollDirectionVertical * scrollSpeed;
 
-        this.validateCameraEdges();
+          this.validateCameraEdges();
+        }
       }
     }
 
@@ -69,7 +75,7 @@ window["Camera"] = (() => {
     scrollCamera(x, y) {
       const { hud } = this.game;
       const margin = 25;
-      let isOnEdge = false
+      let isOnEdge = false;
       this.scrollStop();
 
       if (
@@ -92,6 +98,10 @@ window["Camera"] = (() => {
       } else if (y <= this.y + margin && y >= this.y) {
         this.scrollUp();
         isOnEdge = true;
+      }
+
+      if (!isOnEdge) {
+        this.hoverOnEdgeTick = 0;
       }
 
       return isOnEdge;
