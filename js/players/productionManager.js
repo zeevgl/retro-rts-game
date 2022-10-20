@@ -118,6 +118,10 @@ window["ProductionManager"] = (() => {
       );
       this.player.addUnit(newUnit);
       this.resetUnitProduction();
+
+      const randomX = Math.random() * 300 - 50;
+      const randomY = Math.random() * 100;
+      newUnit.moveTo(newUnit.x + randomX, newUnit.y + randomY);
     }
 
     placeBuilding(x, y) {

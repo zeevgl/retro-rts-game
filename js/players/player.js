@@ -41,7 +41,7 @@ class Player {
   attemptToClickUnitAtPoint(x, y) {
     this.deselectAllUnits();
 
-    const selectedUnits = this.getUnitsInPoint(x, y);
+    const selectedUnits = [this.getUnitsInPoint(x, y)[0]];  //for now force only 1 unit selection
 
     selectedUnits.forEach((unit) => {
       unit.isSelected = true;
