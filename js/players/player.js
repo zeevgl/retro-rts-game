@@ -41,7 +41,9 @@ class Player {
   attemptToClickUnitAtPoint(x, y) {
     this.deselectAllUnits();
 
-    const selectedUnits = [this.getUnitsInPoint(x, y)[0]];  //for now force only 1 unit selection
+    // const selectedUnits = this.getUnitsInPoint(x, y);
+    const unit = this.getUnitInPoint(x, y); //allow only 1 unit selected for now
+    const selectedUnits = unit ? [unit] : [];
 
     selectedUnits.forEach((unit) => {
       unit.isSelected = true;
@@ -56,6 +58,16 @@ class Player {
     return this.units.filter((unit) => {
       return unit.isAlive && unit.inPointInUnit(x, y);
     });
+  }
+
+  getUnitInPoint(x, y) {
+    for (let i = 0; i < this.units.length; i++) {
+      if (this.units[i].isAlive && this.units[i].inPointInUnit(x, y)) {
+        return this.units[i];
+      }
+    }
+
+    return null;
   }
 
   deselectAllUnits() {
