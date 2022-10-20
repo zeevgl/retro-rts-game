@@ -35,3 +35,7 @@
   - [ ] Spice Fields
   - [ ] Spice Blooms
 - [x] Hud Menu
+- [ ] Collision detection
+  - [ ] unit vs unit
+  - [ ] unit spawn, move away from obstacle
+  - [ ] unit vs terrain
