@@ -11,6 +11,8 @@ class Game {
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
     this.gameMap = new GameMap(this);
+
+    this.humanPlayer.resources.addResources(2000);
   }
 
   update(deltaTime, timestamp) {

@@ -65,6 +65,7 @@ window["Hud"] = (() => {
       this.miniMap.draw(ctx);
       this.drawViewport(ctx);
       this.actionMenu.draw(ctx);
+      this.drawResources(ctx);
       ctx.restore();
     }
 
@@ -80,6 +81,10 @@ window["Hud"] = (() => {
         context.strokeStyle = "red";
         context.stroke();
       }
+    }
+
+    drawResources(ctx) {
+      drawText(ctx,`Money: ${this.game.humanPlayer.resources.money}`, this.hudX - 100, 20);
     }
   }
   return Hud;

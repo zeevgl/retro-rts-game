@@ -7,6 +7,7 @@ class Player {
     this.selectedUnits = [];
     this.techTree = new TechTree(this);
     this.productionManager = new ProductionManager(this);
+    this.resources = new Resources(this);
   }
 
   update(deltaTime, timestamp) {
@@ -25,6 +26,7 @@ class Player {
     });
 
     this.productionManager.update(deltaTime, timestamp);
+    this.resources.update(deltaTime, timestamp);
   }
 
   draw(ctx) {
