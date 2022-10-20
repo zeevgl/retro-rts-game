@@ -12,7 +12,7 @@ window["TechTree"] = (() => {
           class: ContractionYard,
           isVisible: false,
           isUnlocked: () => false,
-          exists: false,
+          exists: true,
         },
         {
           unit: new Barracks(0, 0, "gray"),
