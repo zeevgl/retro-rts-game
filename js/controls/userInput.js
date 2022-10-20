@@ -108,7 +108,8 @@ window["UserInput"] = (() => {
     }
 
     handleActionMenuItem(actionMenuItem) {
-      if (actionMenuItem.unit.isBuilding()) {
+      //TODO:this should be in player-> build manager... so AI can resue
+      if (actionMenuItem.unit.isABuilding()) {
         if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
           this.state = UserInputStates.PLACE_BUILDING;
         } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
@@ -123,6 +124,23 @@ window["UserInput"] = (() => {
           console.log("unable to comply training in progress");
         }
       }
+
+
+      // if (actionMenuItem.unit.isABuilding()) {
+      //   if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
+      //     this.state = UserInputStates.PLACE_BUILDING;
+      //   } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
+      //     this.game.hud.actionMenu.buildAUnit(actionMenuItem);
+      //   } else {
+      //     console.log("unable to comply building in progress");
+      //   }
+      // } else {
+      //   if (!this.game.hud.actionMenu.isTrainingInProgress()) {
+      //     this.game.hud.actionMenu.trainAUnit(actionMenuItem);
+      //   } else {
+      //     console.log("unable to comply training in progress");
+      //   }
+      // }
     }
 
     placeBuilding(x, y) {

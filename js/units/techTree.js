@@ -56,7 +56,7 @@ window["TechTree"] = (() => {
     }
 
     updateTechTree(unit) {
-      if (unit.isBuilding()) {
+      if (unit.isABuilding()) {
         this.buildings.forEach((building) => {
           if (unit instanceof building.class) {
             building.exists = true;

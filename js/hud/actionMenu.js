@@ -50,7 +50,7 @@ window["ActionMenu"] = (() => {
 
           const building = this.game.humanPlayer.units.find((unit) => {
             if (
-              unit.isBuilding() &&
+              unit.isABuilding() &&
               unit instanceof this.unitTraining.item.unit.buildAt
             ) {
               return unit;
@@ -147,10 +147,10 @@ window["ActionMenu"] = (() => {
 
       if (
         !item.isUnlocked() ||
-        (item.unit.isBuilding() &&
+        (item.unit.isABuilding() &&
           this.isBuildingInProgress() &&
           this.buildingBuild.item.unit.name !== item.unit.name) ||
-        (!item.unit.isBuilding() &&
+        (!item.unit.isABuilding() &&
           this.isTrainingInProgress() &&
           this.unitTraining.item.unit.name !== item.unit.name)
       ) {
@@ -173,14 +173,14 @@ window["ActionMenu"] = (() => {
 
     drawItemInProgress(ctx, item, x, y, width, height) {
       if (
-        item.unit.isBuilding() &&
+        item.unit.isABuilding() &&
         this.isBuildingInProgress() &&
         this.buildingBuild.item.unit.name === item.unit.name
       ) {
         const progress = this.buildingBuild.tick / item.unit.buildTime;
         this.drawItemProgressBar(ctx, item, x, y, width, height, progress);
       } else if (
-        !item.unit.isBuilding() &&
+        !item.unit.isABuilding() &&
         this.isTrainingInProgress() &&
         this.unitTraining.item.unit.name === item.unit.name
       ) {

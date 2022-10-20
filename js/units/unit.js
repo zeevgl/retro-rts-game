@@ -301,7 +301,7 @@ window["Unit"] = (() => {
       }
     }
 
-    isBuilding() {
+    isABuilding() {
       return this.unitClass === UnitClasses.BUILDING;
     }
   }

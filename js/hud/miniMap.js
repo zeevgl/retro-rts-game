@@ -42,7 +42,7 @@ window["MiniMap"] = (() => {
     drawUnitOnMiniMap(ctx, unit) {
       ctx.fillStyle = unit.color;
       const { x, y } = this.calcUnitPositionOnMiniMap(unit);
-      if (unit.isBuilding()) {
+      if (unit.isABuilding()) {
         ctx.fillRect(x, y, 15, 15);
       } else {
         ctx.fillRect(x, y, 5, 5);
