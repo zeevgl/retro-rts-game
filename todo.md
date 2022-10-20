@@ -13,20 +13,20 @@
   - [ ] Artillery
 - [ ] Building
   - [ ] Building Types
-    - [ ] Contraction Yard
-    - [ ] Barracks
+    - [x] Contraction Yard
+    - [x] Barracks
     - [ ] Refinery
     - [ ] Power Plant
     - [ ] War Factory
     - [ ] Silo
     - [ ] Radar Dome
-  - [ ] Building placement
-  - [ ] Building construction
+  - [x] Building placement
+  - [x] Building construction
   - [ ] Building destruction
   - [ ] Building repair
   - [ ] Building upgrades
 - [ ] Minimap
-  - [ ] Render buildings
+  - [x] Render buildings
   - [ ] Drag view port
   - [ ] Click on minimap
 - [ ] Mining resources
@@ -34,4 +34,4 @@
 - [ ] Spice Fields
   - [ ] Spice Fields
   - [ ] Spice Blooms
-- [ ] Hud Menu
+- [x] Hud Menu
