@@ -1,15 +1,3 @@
-const BuildingBuildStates = {
-  IDLE: "IDLE",
-  BUILDING: "BUILDING",
-  READY: "READY",
-};
-
-const UnitTrainingStates = {
-  IDLE: "IDLE",
-  TRAINING: "TRAINING",
-  READY: "READY",
-};
-
 window["ActionMenu"] = (() => {
   class ActionMenu {
     constructor(game, wrapperDimensions, viewport) {
@@ -23,12 +11,6 @@ window["ActionMenu"] = (() => {
       this.y = wrapperDimensions.y;
 
       this.itemWidth = this.width / 2;
-
-      this.buildingBuild = {
-        item: null,
-        tick: 0,
-        state: BuildingBuildStates.IDLE,
-      };
     }
 
     update(deltaTime, timestamp) {
@@ -220,26 +202,6 @@ window["ActionMenu"] = (() => {
       }
 
       return null;
-    }
-
-    buildAUnit(item) {
-      this.buildingBuild = {
-        item: item,
-        tick: 0,
-        state: BuildingBuildStates.BUILDING,
-      };
-    }
-
-    buildingWasPlaced() {
-      this.buildingBuild = {
-        item: null,
-        tick: 0,
-        state: BuildingBuildStates.IDLE,
-      };
-    }
-
-    isBuildingInProgress() {
-      return this.buildingBuild.state === BuildingBuildStates.BUILDING;
     }
   }
 
