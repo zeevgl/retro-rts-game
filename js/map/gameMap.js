@@ -2,8 +2,8 @@ window["GameMap"] = (() => {
   class GameMap {
     constructor(game) {
       this.game = game;
-      this.mapWidth = 2000;
-      this.mapHeight = 2000;
+      this.mapWidth = 2560;
+      this.mapHeight = 2560;
 
       this.initPlayers();
     }

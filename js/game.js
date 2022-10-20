@@ -11,6 +11,7 @@ class Game {
     this.aiPlayers = [new AiPlayer("player 2", "#ff0000", { x: 500, y: 400 })];
     this.enemyAI = new EnemyAI(this);
     this.gameMap = new GameMap(this);
+    this.level1 = new Level(TileMaps.map2, 'assets');
 
     this.humanPlayer.resources.addResources(1000);
   }
@@ -22,14 +23,17 @@ class Game {
 
     //this.enemyAI.performAI();
     this.hud.update(deltaTime, timestamp);
+    this.level1.update(deltaTime, timestamp);
     this.camera.update(deltaTime, timestamp);
   }
 
   draw(context) {
     context.save();
+
     this.camera.draw(context);
 
     this.drawBackground(context);
+    this.level1.draw(context);
 
     this.userInput.draw(context);
 
@@ -40,7 +44,6 @@ class Game {
     this.hud.draw(context);
 
     this.gameMap.draw(context);
-
     context.restore();
   }
 
