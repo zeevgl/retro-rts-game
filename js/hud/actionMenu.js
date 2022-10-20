@@ -29,43 +29,10 @@ window["ActionMenu"] = (() => {
         tick: 0,
         state: BuildingBuildStates.IDLE,
       };
-
-      this.unitTraining = {
-        item: null,
-        tick: 0,
-        state: BuildingBuildStates.IDLE,
-      };
     }
 
     update(deltaTime, timestamp) {
-      if (this.isBuildingInProgress()) {
-        this.buildingBuild.tick += deltaTime;
-        if (this.buildingBuild.tick > this.buildingBuild.item.unit.buildTime) {
-          this.buildingBuild.state = BuildingBuildStates.READY;
-        }
-      } else if (this.isTrainingInProgress()) {
-        this.unitTraining.tick += deltaTime;
-        if (this.unitTraining.tick > this.unitTraining.item.unit.buildTime) {
-          //TODO: move this to a better place
-
-          const building = this.game.humanPlayer.units.find((unit) => {
-            if (
-              unit.isABuilding() &&
-              unit instanceof this.unitTraining.item.unit.buildAt
-            ) {
-              return unit;
-            }
-          });
-
-          const newUnit = new this.unitTraining.item.class(
-            building.x + building.width / 2,
-            building.y + building.height + 10,
-            this.game.humanPlayer.color
-          );
-          this.game.humanPlayer.addUnit(newUnit);
-          this.unitTraining.state = UnitTrainingStates.IDLE;
-        }
-      }
+      //
     }
 
     draw(ctx) {
@@ -147,12 +114,12 @@ window["ActionMenu"] = (() => {
 
       if (
         !item.isUnlocked() ||
-        (item.unit.isABuilding() &&
-          this.isBuildingInProgress() &&
-          this.buildingBuild.item.unit.name !== item.unit.name) ||
-        (!item.unit.isABuilding() &&
-          this.isTrainingInProgress() &&
-          this.unitTraining.item.unit.name !== item.unit.name)
+        (this.game.humanPlayer.productionManager.isBuildingInProgress() &&
+          this.game.humanPlayer.productionManager.buildingProduction.item.unit
+            .name !== item.unit.name) ||
+        (this.game.humanPlayer.productionManager.isUnitInProgress() &&
+          this.game.humanPlayer.productionManager.unitProduction.item.unit
+            .name !== item.unit.name)
       ) {
         ctx.globalAlpha = 0.2;
       }
@@ -172,19 +139,9 @@ window["ActionMenu"] = (() => {
     }
 
     drawItemInProgress(ctx, item, x, y, width, height) {
-      if (
-        item.unit.isABuilding() &&
-        this.isBuildingInProgress() &&
-        this.buildingBuild.item.unit.name === item.unit.name
-      ) {
-        const progress = this.buildingBuild.tick / item.unit.buildTime;
-        this.drawItemProgressBar(ctx, item, x, y, width, height, progress);
-      } else if (
-        !item.unit.isABuilding() &&
-        this.isTrainingInProgress() &&
-        this.unitTraining.item.unit.name === item.unit.name
-      ) {
-        const progress = this.unitTraining.tick / item.unit.buildTime;
+      if (this.game.humanPlayer.productionManager.isItemInProgress(item)) {
+        const progress =
+          this.game.humanPlayer.productionManager.getProgress(item);
         this.drawItemProgressBar(ctx, item, x, y, width, height, progress);
       }
     }
@@ -221,8 +178,7 @@ window["ActionMenu"] = (() => {
 
     drawBuildingReadyToPlace(ctx, item, x, y, width, height) {
       if (
-        this.isBuildingReadyToPlace() &&
-        this.buildingBuild.item.unit.name === item.unit.name
+        this.game.humanPlayer.productionManager.isBuildingReadyToBePlace(item)
       ) {
         ctx.save();
         ctx.globalAlpha = 0.6;
@@ -274,14 +230,6 @@ window["ActionMenu"] = (() => {
       };
     }
 
-    trainAUnit(item) {
-      this.unitTraining = {
-        item: item,
-        tick: 0,
-        state: UnitTrainingStates.TRAINING,
-      };
-    }
-
     buildingWasPlaced() {
       this.buildingBuild = {
         item: null,
@@ -292,14 +240,6 @@ window["ActionMenu"] = (() => {
 
     isBuildingInProgress() {
       return this.buildingBuild.state === BuildingBuildStates.BUILDING;
-    }
-
-    isBuildingReadyToPlace() {
-      return this.buildingBuild.state === BuildingBuildStates.READY;
-    }
-
-    isTrainingInProgress() {
-      return this.unitTraining.state === UnitTrainingStates.TRAINING;
     }
   }
 

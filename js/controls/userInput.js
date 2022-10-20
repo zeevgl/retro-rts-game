@@ -30,7 +30,7 @@ window["UserInput"] = (() => {
       }
 
       if (this.state === UserInputStates.PLACE_BUILDING) {
-        const newUnit = this.game.hud.actionMenu.buildingBuild.item.unit;
+        const newUnit = this.game.humanPlayer.productionManager.buildingProduction.item.unit;
         newUnit.color = "gray";
         newUnit.x = this.mouseHandler.position.x;
         newUnit.y = this.mouseHandler.position.y;
@@ -44,7 +44,8 @@ window["UserInput"] = (() => {
       if (actionMenuItem) {
         this.handleActionMenuItem(actionMenuItem);
       } else if (this.state === UserInputStates.PLACE_BUILDING) {
-        this.placeBuilding(x, y);
+        this.game.humanPlayer.productionManager.placeBuilding(x, y);
+        this.state = UserInputStates.IDLE;
       } else {
         const units = this.game.humanPlayer.attemptToClickUnitAtPoint(x, y);
         if (units.length) {
@@ -108,50 +109,21 @@ window["UserInput"] = (() => {
     }
 
     handleActionMenuItem(actionMenuItem) {
-      //TODO:this should be in player-> build manager... so AI can resue
       if (actionMenuItem.unit.isABuilding()) {
-        if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
+        if (this.game.humanPlayer.productionManager.isBuildingReadyToBePlace(actionMenuItem)) {
           this.state = UserInputStates.PLACE_BUILDING;
-        } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
-          this.game.hud.actionMenu.buildAUnit(actionMenuItem);
+        } else if (!this.game.humanPlayer.productionManager.isBuildingInProgress()) {
+          this.game.humanPlayer.productionManager.startBuilding(actionMenuItem);
         } else {
           console.log("unable to comply building in progress");
         }
       } else {
-        if (!this.game.hud.actionMenu.isTrainingInProgress()) {
-          this.game.hud.actionMenu.trainAUnit(actionMenuItem);
+        if (!this.game.humanPlayer.productionManager.isUnitInProgress()) {
+          this.game.humanPlayer.productionManager.startUnit(actionMenuItem);
         } else {
           console.log("unable to comply training in progress");
         }
       }
-
-
-      // if (actionMenuItem.unit.isABuilding()) {
-      //   if (this.game.hud.actionMenu.isBuildingReadyToPlace()) {
-      //     this.state = UserInputStates.PLACE_BUILDING;
-      //   } else if (!this.game.hud.actionMenu.isBuildingInProgress()) {
-      //     this.game.hud.actionMenu.buildAUnit(actionMenuItem);
-      //   } else {
-      //     console.log("unable to comply building in progress");
-      //   }
-      // } else {
-      //   if (!this.game.hud.actionMenu.isTrainingInProgress()) {
-      //     this.game.hud.actionMenu.trainAUnit(actionMenuItem);
-      //   } else {
-      //     console.log("unable to comply training in progress");
-      //   }
-      // }
-    }
-
-    placeBuilding(x, y) {
-      const newUnit = new this.game.hud.actionMenu.buildingBuild.item.class(
-        x,
-        y,
-        this.game.humanPlayer.color
-      );
-      this.game.humanPlayer.addUnit(newUnit);
-      this.state = UserInputStates.IDLE;
-      this.game.hud.actionMenu.buildingWasPlaced();
     }
   }
   return UserInput;

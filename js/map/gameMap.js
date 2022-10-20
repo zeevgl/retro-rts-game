@@ -54,7 +54,7 @@ window["GameMap"] = (() => {
       );
       humanPlayer.addUnit(
         new Rocket(
-          160 + humanPlayer.startingPoint.x,
+          160 + humanPlayer.startingPoint.x+80,
           100 + humanPlayer.startingPoint.y,
           humanPlayer.color
         )
