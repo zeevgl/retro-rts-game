@@ -12,7 +12,7 @@ class Game {
     this.enemyAI = new EnemyAI(this);
     this.gameMap = new GameMap(this);
 
-    this.humanPlayer.resources.addResources(2000);
+    this.humanPlayer.resources.addResources(1000);
   }
 
   update(deltaTime, timestamp) {
