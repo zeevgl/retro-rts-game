@@ -4,7 +4,6 @@ window["Resources"] = (() => {
       this.player = player;
       this.money = 0;
       this.increaseAmount = 0;
-      this.decreaseAmount = 0;
       this.rate = 1;
       this.increaseBy = 12;
       this.tick = 0;
