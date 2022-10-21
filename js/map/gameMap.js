@@ -50,7 +50,6 @@ window["GameMap"] = (() => {
       const { aiPlayers } = this.game;
       const positions = this.level.getAiPlayersPositions()
       aiPlayers.forEach((player, index) => {
-        console.log('positions = ', positions[index]);
         player.addUnit(
           new ContractionYard(
             positions[index].x,

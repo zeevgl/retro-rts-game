@@ -1,12 +1,15 @@
 class Level {
   constructor(map, assetsFolder) {
     this.assetsFolder = assetsFolder;
+    this.tileSize = 64;
     this.positions = [];
     this.map = map;
     this.sprite = null;
+
     this.platfroms = null;
     this.playerPositions = null;
-    this.tileSize = 64;
+    this.spiceFields = null;
+
     const originalTileSize = this.map.tilesets[0].tilewidth;
     this.tileSizeMultiplayer = this.tileSize / originalTileSize;
     this.initSprite();
@@ -66,9 +69,7 @@ class Level {
     );
 
     this.ground = this.map.layers.find((layer) => layer.name === "ground");
-    this.interactable = this.map.layers.find(
-      (layer) => layer.name === "interactable"
-    );
+    this.spiceFields = this.map.layers.find((layer) => layer.name === "spice");
   }
 
   getWidth() {
