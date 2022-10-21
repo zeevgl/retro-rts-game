@@ -6,7 +6,7 @@ class Level {
     this.sprite = null;
     this.platfroms = null;
     this.tilesPosition = [];
-    this.tileSize = 32;
+    this.tileSize = 64;
     this.initSprite();
     this.initLayers();
   }
