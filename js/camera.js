@@ -1,5 +1,5 @@
 window["Camera"] = (() => {
-  const scrollSpeed = 5;
+  const scrollSpeed = 15;
   const hoverOnEdgeTime = 200;
   class Camera {
     constructor(game) {
