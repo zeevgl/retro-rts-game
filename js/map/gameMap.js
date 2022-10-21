@@ -43,6 +43,7 @@ window["GameMap"] = (() => {
 
       humanPlayer.addUnit(new Infantry(130 + x, 140 + y, humanPlayer.color));
       humanPlayer.addUnit(new Rocket(160 + x + 80, 100 + y, humanPlayer.color));
+      humanPlayer.addUnit(new Harvester(x, y + 300, humanPlayer.color));
     }
 
     initAiPlayer() {
