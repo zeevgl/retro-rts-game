@@ -77,7 +77,7 @@ window["Unit"] = (() => {
         distance <= this.attackRange
       ) {
         this.attack(this.targetUnit);
-      } else if (distance < 3) {
+      } else if (Math.floor(distance) <= 3 || distance < this.speed) {
         this.state = UnitStates.IDLE;
         return;
       }
