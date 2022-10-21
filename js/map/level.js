@@ -59,4 +59,12 @@ class Level {
       (layer) => layer.name === 'interactable'
     );
   }
+
+  getWidth() {
+    return this.map.width * this.tileSize;
+  }
+
+  getHeight() {
+    return this.map.height * this.tileSize;
+  }
 }

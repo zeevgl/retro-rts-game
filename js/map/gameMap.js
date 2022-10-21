@@ -2,15 +2,21 @@ window["GameMap"] = (() => {
   class GameMap {
     constructor(game) {
       this.game = game;
-      this.mapWidth = 64*80;
-      this.mapHeight = 64*80;
+      this.level = new Level(TileMaps.map2, "assets");
+
+      this.mapWidth = this.level.getWidth();
+      this.mapHeight = this.level.getHeight();
 
       this.initPlayers();
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      this.level.update(deltaTime, timestamp);
+    }
 
     draw(ctx) {
+      this.level.draw(ctx);
+
       if (DEBUG_MODE) {
         ctx.save();
         ctx.beginPath();
@@ -54,7 +60,7 @@ window["GameMap"] = (() => {
       );
       humanPlayer.addUnit(
         new Rocket(
-          160 + humanPlayer.startingPoint.x+80,
+          160 + humanPlayer.startingPoint.x + 80,
           100 + humanPlayer.startingPoint.y,
           humanPlayer.color
         )
