@@ -189,7 +189,8 @@ window["ActionMenu"] = (() => {
       );
     }
 
-    getItemAtXy(x, y) {
+    getItemAtXy(originalX, originalY) {
+      const { x, y } = this.game.camera.adjustPointToCamera(originalX, originalY);
       if (this.isXYInside(x, y)) {
         const itemX = x - this.x;
         const itemY = y - this.y;

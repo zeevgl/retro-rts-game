@@ -106,6 +106,14 @@ window["Camera"] = (() => {
 
       return isOnEdge;
     }
+
+    adjustPointToCamera(x, y) {
+      return {
+        x: x - this.x,
+        y: y - this.y,
+      };
+
+    }
   }
 
   return Camera;

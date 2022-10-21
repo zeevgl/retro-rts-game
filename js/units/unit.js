@@ -145,6 +145,7 @@ window["Unit"] = (() => {
         this.drawVisionRange(ctx);
         this.drawTargeting(ctx);
         this.drawAttack(ctx);
+        this.drawCoordinates(ctx);
       }
 
       ctx.restore();
@@ -254,6 +255,12 @@ window["Unit"] = (() => {
         );
         ctx.strokeStyle = "purple";
         ctx.stroke();
+      }
+    }
+
+    drawCoordinates(ctx) {
+      if (DEBUG_MODE) {
+        drawText(ctx, `x:${this.x}, y:${this.y}`, this.x + 25, this.y + 15);
       }
     }
 
