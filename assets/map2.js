@@ -106,19 +106,8 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"playes_position",
+         "name":"players_positions",
          "objects":[
-                {
-                 "class":"",
-                 "height":16,
-                 "id":2,
-                 "name":"player1",
-                 "rotation":0,
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":112
-                }, 
                 {
                  "class":"",
                  "height":16,
@@ -129,6 +118,17 @@
                  "width":16,
                  "x":832,
                  "y":912
+                }, 
+                {
+                 "class":"",
+                 "height":16,
+                 "id":2,
+                 "name":"player1",
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":160,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -181,7 +181,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":8,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
