@@ -11,29 +11,36 @@ window["EnemyAI"] = (() => {
     performAI() {
       //POC - simple AI: each AI unit attack closest human unit
       this.game.aiPlayers.forEach((aiPlayer) => {
-        aiPlayer.units.forEach((aiUnit) => {
-          if (
-            (aiUnit.isAlive && aiUnit.state === UnitStates.IDLE) ||
-            aiUnit.state === UnitStates.MOVING
-          ) {
-            const closestEnemyUnit = this.getClosestEnemyUnit(aiUnit);
+        this.searchAndDestroy(aiPlayer);
+        this.buildUnits(aiPlayer);
+      });
+    }
 
-            if (closestEnemyUnit) {
-              aiPlayer.selectedUnits = [aiUnit];
-              aiPlayer.attack(closestEnemyUnit.unit);
-            } else if (aiUnit.state === UnitStates.IDLE) {
-              const randomPosition = {
-                x: Math.floor(Math.random() * this.game.gameWidth),
-                y: Math.floor(Math.random() * this.game.gameHeight),
-              };
-              aiPlayer.selectedUnits = [aiUnit];
-              aiPlayer.moveSelectedUnitsToPosition(
-                randomPosition.x,
-                randomPosition.y
-              );
-            }
+    searchAndDestroy(aiPlayer) {
+      aiPlayer.units.forEach((aiUnit) => {
+        if (
+          (!aiUnit.isABuilding() &&
+            aiUnit.isAlive &&
+            aiUnit.state === UnitStates.IDLE) ||
+          aiUnit.state === UnitStates.MOVING
+        ) {
+          const closestEnemyUnit = this.getClosestEnemyUnit(aiUnit);
+
+          if (closestEnemyUnit) {
+            aiPlayer.selectedUnits = [aiUnit];
+            aiPlayer.attack(closestEnemyUnit.unit);
+          } else if (aiUnit.state === UnitStates.IDLE) {
+            const randomPosition = {
+              x: Math.floor(Math.random() * this.game.gameWidth),
+              y: Math.floor(Math.random() * this.game.gameHeight),
+            };
+            aiPlayer.selectedUnits = [aiUnit];
+            aiPlayer.moveSelectedUnitsToPosition(
+              randomPosition.x,
+              randomPosition.y
+            );
           }
-        });
+        }
       });
     }
 
@@ -64,6 +71,13 @@ window["EnemyAI"] = (() => {
         },
         null
       );
+    }
+
+    buildUnits(aiPlayer) {
+      if (aiPlayer.units.length < 10) {
+        const items = this.game.humanPlayer.techTree.getVisibleUnits()
+        aiPlayer.productionManager.startUnit(items[0]);
+      }
     }
   }
 
