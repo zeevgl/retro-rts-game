@@ -30,7 +30,8 @@ window["UserInput"] = (() => {
       }
 
       if (this.state === UserInputStates.PLACE_BUILDING) {
-        const newUnit = this.game.humanPlayer.productionManager.buildingProduction.item.unit;
+        const newUnit =
+          this.game.humanPlayer.productionManager.buildingProduction.item.unit;
         newUnit.color = "gray";
         newUnit.x = this.mouseHandler.position.x;
         newUnit.y = this.mouseHandler.position.y;
@@ -110,19 +111,17 @@ window["UserInput"] = (() => {
 
     handleActionMenuItem(actionMenuItem) {
       if (actionMenuItem.unit.isABuilding()) {
-        if (this.game.humanPlayer.productionManager.isBuildingReadyToBePlace(actionMenuItem)) {
+        if (
+          this.game.humanPlayer.productionManager.isBuildingReadyToBePlace(
+            actionMenuItem
+          )
+        ) {
           this.state = UserInputStates.PLACE_BUILDING;
-        } else if (!this.game.humanPlayer.productionManager.isBuildingInProgress()) {
-          this.game.humanPlayer.productionManager.startBuilding(actionMenuItem);
         } else {
-          console.log("unable to comply building in progress");
+          this.game.humanPlayer.productionManager.startBuilding(actionMenuItem);
         }
       } else {
-        if (!this.game.humanPlayer.productionManager.isUnitInProgress()) {
-          this.game.humanPlayer.productionManager.startUnit(actionMenuItem);
-        } else {
-          console.log("unable to comply training in progress");
-        }
+        this.game.humanPlayer.productionManager.startUnit(actionMenuItem);
       }
     }
   }

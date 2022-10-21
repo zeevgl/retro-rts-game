@@ -48,19 +48,27 @@ window["ProductionManager"] = (() => {
     }
 
     startBuilding(item) {
-      this.buildingProduction = {
-        item: item,
-        tick: 0,
-        state: ProductionStates.IN_PROGRESS,
-      };
+      if (!this.isBuildingInProgress()) {
+        this.buildingProduction = {
+          item: item,
+          tick: 0,
+          state: ProductionStates.IN_PROGRESS,
+        };
+      } else {
+        console.log("unable to comply building in progress");
+      }
     }
 
     startUnit(item) {
-      this.unitProduction = {
-        item: item,
-        tick: 0,
-        state: ProductionStates.IN_PROGRESS,
-      };
+      if (!this.isUnitInProgress()) {
+        this.unitProduction = {
+          item: item,
+          tick: 0,
+          state: ProductionStates.IN_PROGRESS,
+        };
+      } else {
+        console.log("unable to comply training in progress");
+      }
     }
 
     isBuildingInProgress() {
