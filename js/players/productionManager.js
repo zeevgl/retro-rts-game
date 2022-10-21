@@ -109,6 +109,13 @@ window["ProductionManager"] = (() => {
       );
     }
 
+    isAnyBuildingReadyToBePlace() {
+      return (
+          this.buildingProduction.state === ProductionStates.READY &&
+          this.buildingProduction.item.unit.isABuilding()
+      );
+    }
+
     spawnUnit(item) {
       const building = this.player.units.find((unit) => {
         if (

@@ -58,28 +58,28 @@ window["GameMap"] = (() => {
           )
         );
 
-        player.addUnit(
-          new Barracks(
-            positions[index].x + 120,
-            positions[index].y + 10,
-            player.color
-          )
-        );
-
-        player.addUnit(
-          new Rocket(
-            positions[index].x - 100,
-            positions[index].y,
-            player.color
-          )
-        );
-        player.addUnit(
-          new Rocket(
-            positions[index].x - 150,
-            100 + positions[index].y,
-            player.color
-          )
-        );
+      //   player.addUnit(
+      //     new Barracks(
+      //       positions[index].x + 120,
+      //       positions[index].y + 10,
+      //       player.color
+      //     )
+      //   );
+      //
+      //   player.addUnit(
+      //     new Rocket(
+      //       positions[index].x - 100,
+      //       positions[index].y,
+      //       player.color
+      //     )
+      //   );
+      //   player.addUnit(
+      //     new Rocket(
+      //       positions[index].x - 150,
+      //       100 + positions[index].y,
+      //       player.color
+      //     )
+      //   );
       });
     }
   }
