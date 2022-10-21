@@ -28,6 +28,8 @@ window["Harvester"] = (() => {
         buildTime,
         ContractionYard //TODO: change to War Factory
       );
+
+      this.spiceField = null;
     }
 
     update(deltaTime, timestamp) {
@@ -44,6 +46,10 @@ window["Harvester"] = (() => {
         this.x + this.width / 2,
         this.y + this.height / 2
       );
+    }
+
+    setSpiceField(x, y) {
+      this.spiceField = { x, y };
     }
   }
   return Harvester;
