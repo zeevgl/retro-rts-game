@@ -1,3 +1,8 @@
+const MapObjects = {
+  SPICE: "SPICE",
+  TERRAIN: "TERRAIN",
+};
+
 class Level {
   constructor(map, assetsFolder) {
     this.assetsFolder = assetsFolder;
@@ -80,10 +85,9 @@ class Level {
       (layer) => layer.name === "spice"
     );
 
-    this.objects.playerPositions.objects =
-      this.adjustObjectsTileSizeMultiplier(
-        this.objects.playerPositions.objects
-      );
+    this.objects.playerPositions.objects = this.adjustObjectsTileSizeMultiplier(
+      this.objects.playerPositions.objects
+    );
     this.objects.spiceFields.objects = this.adjustObjectsTileSizeMultiplier(
       this.objects.spiceFields.objects
     );
@@ -139,10 +143,15 @@ class Level {
         y <= spice.y + spice.height
       ) {
         return {
-          type: "spice",
-          spice,
+          type: MapObjects.SPICE,
+          object: spice,
         };
       }
+    }
+
+    return {
+      type: MapObjects.TERRAIN,
+      object: null,
     }
   }
 }

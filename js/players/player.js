@@ -80,10 +80,18 @@ class Player {
     this.selectedUnits = [];
   }
 
-  moveSelectedUnitsToPosition(x, y) {
+  moveSelectedUnitsToPosition(x, y, destinationObject = null) {
     if (this.selectedUnits.length) {
       this.selectedUnits.forEach((unit) => {
         unit.moveTo(x, y);
+
+        if (unit instanceof Harvester) {
+          if (destinationObject?.type === MapObjects.SPICE) {
+            unit.setSpiceField(x, y, destinationObject.object);
+          } else {
+            unit.stopHarvest();
+          }
+        }
       });
     }
   }

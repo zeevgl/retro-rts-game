@@ -67,9 +67,19 @@ window["UserInput"] = (() => {
       if (unitClicked) {
         this.game.humanPlayer.attack(unitClicked);
       } else {
+        //TODO: maybe move "getWhatIsOnPosition" into player?
+        const destinationObject = this.game.gameMap.level.getWhatIsOnPosition(
+          x,
+          y
+        );
+        this.game.humanPlayer.moveSelectedUnitsToPosition(
+          x,
+          y,
+          destinationObject
+        );
+
         //is it a terrain?
         //move to position
-        this.game.humanPlayer.moveSelectedUnitsToPosition(x, y);
         this.targetXY = {
           x,
           y,
