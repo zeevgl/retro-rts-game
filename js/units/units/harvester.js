@@ -17,7 +17,7 @@ window["Harvester"] = (() => {
   const buildTime = 1000;
 
   class Harvester extends Unit {
-    constructor(x, y, color) {
+    constructor(x, y, color, getClosestRefinery, dumpSpice) {
       super(
         name,
         x,
