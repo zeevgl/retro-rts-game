@@ -78,6 +78,7 @@ window["Harvester"] = (() => {
     }
 
     harvest(deltaTime, timestamp) {
+      //TODO: change to SWITCH statement
       if (
         this.harvestingState === HarvesterState.OnRoutToField &&
         this.isInSpiceField()
