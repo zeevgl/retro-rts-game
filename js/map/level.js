@@ -15,7 +15,7 @@ class Level {
     };
 
     const originalTileSize = this.map.tilesets[0].tilewidth;
-    this.tileSizeMultiplayer = this.tileSize / originalTileSize;
+    this.tileSizeMultiplier = this.tileSize / originalTileSize;
     this.initSprite();
     this.initLayers();
   }
@@ -81,22 +81,22 @@ class Level {
     );
 
     this.objects.playerPositions.objects =
-      this.adjustObjectsTileSizeMultiplayer(
+      this.adjustObjectsTileSizeMultiplier(
         this.objects.playerPositions.objects
       );
-    this.objects.spiceFields.objects = this.adjustObjectsTileSizeMultiplayer(
+    this.objects.spiceFields.objects = this.adjustObjectsTileSizeMultiplier(
       this.objects.spiceFields.objects
     );
   }
 
-  adjustObjectsTileSizeMultiplayer(objects) {
+  adjustObjectsTileSizeMultiplier(objects) {
     return objects.map((object) => {
       return {
         ...object,
-        x: object.x * this.tileSizeMultiplayer,
-        y: object.y * this.tileSizeMultiplayer,
-        width: object.width * this.tileSizeMultiplayer,
-        height: object.height * this.tileSizeMultiplayer,
+        x: object.x * this.tileSizeMultiplier,
+        y: object.y * this.tileSizeMultiplier,
+        width: object.width * this.tileSizeMultiplier,
+        height: object.height * this.tileSizeMultiplier,
       };
     });
   }
