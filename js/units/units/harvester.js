@@ -77,6 +77,10 @@ window["Harvester"] = (() => {
       this.harvestingState = HarvesterState.Idle;
     }
 
+    returnToSpiceField() {
+      this.moveTo(this.spiceField.x, this.spiceField.y);
+    }
+
     harvest(deltaTime, timestamp) {
       //TODO: change to SWITCH statement
       if (
@@ -100,6 +104,9 @@ window["Harvester"] = (() => {
         }
       } else if (this.harvestingState === HarvesterState.Dumping) {
         console.log("dumping", this.spice);
+        this.spice = 0;
+        this.harvestingState = HarvesterState.OnRoutToField;
+        this.returnToSpiceField();
       }
     }
 
