@@ -6,9 +6,13 @@ class Level {
     this.map = map;
     this.sprite = null;
 
-    this.platfroms = null;
-    this.playerPositions = null;
-    this.spiceFields = null;
+    this.tiles = {
+      ground: null,
+    };
+    this.objects = {
+      playerPositions: null,
+      spiceFields: null,
+    };
 
     const originalTileSize = this.map.tilesets[0].tilewidth;
     this.tileSizeMultiplayer = this.tileSize / originalTileSize;
@@ -21,7 +25,7 @@ class Level {
   draw(context) {
     for (let y = 0; y < this.map.height; y++) {
       for (let x = 0; x < this.map.width; x++) {
-        const tile = this.getTile(this.ground.data, x, y);
+        const tile = this.getTile(this.tiles.ground.data, x, y);
         if (tile !== 0) {
           this.sprite.draw(
             context,
@@ -32,15 +36,18 @@ class Level {
         }
       }
     }
-
-    //DEBUG_MODE && this.drawPlatforms(context);
+    this.drawObjects(context);
   }
 
-  // drawPlatforms(context) {
-  //   this.platfroms.objects.forEach((p) => {
-  //     context.strokeRect(p.x, p.y, p.width, p.height);
-  //   });
-  // }
+  drawObjects(context) {
+    this.objects.spiceFields.objects.forEach((p) => {
+      context.strokeRect(p.x, p.y, p.width, p.height);
+    });
+
+    this.objects.playerPositions.objects.forEach((p) => {
+      context.strokeRect(p.x, p.y, p.width, p.height);
+    });
+  }
 
   getTile(tiles, col, row) {
     //int oneDindex = (row * length_of_row) + column; // Indexes
@@ -63,13 +70,35 @@ class Level {
   }
 
   initLayers() {
-    this.platfroms = this.map.layers.find((layer) => layer.name === "platform");
-    this.playerPositions = this.map.layers.find(
+    this.tiles.ground = this.map.layers.find(
+      (layer) => layer.name === "ground"
+    );
+    this.objects.playerPositions = this.map.layers.find(
       (layer) => layer.name === "players_positions"
     );
+    this.objects.spiceFields = this.map.layers.find(
+      (layer) => layer.name === "spice"
+    );
 
-    this.ground = this.map.layers.find((layer) => layer.name === "ground");
-    this.spiceFields = this.map.layers.find((layer) => layer.name === "spice");
+    this.objects.playerPositions.objects =
+      this.adjustObjectsTileSizeMultiplayer(
+        this.objects.playerPositions.objects
+      );
+    this.objects.spiceFields.objects = this.adjustObjectsTileSizeMultiplayer(
+      this.objects.spiceFields.objects
+    );
+  }
+
+  adjustObjectsTileSizeMultiplayer(objects) {
+    return objects.map((object) => {
+      return {
+        ...object,
+        x: object.x * this.tileSizeMultiplayer,
+        y: object.y * this.tileSizeMultiplayer,
+        width: object.width * this.tileSizeMultiplayer,
+        height: object.height * this.tileSizeMultiplayer,
+      };
+    });
   }
 
   getWidth() {
@@ -81,22 +110,39 @@ class Level {
   }
 
   getHumanPlayerPosition() {
-    const position = this.playerPositions.objects.find(
+    const position = this.objects.playerPositions.objects.find(
       (p) => p.name === "player1"
     );
 
     return {
-      x: position.x * this.tileSizeMultiplayer,
-      y: position.y * this.tileSizeMultiplayer,
+      x: position.x,
+      y: position.y,
     };
   }
 
   getAiPlayersPositions() {
-    return this.playerPositions.objects
+    return this.objects.playerPositions.objects
       .filter((p) => p.name !== "player1")
       .map((o) => ({
-        x: o.x * this.tileSizeMultiplayer,
-        y: o.y * this.tileSizeMultiplayer,
+        x: o.x,
+        y: o.y,
       }));
+  }
+
+  getWhatIsOnPosition(x, y) {
+    for (let i = 0; i < this.objects.spiceFields.objects.length; i++) {
+      const spice = this.objects.spiceFields.objects[i];
+      if (
+        x >= spice.x &&
+        x <= spice.x + spice.width &&
+        y >= spice.y &&
+        y <= spice.y + spice.height
+      ) {
+        return {
+          type: "spice",
+          spice,
+        };
+      }
+    }
   }
 }
