@@ -48,6 +48,11 @@ window["Harvester"] = (() => {
         width: 100,
         height: 100,
       };
+
+      //harvester unit needs to :
+      //1. know where is the refinery
+      //2. update player resources
+
     }
 
     update(deltaTime, timestamp) {
