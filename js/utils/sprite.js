@@ -9,20 +9,22 @@ function Sprite(img, width, height, positions, sizeW, sizeH) {
 }
 Sprite.prototype = {
   draw: function (ctx, position, x, y) {
-    var pos = this.positions[position];
-    ctx.drawImage(
-      this.img,
-      pos[0],
-      pos[1],
-      this.width,
-      this.height,
-      x,
-      y,
-      this.sizeW,
-      this.sizeH
-    );
+    const pos = this.positions[position];
+    if (pos) {
+      ctx.drawImage(
+        this.img,
+        pos[0],
+        pos[1],
+        this.width,
+        this.height,
+        x,
+        y,
+        this.sizeW,
+        this.sizeH
+      );
 
-    DEBUG_MODE && ctx.strokeRect(x, y, this.sizeW, this.sizeH);
+      DEBUG_MODE && ctx.strokeRect(x, y, this.sizeW, this.sizeH);
+    }
   },
 };
 

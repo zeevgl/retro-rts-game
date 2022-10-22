@@ -1,7 +1,7 @@
 class Level {
   constructor(map, assetsFolder) {
     this.assetsFolder = assetsFolder;
-    this.tileSize = 64;
+    this.tileSize = 32;
     this.positions = [];
     this.map = map;
     this.sprite = null;
