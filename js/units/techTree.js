@@ -15,6 +15,13 @@ window["TechTree"] = (() => {
           exists: true,
         },
         {
+          unit: new Refinery(0, 0, "gray"),
+          class: Refinery,
+          isVisible: true,
+          isUnlocked: () => this.checkDependencies([ContractionYard]),
+          exists: false,
+        },
+        {
           unit: new Barracks(0, 0, "gray"),
           class: Barracks,
           isVisible: true,
@@ -36,6 +43,12 @@ window["TechTree"] = (() => {
           isVisible: true,
           isUnlocked: () => this.checkDependencies([Barracks]),
         },
+        {
+          unit: new Harvester(),
+          class: Harvester,
+          isVisible: true,
+          isUnlocked: () => this.checkDependencies([Refinery]),
+        },
       ];
     }
 
@@ -53,6 +66,10 @@ window["TechTree"] = (() => {
 
     getVisibleBuildings() {
       return this.buildings.filter((building) => building.isVisible);
+    }
+
+    getHarvester() {
+      return this.units.find((unit) => unit.unit instanceof Harvester);
     }
 
     updateTechTree(unit) {

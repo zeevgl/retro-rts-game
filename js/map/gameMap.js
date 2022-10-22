@@ -40,6 +40,7 @@ window["GameMap"] = (() => {
       humanPlayer.addUnit(new ContractionYard(x, y, humanPlayer.color));
 
       humanPlayer.addUnit(new Barracks(x + 120, y + 10, humanPlayer.color));
+      humanPlayer.addUnit(new Refinery(x + 220, y + 10, humanPlayer.color));
 
       humanPlayer.addUnit(new Infantry(130 + x, 140 + y, humanPlayer.color));
       humanPlayer.addUnit(new Rocket(160 + x + 80, 100 + y, humanPlayer.color));

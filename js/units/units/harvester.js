@@ -33,7 +33,7 @@ window["Harvester"] = (() => {
         unitClass,
         speed,
         buildTime,
-        ContractionYard //TODO: change to War Factory
+        Refinery
       );
 
       this.harvestingState = HarvesterState.Idle;
