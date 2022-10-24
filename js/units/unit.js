@@ -3,6 +3,7 @@ window["Unit"] = (() => {
 
   class Unit {
     constructor(
+      player,
       name,
       x,
       y,

@@ -8,8 +8,9 @@ window["Barracks"] = (() => {
   const buildTime = 900;
 
   class Barracks extends Unit {
-    constructor(x, y, color) {
+    constructor(player, x, y, color) {
       super(
+        player,
         name,
         x,
         y,

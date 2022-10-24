@@ -8,8 +8,9 @@ window["Refinery"] = (() => {
   const buildTime = 1200;
 
   class Refinery extends Unit {
-    constructor(x, y, color) {
+    constructor(player, x, y, color) {
       super(
+        player,
         name,
         x,
         y,
@@ -25,6 +26,8 @@ window["Refinery"] = (() => {
         0,
         buildTime
       );
+
+      //add harvester to player. for that I should pass player instance to every unit....
     }
 
     update(deltaTime, timestamp) {

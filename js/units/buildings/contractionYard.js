@@ -8,8 +8,9 @@ window["ContractionYard"] = (() => {
   const buildTime = 10000;
 
   class ContractionYard extends Unit {
-    constructor(x, y, color) {
+    constructor(player, x, y, color) {
       super(
+        player,
         name,
         x,
         y,

@@ -111,22 +111,20 @@ window["ProductionManager"] = (() => {
 
     isAnyBuildingReadyToBePlace() {
       return (
-          this.buildingProduction.state === ProductionStates.READY &&
-          this.buildingProduction.item.unit.isABuilding()
+        this.buildingProduction.state === ProductionStates.READY &&
+        this.buildingProduction.item.unit.isABuilding()
       );
     }
 
     spawnUnit(item) {
       const building = this.player.units.find((unit) => {
-        if (
-          unit.isABuilding() &&
-          unit instanceof item.unit.buildAt
-        ) {
+        if (unit.isABuilding() && unit instanceof item.unit.buildAt) {
           return unit;
         }
       });
 
       const newUnit = new item.class(
+        this.player,
         building.x + building.width / 2,
         building.y + building.height + 10,
         this.player.color
@@ -141,6 +139,7 @@ window["ProductionManager"] = (() => {
 
     placeBuilding(x, y) {
       const newUnit = new this.buildingProduction.item.class(
+        this.player,
         x,
         y,
         this.player.color

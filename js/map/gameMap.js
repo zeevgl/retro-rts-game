@@ -37,50 +37,66 @@ window["GameMap"] = (() => {
       const { humanPlayer } = this.game;
       const { x, y } = this.level.getHumanPlayerPosition();
 
-      humanPlayer.addUnit(new ContractionYard(x, y, humanPlayer.color));
+      humanPlayer.addUnit(
+        new ContractionYard(humanPlayer, x, y, humanPlayer.color)
+      );
 
-      humanPlayer.addUnit(new Barracks(x + 120, y + 10, humanPlayer.color));
-      humanPlayer.addUnit(new Refinery(x + 220, y + 10, humanPlayer.color));
+      humanPlayer.addUnit(
+        new Barracks(humanPlayer, x + 120, y + 10, humanPlayer.color)
+      );
+      humanPlayer.addUnit(
+        new Refinery(humanPlayer, x + 220, y + 10, humanPlayer.color)
+      );
 
-      humanPlayer.addUnit(new Infantry(130 + x, 140 + y, humanPlayer.color));
-      humanPlayer.addUnit(new Rocket(160 + x + 80, 100 + y, humanPlayer.color));
-      humanPlayer.addUnit(new Harvester(x, y + 300, humanPlayer.color));
+      humanPlayer.addUnit(
+        new Infantry(humanPlayer, 130 + x, 140 + y, humanPlayer.color)
+      );
+      humanPlayer.addUnit(
+        new Rocket(humanPlayer, 160 + x + 80, 100 + y, humanPlayer.color)
+      );
+      humanPlayer.addUnit(
+        new Harvester(humanPlayer, x, y + 300, humanPlayer.color)
+      );
     }
 
     initAiPlayer() {
       const { aiPlayers } = this.game;
-      const positions = this.level.getAiPlayersPositions()
+      const positions = this.level.getAiPlayersPositions();
       aiPlayers.forEach((player, index) => {
         player.addUnit(
           new ContractionYard(
+            aiPlayers,
             positions[index].x,
             positions[index].y,
             player.color
           )
         );
 
-      //   player.addUnit(
-      //     new Barracks(
-      //       positions[index].x + 120,
-      //       positions[index].y + 10,
-      //       player.color
-      //     )
-      //   );
-      //
-      //   player.addUnit(
-      //     new Rocket(
-      //       positions[index].x - 100,
-      //       positions[index].y,
-      //       player.color
-      //     )
-      //   );
-      //   player.addUnit(
-      //     new Rocket(
-      //       positions[index].x - 150,
-      //       100 + positions[index].y,
-      //       player.color
-      //     )
-      //   );
+        // player.addUnit(
+        //   new Barracks(
+        //     aiPlayers,
+        //     positions[index].x + 120,
+        //     positions[index].y + 10,
+        //     player.color
+        //   )
+        // );
+        //
+        // player.addUnit(
+        //   new Rocket(
+        //     aiPlayers,
+        //     positions[index].x - 100,
+        //     positions[index].y,
+        //     player.color
+        //   )
+        // );
+        // player.addUnit(
+        //   new Rocket(
+        //     aiPlayers,
+        //     positions[index].x - 150,
+        //     100 + positions[index].y,
+        //     player.color
+        //   )
+        // );
       });
     }
   }

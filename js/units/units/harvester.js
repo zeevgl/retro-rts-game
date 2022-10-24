@@ -17,8 +17,9 @@ window["Harvester"] = (() => {
   const buildTime = 1000;
 
   class Harvester extends Unit {
-    constructor(x, y, color, getClosestRefinery, dumpSpice) {
+    constructor(player, x, y, color) {
       super(
+        player,
         name,
         x,
         y,
@@ -52,7 +53,6 @@ window["Harvester"] = (() => {
       //harvester unit needs to :
       //1. know where is the refinery
       //2. update player resources
-
     }
 
     update(deltaTime, timestamp) {

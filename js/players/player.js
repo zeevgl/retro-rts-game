@@ -38,13 +38,13 @@ class Player {
   addUnit(unit) {
     this.units.push(unit);
     this.techTree.updateTechTree(unit);
-    //TODO:move this into Refinery class?
-    if (unit instanceof Refinery) {
-      const item = this.techTree.getHarvester();
-      if (item) {
-        this.productionManager.spawnUnit(item);
-      }
-    }
+    // //TODO:move this into Refinery class?
+    // if (unit instanceof Refinery) {
+    //   const item = this.techTree.getHarvester();
+    //   if (item) {
+    //     this.productionManager.spawnUnit(item);
+    //   }
+    // }
   }
 
   attemptToClickUnitAtPoint(x, y) {
