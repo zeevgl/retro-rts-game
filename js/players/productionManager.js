@@ -42,7 +42,10 @@ window["ProductionManager"] = (() => {
         if (
           this.unitProduction.tick > this.unitProduction.item.unit.buildTime
         ) {
-          this.spawnUnit(this.unitProduction.item);
+          const building = this.getUnitsProductionBuilding(
+            this.unitProduction.item.unit
+          );
+          this.spawnUnitAtBuilding(this.unitProduction.item.class, building);
         }
       }
     }
@@ -116,14 +119,16 @@ window["ProductionManager"] = (() => {
       );
     }
 
-    spawnUnit(item) {
-      const building = this.player.units.find((unit) => {
-        if (unit.isABuilding() && unit instanceof item.unit.buildAt) {
-          return unit;
+    getUnitsProductionBuilding(unit) {
+      return this.player.units.find((u) => {
+        if (u.isABuilding() && u instanceof unit.buildAt) {
+          return u;
         }
       });
+    }
 
-      const newUnit = new item.class(
+    spawnUnitAtBuilding(unitClass, building) {
+      const newUnit = new unitClass(
         this.player,
         building.x + building.width / 2,
         building.y + building.height + 10,

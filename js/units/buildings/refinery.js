@@ -27,7 +27,12 @@ window["Refinery"] = (() => {
         buildTime
       );
 
-      //add harvester to player. for that I should pass player instance to every unit....
+      if (this.player) {
+        const item = this.player.techTree.getHarvester();
+        if (item) {
+          this.player.productionManager.spawnUnitAtBuilding(item.class, this);
+        }
+      }
     }
 
     update(deltaTime, timestamp) {

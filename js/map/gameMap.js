@@ -54,9 +54,6 @@ window["GameMap"] = (() => {
       humanPlayer.addUnit(
         new Rocket(humanPlayer, 160 + x + 80, 100 + y, humanPlayer.color)
       );
-      humanPlayer.addUnit(
-        new Harvester(humanPlayer, x, y + 300, humanPlayer.color)
-      );
     }
 
     initAiPlayer() {

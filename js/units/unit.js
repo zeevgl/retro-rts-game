@@ -20,6 +20,7 @@ window["Unit"] = (() => {
       buildTime,
       buildAt
     ) {
+      this.player = player;
       this.id = uuidv4();
       this.name = name;
       this.x = x;
