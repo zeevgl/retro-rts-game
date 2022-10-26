@@ -46,17 +46,7 @@ window["Harvester"] = (() => {
       this.dumpSpeedTick = 0;
       this.spice = 0;
 
-      //TMP refinery
-      this.refinery = {
-        x: 100,
-        y: 100,
-        width: 100,
-        height: 100,
-      };
-
-      //harvester unit needs to :
-      //1. know where is the refinery
-      //2. update player resources
+      this.refinery = null;
     }
 
     update(deltaTime, timestamp) {
@@ -102,7 +92,12 @@ window["Harvester"] = (() => {
             this.spice += this.harvestSpeed / deltaTime;
           } else if (this.spice >= this.capacity) {
             this.harvestingState = HarvesterState.Returning;
-            this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
+            this.refinery = this.findClosestRefinery();
+            if (this.refinery) {
+              this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
+            } else {
+              this.harvestingState = HarvesterState.Idle;
+            }
           }
           break;
         case HarvesterState.Returning:
@@ -146,6 +141,17 @@ window["Harvester"] = (() => {
         this.y < this.refinery.y + this.refinery.height &&
         this.y + this.height > this.refinery.y
       );
+    }
+
+    findClosestRefinery() {
+      return this.player.units
+        .filter((unit) => unit.isAlive && unit instanceof Refinery)
+        .map((refinery) => ({
+          refinery,
+          distance: calcDistance(this.x, this.y, refinery.x, refinery.y),
+        }))
+        .reduce((prev, curr) => (prev.distance < curr.distance ? prev : curr))
+        .refinery;
     }
   }
   return Harvester;
