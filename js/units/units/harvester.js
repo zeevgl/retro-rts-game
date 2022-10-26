@@ -3,6 +3,7 @@ const HarvesterState = {
   Harvesting: "Harvesting",
   Returning: "Returning",
   Dumping: "Dumping",
+  DumpingWait: "DumpingWait",
   Idle: "Idle",
 };
 window["Harvester"] = (() => {
@@ -39,7 +40,10 @@ window["Harvester"] = (() => {
 
       this.harvestingState = HarvesterState.Idle;
       this.spiceField = null;
-      this.capacity = 20;
+      this.capacity = 1000;
+      this.harvestSpeed = 250;
+      this.dumpSpeed = 3000;
+      this.dumpSpeedTick = 0;
       this.spice = 0;
 
       //TMP refinery
@@ -87,31 +91,40 @@ window["Harvester"] = (() => {
     }
 
     harvest(deltaTime, timestamp) {
-      //TODO: change to SWITCH statement
-      if (
-        this.harvestingState === HarvesterState.OnRoutToField &&
-        this.isInSpiceField()
-      ) {
-        this.harvestingState = HarvesterState.Harvesting;
-      } else if (
-        this.harvestingState === HarvesterState.Harvesting &&
-        this.isInSpiceField()
-      ) {
-        if (this.spice < this.capacity) {
-          this.spice += 1;
-        } else {
-          this.harvestingState = HarvesterState.Returning;
-          this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
-        }
-      } else if (this.harvestingState === HarvesterState.Returning) {
-        if (this.isInRefinery()) {
-          this.harvestingState = HarvesterState.Dumping;
-        }
-      } else if (this.harvestingState === HarvesterState.Dumping) {
-        console.log("dumping", this.spice);
-        this.spice = 0;
-        this.harvestingState = HarvesterState.OnRoutToField;
-        this.returnToSpiceField();
+      switch (this.harvestingState) {
+        case HarvesterState.OnRoutToField:
+          if (this.isInSpiceField()) {
+            this.harvestingState = HarvesterState.Harvesting;
+          }
+          break;
+        case HarvesterState.Harvesting:
+          if (this.spice < this.capacity) {
+            this.spice += this.harvestSpeed / deltaTime;
+          } else if (this.spice >= this.capacity) {
+            this.harvestingState = HarvesterState.Returning;
+            this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
+          }
+          break;
+        case HarvesterState.Returning:
+          if (this.isInRefinery()) {
+            this.harvestingState = HarvesterState.Dumping;
+          }
+          break;
+        case HarvesterState.Dumping:
+          this.player.resources.addResources(this.spice);
+          this.spice = 0;
+          this.harvestingState = HarvesterState.DumpingWait;
+          break;
+        case HarvesterState.DumpingWait:
+          this.dumpSpeedTick += deltaTime;
+          if (this.dumpSpeedTick >= this.dumpSpeed) {
+            this.dumpSpeedTick = 0;
+            this.harvestingState = HarvesterState.OnRoutToField;
+            this.returnToSpiceField();
+          }
+          break;
+        case HarvesterState.Idle:
+          break;
       }
     }
 

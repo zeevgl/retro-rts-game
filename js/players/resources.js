@@ -29,11 +29,11 @@ window["Resources"] = (() => {
     }
 
     addResources(amount) {
-      this.increaseAmount += amount;
+      this.increaseAmount += Math.round(amount);
     }
 
     deductResources(amount) {
-      this.increaseAmount -= amount;
+      this.increaseAmount -= Math.round(amount);
     }
   }
 
