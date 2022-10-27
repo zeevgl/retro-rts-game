@@ -14,3 +14,18 @@ function calcMoves(speed, distance, x1, y1, x2, y2) {
     yunits,
   };
 }
+
+function getClosestUnitOfPlayer(x, y, player, unitTypeClass = null) {
+  return player.units
+      .filter((unit) => {
+        if (unitTypeClass) {
+          return unit.isAlive && unit instanceof unitTypeClass;
+        }
+        return unit.isAlive;
+      })
+      .map((unit) => ({
+        unit,
+        distance: calcDistance(x, y, unit.x, unit.y),
+      }))
+      .reduce((prev, curr) => (prev.distance < curr.distance ? prev : curr));
+}

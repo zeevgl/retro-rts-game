@@ -92,7 +92,15 @@ window["Harvester"] = (() => {
             this.spice += this.harvestSpeed / deltaTime;
           } else if (this.spice >= this.capacity) {
             this.harvestingState = HarvesterState.Returning;
-            this.refinery = this.findClosestRefinery();
+            const closestUnit = getClosestUnitOfPlayer(
+              this.x,
+              this.y,
+              this.player,
+              Refinery
+            );
+            if (closestUnit?.unit) {
+              this.refinery = closestUnit.unit;
+            }
             if (this.refinery) {
               this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
             } else {
@@ -141,17 +149,6 @@ window["Harvester"] = (() => {
         this.y < this.refinery.y + this.refinery.height &&
         this.y + this.height > this.refinery.y
       );
-    }
-
-    findClosestRefinery() {
-      return this.player.units
-        .filter((unit) => unit.isAlive && unit instanceof Refinery)
-        .map((refinery) => ({
-          refinery,
-          distance: calcDistance(this.x, this.y, refinery.x, refinery.y),
-        }))
-        .reduce((prev, curr) => (prev.distance < curr.distance ? prev : curr))
-        .refinery;
     }
   }
   return Harvester;
