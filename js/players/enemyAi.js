@@ -36,7 +36,11 @@ window["EnemyAI"] = (() => {
             aiUnit.state === UnitStates.IDLE) ||
           aiUnit.state === UnitStates.MOVING
         ) {
-          const closestEnemyUnit = this.getClosestEnemyUnit(aiUnit);
+          const closestEnemyUnit = getClosestUnitOfPlayer(
+            aiUnit,
+            this.game.humanPlayer,
+            { ignoreVisionRange: false }
+          );
 
           if (closestEnemyUnit) {
             aiPlayer.selectedUnits = [aiUnit];
@@ -54,35 +58,6 @@ window["EnemyAI"] = (() => {
           }
         }
       });
-    }
-
-    getClosestEnemyUnit(aiUnit) {
-      return this.game.humanPlayer.units.reduce(
-        (closestHumanUnit, humanUnit) => {
-          if (humanUnit.isAlive) {
-            const distance = calcDistance(
-              aiUnit.x,
-              aiUnit.y,
-              humanUnit.x,
-              humanUnit.y
-            );
-
-            if (
-              distance <= aiUnit.visionRange &&
-              (closestHumanUnit === null ||
-                distance < closestHumanUnit.distance)
-            ) {
-              closestHumanUnit = {
-                unit: humanUnit,
-                distance,
-              };
-            }
-          }
-
-          return closestHumanUnit;
-        },
-        null
-      );
     }
 
     whatToBuild(aiPlayer) {

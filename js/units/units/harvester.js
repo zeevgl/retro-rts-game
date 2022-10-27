@@ -81,6 +81,7 @@ window["Harvester"] = (() => {
     }
 
     harvest(deltaTime, timestamp) {
+      //TODO:Zeev: this function is TOO LONG
       switch (this.harvestingState) {
         case HarvesterState.OnRoutToField:
           if (this.isInSpiceField()) {
@@ -92,17 +93,14 @@ window["Harvester"] = (() => {
             this.spice += this.harvestSpeed / deltaTime;
           } else if (this.spice >= this.capacity) {
             this.harvestingState = HarvesterState.Returning;
-            const closestUnit = getClosestUnitOfPlayer(
-              this.x,
-              this.y,
-              this.player,
-              Refinery
-            );
+            const closestUnit = getClosestUnitOfPlayer(this, this.player, {
+              unitTypeClass: Refinery,
+            });
             if (closestUnit?.unit) {
               this.refinery = closestUnit.unit;
             }
             if (this.refinery) {
-              this.moveTo(this.refinery.x, this.refinery.y); //TODO: find closest refinery
+              this.moveTo(this.refinery.x, this.refinery.y);
             } else {
               this.harvestingState = HarvesterState.Idle;
             }
