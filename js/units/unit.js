@@ -137,27 +137,32 @@ window["Unit"] = (() => {
     draw(ctx) {
       ctx.save();
 
+      if (!this.isAlive) {
+        ctx.globalAlpha = 0.1;
+      }
+
       this.drawUnit(ctx);
 
       if (this.isAlive) {
         this.drawSelectionBox(ctx);
         this.drawPath(ctx);
         this.drawHealthBar(ctx);
-        this.drawAttackRange(ctx);
-        this.drawVisionRange(ctx);
         this.drawTargeting(ctx);
         this.drawAttack(ctx);
-        this.drawCoordinates(ctx);
+
+        if (DEBUG_MODE) {
+          this.drawAttackRange(ctx);
+          this.drawVisionRange(ctx);
+          this.drawCoordinates(ctx);
+          this.drawName(ctx);
+        }
       }
 
       ctx.restore();
     }
 
     drawUnit(ctx) {
-      if (!this.isAlive) {
-        ctx.globalAlpha = 0.1;
-      }
-
+      //each unit should override this with their own draw method. this is just a placeholder
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
@@ -230,40 +235,45 @@ window["Unit"] = (() => {
     }
 
     drawAttackRange(ctx) {
-      if (DEBUG_MODE) {
-        ctx.beginPath();
-        ctx.arc(
-          this.x + this.width / 2,
-          this.y + this.height / 2,
-          this.attackRange,
-          0,
-          2 * Math.PI
-        );
-        ctx.strokeStyle = "gray";
-        ctx.stroke();
-      }
+      ctx.beginPath();
+      ctx.arc(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        this.attackRange,
+        0,
+        2 * Math.PI
+      );
+      ctx.strokeStyle = "gray";
+      ctx.stroke();
     }
 
     drawVisionRange(ctx) {
-      if (DEBUG_MODE) {
-        ctx.setLineDash([5, 3]);
-        ctx.beginPath();
-        ctx.arc(
-          this.x + this.width / 2,
-          this.y + this.height / 2,
-          this.visionRange,
-          0,
-          2 * Math.PI
-        );
-        ctx.strokeStyle = "purple";
-        ctx.stroke();
-      }
+      ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.arc(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        this.visionRange,
+        0,
+        2 * Math.PI
+      );
+      ctx.strokeStyle = "purple";
+      ctx.stroke();
     }
 
     drawCoordinates(ctx) {
-      if (DEBUG_MODE) {
-        drawText(ctx, `x:${this.x}, y:${this.y}`, this.x + 25, this.y + 15);
-      }
+      drawText(ctx, `x:${this.x}, y:${this.y}`, this.x + 25, this.y + 15);
+    }
+
+    drawName(ctx) {
+      ctx.fillStyle = "black";
+      ctx.font = "12px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(
+        this.name,
+        this.x + this.width / 2,
+        this.y + this.height / 2
+      );
     }
 
     inPointInUnit(x, y) {

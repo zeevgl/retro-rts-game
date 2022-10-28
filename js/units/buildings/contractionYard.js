@@ -1,8 +1,8 @@
 window["ContractionYard"] = (() => {
   const maxHealth = 1000;
   const name = "ContractionYard";
-  const width = 100;
-  const height = 75;
+  const width = 120;
+  const height = 120;
   const visionRange = 150;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 10000;
@@ -26,6 +26,21 @@ window["ContractionYard"] = (() => {
         0,
         buildTime
       );
+
+      this.initSprites();
+    }
+
+    initSprites() {
+      const { positions, sprite } = getSpritePositions(
+        97,
+        86,
+        this.height,
+        1,
+        1,
+        "../assets/units/construction_yard.png"
+      );
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
@@ -34,14 +49,10 @@ window["ContractionYard"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
-      );
+    }
+
+    drawUnit(ctx) {
+      this.sprite.draw(ctx, 0, this.x, this.y);
     }
   }
   return ContractionYard;
