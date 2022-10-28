@@ -9,7 +9,7 @@ const HarvesterState = {
 window["Harvester"] = (() => {
   const maxHealth = 1000;
   const name = "Harvester";
-  const width = 65;
+  const width = 95;
   const height = 95;
   const visionRange = 250;
   const attackRange = 0;
@@ -47,6 +47,21 @@ window["Harvester"] = (() => {
       this.spice = 0;
 
       this.refinery = null;
+
+      this.initSprites();
+    }
+
+    initSprites() {
+      const { positions, sprite } = getSpritePositions(
+          55,
+          55,
+          this.height,
+          8,
+          6,
+          "../assets/units/harvester.png"
+      );
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
@@ -56,14 +71,11 @@ window["Harvester"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
-      );
+
+    }
+
+    drawUnit(ctx) {
+      this.sprite.draw(ctx, 0, this.x, this.y);
     }
 
     setSpiceField(x, y, object) {
