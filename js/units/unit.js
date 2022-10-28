@@ -201,7 +201,11 @@ window["Unit"] = (() => {
       ctx.fillStyle = "white";
       ctx.font = "10px Arial";
       ctx.textAlign = "center";
-      ctx.fillText(this.health + "/" + this.maxHealth, this.x + 5, this.y - 2);
+      ctx.fillText(
+        this.health + "/" + this.maxHealth,
+        this.x + this.width / 2,
+        this.y - 2
+      );
     }
 
     drawAttack(ctx) {
