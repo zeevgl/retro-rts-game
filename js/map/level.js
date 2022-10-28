@@ -41,7 +41,7 @@ class Level {
         }
       }
     }
-    this.drawObjects(context);
+    DEBUG_MODE && this.drawObjects(context);
   }
 
   drawObjects(context) {
