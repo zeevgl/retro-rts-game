@@ -41,9 +41,11 @@ window["UserInput"] = (() => {
 
     onMouseLeftClicked(x, y) {
       const actionMenuItem = this.game.hud.actionMenu.getItemAtXy(x, y);
-
+      const positionFromMiniMap = this.game.hud.miniMap.getPositionFromMiniMap(x, y);
       if (actionMenuItem) {
         this.handleActionMenuItem(actionMenuItem);
+      } else if (positionFromMiniMap) {
+        this.game.camera.moveCameraTo(positionFromMiniMap.x, positionFromMiniMap.y);
       } else if (this.state === UserInputStates.PLACE_BUILDING) {
         this.game.humanPlayer.productionManager.placeBuilding(x, y);
         this.state = UserInputStates.IDLE;

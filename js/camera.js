@@ -112,7 +112,17 @@ window["Camera"] = (() => {
         x: x - this.x,
         y: y - this.y,
       };
+    }
 
+    moveCameraTo(x, y) {
+      this.x = x;
+      this.y = y;
+
+      //should be centered
+      this.x -= this.game.hud.viewport.width / 2;
+      this.y -= this.game.hud.viewport.height / 2;
+
+      this.validateCameraEdges();
     }
   }
 

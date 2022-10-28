@@ -1,6 +1,4 @@
 window["MiniMap"] = (() => {
-
-
   class MiniMap {
     constructor(game, wrapperDimensions, viewport) {
       this.game = game;
@@ -47,13 +45,19 @@ window["MiniMap"] = (() => {
       } else {
         ctx.fillRect(x, y, 5, 5);
       }
-
     }
 
     calcUnitPositionOnMiniMap(unit) {
       return {
         x: this.x + (unit.x / this.game.gameMap.mapWidth) * this.width,
         y: this.y + (unit.y / this.game.gameMap.mapHeight) * this.height,
+      };
+    }
+
+    calcUnitPositionOnMainMap(x, y) {
+      return {
+        x: (x - this.x) * (this.game.gameMap.mapWidth / this.width),
+        y: (y - this.y) * (this.game.gameMap.mapHeight / this.height),
       };
     }
 
@@ -74,6 +78,24 @@ window["MiniMap"] = (() => {
       ctx.strokeStyle = "white";
       ctx.stroke();
       ctx.restore();
+    }
+
+    isXYInside(x, y) {
+      return (
+        x > this.x &&
+        x < this.x + this.width &&
+        y > this.y &&
+        y < this.y + this.height
+      );
+    }
+
+    getPositionFromMiniMap(originalX, originalY) {
+      const { x, y } = this.game.camera.adjustPointToCamera(
+        originalX,
+        originalY
+      );
+
+      return this.isXYInside(x, y) && this.calcUnitPositionOnMainMap(x, y);
     }
   }
 
