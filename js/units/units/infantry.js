@@ -1,3 +1,8 @@
+const infantrySpritePositions = [
+  { x: 1, y: 12, width: 22, height: 30 },
+  { x: 24, y: 12, width: 22, height: 30 },
+];
+
 window["Infantry"] = (() => {
   //TODO: change all these consts into static properties of the class
   const maxHealth = 100;
@@ -37,6 +42,20 @@ window["Infantry"] = (() => {
         buildTime,
         Barracks
       );
+      this.initSprites();
+    }
+
+    initSprites() {
+      //idle
+      const { positions, sprite } = getSpriteByPositions(
+        this.height,
+        infantrySpritePositions,
+        "../assets/units/marin.png"
+      );
+
+      //walking...
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
@@ -45,14 +64,10 @@ window["Infantry"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
-      );
+    }
+
+    drawUnit(ctx) {
+      this.sprite.draw(ctx, 0, this.x, this.y);
     }
   }
   return Infantry;

@@ -1,8 +1,9 @@
 function Sprite(img, width, height, positions, sizeW, sizeH) {
   //https://davetayls.me/blog/2013/02/11/drawing-sprites-with-canvas
   this.img = img;
-  this.width = width;
-  this.height = height;
+  //TODO: remove width and height. it is coming from positions array
+  // this.width = width;
+  // this.height = height;
   this.positions = positions;
   this.sizeW = sizeW;
   this.sizeH = sizeH || sizeW;
@@ -13,10 +14,10 @@ Sprite.prototype = {
     if (pos) {
       ctx.drawImage(
         this.img,
-        pos[0],
-        pos[1],
-        this.width,
-        this.height,
+        pos.x,
+        pos.y,
+        pos.width,
+        pos.height,
         x,
         y,
         this.sizeW,
@@ -37,7 +38,7 @@ function drawAllSpritePositions(ctx, sprite, itemSize, cols, rows) {
 }
 
 /*
-used for evn spread sprites
+used for even spread sprites
 return {
   positions: [[],[]],
   sprite: Sprite
@@ -56,7 +57,12 @@ function getSpritePositions(
 
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
-      positions.push([i * singelItemWidth, j * singelItemHeight]);
+      positions.push({
+        x: i * singelItemWidth,
+        y: j * singelItemHeight,
+        width: singelItemWidth,
+        height: singelItemHeight,
+      });
     }
   }
 
@@ -70,6 +76,19 @@ function getSpritePositions(
     positions,
     singleItemSize
   );
+
+  return {
+    positions,
+    sprite,
+  };
+}
+
+function getSpriteByPositions(singleItemSize, positions, filePath) {
+
+  const img = new Image();
+  img.src = filePath;
+
+  const sprite = new Sprite(img, null, null, positions, singleItemSize);
 
   return {
     positions,
