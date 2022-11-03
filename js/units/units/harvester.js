@@ -60,7 +60,7 @@ window["Harvester"] = (() => {
         this.height,
         8,
         6,
-        "../assets/units/harvester.png"
+        "../assets/units/scifiUnit_09.png"
       );
 
       this.sprite = sprite;
@@ -84,13 +84,32 @@ window["Harvester"] = (() => {
       ctx.translate(cx, cy);
       ctx.rotate(this.angle);
       ctx.translate(-cx, -cy);
-      this.sprite.draw(ctx, 8, this.x, this.y);
+
+      if (
+        (this.angle >= 7.8 && this.angle <= 10) ||
+        (this.angle >= 3 && this.angle <= 4.6)
+      ) {
+        ctx.scale(1, -1);
+        this.sprite.draw(ctx, 0, this.x, -this.y - this.height);
+      } else {
+        this.sprite.draw(ctx, 0, this.x, this.y);
+      }
+
+      // const flipped = !(this.angle >= 3 && this.angle <= 7.5); //this.angle > Math.PI / 2 && this.angle < (Math.PI * 3) / 2;
+      // if (flipped) {
+      //   ctx.scale(1, -1);
+      //   this.sprite.draw(ctx, 0, this.x , -this.y - this.height);
+      // } else {
+      //   this.sprite.draw(ctx, 0, this.x, this.y);
+      // }
+
       ctx.restore();
     }
 
     moveTo(x, y) {
       super.moveTo(x, y);
       this.angle = this.getAngle(x, y);
+      console.log("this.angle  = ", this.angle);
     }
 
     setSpiceField(x, y, object) {
@@ -180,7 +199,7 @@ window["Harvester"] = (() => {
       const x = this.x + this.width / 2;
       const y = this.y + this.height / 2;
       const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
-      return radian + 2*Math.PI;
+      return radian + 2 * Math.PI;
       //http://jsfiddle.net/rjCeV/2/
     }
   }
