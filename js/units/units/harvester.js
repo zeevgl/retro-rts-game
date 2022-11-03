@@ -14,7 +14,7 @@ window["Harvester"] = (() => {
   const visionRange = 250;
   const attackRange = 0;
   const unitClass = UnitClasses.HEAVY;
-  const speed = 10;
+  const speed = 2;
   const buildTime = 1000;
 
   class Harvester extends Unit {
@@ -48,17 +48,19 @@ window["Harvester"] = (() => {
 
       this.refinery = null;
 
+      this.angle = 0;
+
       this.initSprites();
     }
 
     initSprites() {
       const { positions, sprite } = getSpritePositions(
-          55,
-          55,
-          this.height,
-          8,
-          6,
-          "../assets/units/harvester.png"
+        55,
+        55,
+        this.height,
+        8,
+        6,
+        "../assets/units/harvester.png"
       );
 
       this.sprite = sprite;
@@ -71,11 +73,24 @@ window["Harvester"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, 0, this.x, this.y);
+      ctx.save();
+
+      const cx = this.x + this.width / 2;
+      const cy = this.y + this.height / 2;
+
+      ctx.translate(cx, cy);
+      ctx.rotate(this.angle);
+      ctx.translate(-cx, -cy);
+      this.sprite.draw(ctx, 8, this.x, this.y);
+      ctx.restore();
+    }
+
+    moveTo(x, y) {
+      super.moveTo(x, y);
+      this.angle = this.getAngle(x, y);
     }
 
     setSpiceField(x, y, object) {
@@ -159,6 +174,14 @@ window["Harvester"] = (() => {
         this.y < this.refinery.y + this.refinery.height &&
         this.y + this.height > this.refinery.y
       );
+    }
+
+    getAngle() {
+      const x = this.x + this.width / 2;
+      const y = this.y + this.height / 2;
+      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
+      return radian + 2*Math.PI;
+      //http://jsfiddle.net/rjCeV/2/
     }
   }
   return Harvester;
