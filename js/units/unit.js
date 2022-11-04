@@ -68,8 +68,8 @@ window["Unit"] = (() => {
 
     updateMove(deltaTime, timestamp) {
       const distance = calcDistance(
-        this.x,
-        this.y,
+        this.x + this.width / 2,
+        this.y + this.height / 2,
         this.moveTargetX,
         this.moveTargetY
       );
@@ -88,8 +88,8 @@ window["Unit"] = (() => {
       const moves = calcMoves(
         this.speed,
         distance,
-        this.x,
-        this.y,
+        this.x + this.width / 2,
+        this.y + this.height / 2,
         this.moveTargetX,
         this.moveTargetY
       );
