@@ -183,7 +183,7 @@ window["Unit"] = (() => {
       if (this.state === UnitStates.MOVING) {
         ctx.beginPath();
         ctx.moveTo(this.moveTargetX, this.moveTargetY);
-        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
         ctx.strokeStyle = "#00FF00";
         ctx.stroke();
       }
