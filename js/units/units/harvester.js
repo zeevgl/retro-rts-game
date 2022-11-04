@@ -61,7 +61,7 @@ window["Harvester"] = (() => {
         this.height,
         8,
         4,
-        "../assets/units/harvester.png"
+        "../assets/units/harvester2.png"
       );
 
       this.sprite = sprite;
