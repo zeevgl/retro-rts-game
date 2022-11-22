@@ -49,6 +49,8 @@ window["Unit"] = (() => {
       this.targetUnit = null;
       this.isSelected = false;
       this.projectiles = [];
+
+      this.degree = 0;
     }
 
     update(deltaTime, timestamp) {
@@ -294,6 +296,7 @@ window["Unit"] = (() => {
       this.state = UnitStates.MOVING;
       this.moveTargetX = x;
       this.moveTargetY = y;
+      this.degree = this.getDegree(x, y);
     }
 
     moveToAttack(x, y) {
@@ -326,6 +329,52 @@ window["Unit"] = (() => {
 
     isABuilding() {
       return this.unitClass === UnitClasses.BUILDING;
+    }
+
+    getDegree() {
+      const x = this.x + this.width / 2;
+      const y = this.y + this.height / 2;
+      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
+      return radian * (180 / Math.PI) + 180;
+    }
+
+    getRadian() {
+      //currently not used
+      const x = this.x + this.width / 2;
+      const y = this.y + this.height / 2;
+      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
+      const degrees = Math.atan(this.moveTargetY - y, this.moveTargetX - x);
+      //console.log('radian = ', radian, radian * (180 / Math.PI));
+      return radian + 2 * Math.PI;
+      //http://jsfiddle.net/rjCeV/2/
+    }
+
+    degreeToPosition(degree) {
+      //TODO: need to make this code more dynamic. it should calc according to available positions in sprite..
+
+      //360 / 32 = 11.25
+      // 90 / 11.25 = 8
+      // 180 / 11.25 = 16
+
+      //90 => 0
+      //180 => 8
+      //270 => 16
+      //360 => 24
+
+      const slice = 360 / 32;
+
+      const p = Math.floor(degree / slice);
+      if (degree >= 0 && degree <= 90) {
+        return p + 24;
+      } else if (degree > 90 && degree <= 180) {
+        return p - 8;
+      } else if (degree > 180 && degree <= 270) {
+        return p - 8;
+      } else if (degree > 270 && degree <= 360) {
+        return p - 8;
+      } else {
+        return 0;
+      }
     }
   }
 

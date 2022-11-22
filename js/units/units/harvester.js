@@ -48,9 +48,6 @@ window["Harvester"] = (() => {
 
       this.refinery = null;
 
-      this.angle = 0;
-      this.degree = 0;
-
       this.initSprites();
     }
 
@@ -84,55 +81,8 @@ window["Harvester"] = (() => {
       ctx.restore();
     }
 
-    degreeToPosition(degree) {
-      //360 / 32 = 11.25
-      // 90 / 11.25 = 8
-      // 180 / 11.25 = 16
-
-      //90 => 0
-      //180 => 8
-      //270 => 16
-      //360 => 24
-
-      const slice = 360 / 32;
-
-      const p = Math.floor(degree / slice);
-      // console.log("p = ", p, p + 14);
-      if (degree >= 0 && degree <= 90) {
-       console.log("p = ", p, p + 26);
-        return p + 24;
-      } else if (degree > 90 && degree <= 180) {
-        return p - 8;
-      } else if (degree > 180 && degree <= 270) {
-        console.log("p = ", p, p - 8);
-        return p - 8;
-      } else if (degree > 270 && degree <= 360) {
-        return p - 8;
-      } else {
-        return 0;
-      }
-
-      // if (degree >= 0 && degree <= 90) {
-      //   return 1;
-      // } else if (degree > 90 && degree <= 180) {
-      //   return 2;
-      // } else if (degree > 180 && degree <= 270) {
-      //   return 3;
-      // } else if (degree > 270 && degree <= 360) {
-      //   return 4;
-      // } else {
-      //   return 0;
-      // }
-      //degree -= 90;
-      // console.log("--degree = ", degree);
-
-      // console.log("p = ", p);
-
-      //25
-      //return p - 10;
-    }
-
     drawUnitRotate(ctx) {
+      //this uses canvas rotate to draw. currently not in use
       ctx.save();
 
       const cx = this.x + this.width / 2;
@@ -157,11 +107,6 @@ window["Harvester"] = (() => {
 
     moveTo(x, y) {
       super.moveTo(x, y);
-      this.angle = this.getRadian(x, y);
-      this.degree = this.getDegree(x, y);
-      // console.log("this.angle  = ", this.angle);
-      console.log("this.degree  = ", this.degree);
-      console.log("pos=", this.degreeToPosition(this.degree));
     }
 
     setSpiceField(x, y, object) {
@@ -245,23 +190,6 @@ window["Harvester"] = (() => {
         this.y < this.refinery.y + this.refinery.height &&
         this.y + this.height > this.refinery.y
       );
-    }
-
-    getRadian() {
-      const x = this.x + this.width / 2;
-      const y = this.y + this.height / 2;
-      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
-      const degrees = Math.atan(this.moveTargetY - y, this.moveTargetX - x);
-      //console.log('radian = ', radian, radian * (180 / Math.PI));
-      return radian + 2 * Math.PI;
-      //http://jsfiddle.net/rjCeV/2/
-    }
-
-    getDegree() {
-      const x = this.x + this.width / 2;
-      const y = this.y + this.height / 2;
-      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
-      return radian * (180 / Math.PI) + 180;
     }
   }
   return Harvester;
