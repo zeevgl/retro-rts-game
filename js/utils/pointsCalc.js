@@ -39,3 +39,17 @@ function getClosestUnitOfPlayer(
       null
     );
 }
+
+function getDegree(x1, y1, x2, y2) {
+  const radian = Math.atan2(y2 - y1, x2 - x1);
+  return radian * (180 / Math.PI) + 180;
+}
+
+function getRadian(x1, y1, x2, y2) {
+  //currently not used
+  const radian = Math.atan2(y2 - y1, x2 - x1);
+  const degrees = Math.atan(y2 - y1, x2 - x1);
+  //console.log('radian = ', radian, radian * (180 / Math.PI));
+  return radian + 2 * Math.PI;
+  //http://jsfiddle.net/rjCeV/2/
+}

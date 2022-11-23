@@ -296,7 +296,7 @@ window["Unit"] = (() => {
       this.state = UnitStates.MOVING;
       this.moveTargetX = x;
       this.moveTargetY = y;
-      this.degree = this.getDegree(x, y);
+      this.degree = getDegree(this.centerX, this.centerY, this.moveTargetX, this.moveTargetY);
     }
 
     moveToAttack(x, y) {
@@ -331,22 +331,12 @@ window["Unit"] = (() => {
       return this.unitClass === UnitClasses.BUILDING;
     }
 
-    getDegree() {
-      const x = this.x + this.width / 2;
-      const y = this.y + this.height / 2;
-      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
-      return radian * (180 / Math.PI) + 180;
+    get centerX() {
+      return this.x + this.width / 2;
     }
 
-    getRadian() {
-      //currently not used
-      const x = this.x + this.width / 2;
-      const y = this.y + this.height / 2;
-      const radian = Math.atan2(this.moveTargetY - y, this.moveTargetX - x);
-      const degrees = Math.atan(this.moveTargetY - y, this.moveTargetX - x);
-      //console.log('radian = ', radian, radian * (180 / Math.PI));
-      return radian + 2 * Math.PI;
-      //http://jsfiddle.net/rjCeV/2/
+    get centerY() {
+      return this.y + this.height / 2;
     }
 
     degreeToPosition(degree) {
