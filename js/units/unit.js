@@ -70,8 +70,8 @@ window["Unit"] = (() => {
 
     updateMove(deltaTime, timestamp) {
       const distance = calcDistance(
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        this.centerX,
+        this.centerY,
         this.moveTargetX,
         this.moveTargetY
       );
@@ -90,8 +90,8 @@ window["Unit"] = (() => {
       const moves = calcMoves(
         this.speed,
         distance,
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        this.centerX,
+        this.centerY,
         this.moveTargetX,
         this.moveTargetY
       );
@@ -185,7 +185,7 @@ window["Unit"] = (() => {
       if (this.state === UnitStates.MOVING) {
         ctx.beginPath();
         ctx.moveTo(this.moveTargetX, this.moveTargetY);
-        ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.lineTo(this.centerX, this.centerY);
         ctx.strokeStyle = "#00FF00";
         ctx.stroke();
       }
@@ -205,7 +205,7 @@ window["Unit"] = (() => {
       ctx.textAlign = "center";
       ctx.fillText(
         this.health + "/" + this.maxHealth,
-        this.x + this.width / 2,
+        this.centerX,
         this.y - 2
       );
     }
@@ -243,8 +243,8 @@ window["Unit"] = (() => {
     drawAttackRange(ctx) {
       ctx.beginPath();
       ctx.arc(
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        this.centerX,
+        this.centerY,
         this.attackRange,
         0,
         2 * Math.PI
@@ -257,8 +257,8 @@ window["Unit"] = (() => {
       ctx.setLineDash([5, 3]);
       ctx.beginPath();
       ctx.arc(
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        this.centerX,
+        this.centerY,
         this.visionRange,
         0,
         2 * Math.PI
@@ -277,8 +277,8 @@ window["Unit"] = (() => {
       ctx.textAlign = "center";
       ctx.fillText(
         this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
+        this.centerX,
+        this.centerY
       );
     }
 
