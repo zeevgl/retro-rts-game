@@ -300,9 +300,8 @@ window["Unit"] = (() => {
     }
 
     moveToAttack(x, y) {
+      this.moveTo(x, y);
       this.state = UnitStates.MOVING_TO_ATTACK;
-      this.moveTargetX = x;
-      this.moveTargetY = y;
     }
 
     attack(enemyUnit) {

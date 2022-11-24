@@ -1,4 +1,23 @@
 window["Rocket"] = (() => {
+  const AnimationFrames = {
+    [UnitStates.IDLE]: {
+      start: 0,
+      length: 1,
+    },
+    [UnitStates.MOVING]: {
+      start: 1,
+      length: 6,
+    },
+    [UnitStates.MOVING_TO_ATTACK]: {
+      start: 1,
+      length: 6,
+    },
+    [UnitStates.ATTACK]: {
+      start: 7,
+      length: 2,
+    },
+  };
+
   const maxHealth = 100;
   const name = "rocket";
   const width = 55;
@@ -36,6 +55,10 @@ window["Rocket"] = (() => {
         buildTime,
         Barracks
       );
+      this.tick = 0;
+      this.spriteRow = 0;
+      this.animationFrames = AnimationFrames[UnitStates.IDLE];
+      console.log("this.animationFrames = ", this.animationFrames);
       this.initSprites();
     }
 
@@ -45,7 +68,7 @@ window["Rocket"] = (() => {
         24,
         this.height,
         8,
-        22,
+        29,
         "../assets/units/trooper.png"
       );
 
@@ -54,33 +77,32 @@ window["Rocket"] = (() => {
 
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
+      this.animationFrames = AnimationFrames[this.state];
+
+      this.tick += deltaTime;
+      if (this.tick > 100) {
+        this.tick = 0;
+        // this.spriteRow = (this.spriteRow + 1) % 29;  //will render all
+        this.spriteRow =
+          (this.spriteRow + this.animationFrames.start) %
+          (this.animationFrames.start + this.animationFrames.length);
+        console.log(this.spriteRow);
+      }
     }
 
     draw(ctx) {
       super.draw(ctx);
-      // ctx.fillStyle = "black";
-      // ctx.font = "12px Arial";
-      // ctx.textAlign = "center";
-      // ctx.fillText(
-      //   this.name,
-      //   this.x + this.width / 2,
-      //   this.y + this.height / 2
-      // );
     }
 
     drawUnit(ctx) {
       ctx.save();
-      const position = this.degreeToPosition(this.degree);
-      console.log("position = ", position);
-      this.sprite.draw(ctx, position, this.x, this.y);
-
+      const positionCol = this.degreeToPosition(this.degree);
+      this.sprite.draw(ctx, positionCol + 8 * this.spriteRow, this.x, this.y);
       ctx.restore();
     }
 
     degreeToPosition(degree) {
       const frames = 8;
-      const row = 1;
-
       const slice = 360 / frames;
 
       const col = Math.floor(degree / slice);
