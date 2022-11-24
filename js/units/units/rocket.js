@@ -1,8 +1,8 @@
 window["Rocket"] = (() => {
   const maxHealth = 100;
   const name = "rocket";
-  const width = 20;
-  const height = 20;
+  const width = 55;
+  const height = 117;
   const attackDamage = {
     [UnitClasses.LIGHT]: 6,
     [UnitClasses.MEDIUM]: 25,
@@ -36,6 +36,20 @@ window["Rocket"] = (() => {
         buildTime,
         Barracks
       );
+      this.initSprites();
+    }
+
+    initSprites() {
+      const { positions, sprite } = getSpritePositions(
+        30,
+        24,
+        this.height,
+        8,
+        22,
+        "../assets/units/trooper.png"
+      );
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
@@ -44,14 +58,41 @@ window["Rocket"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
-      );
+      // ctx.fillStyle = "black";
+      // ctx.font = "12px Arial";
+      // ctx.textAlign = "center";
+      // ctx.fillText(
+      //   this.name,
+      //   this.x + this.width / 2,
+      //   this.y + this.height / 2
+      // );
+    }
+
+    drawUnit(ctx) {
+      ctx.save();
+      const position = this.degreeToPosition(this.degree);
+      console.log("position = ", position);
+      this.sprite.draw(ctx, position, this.x, this.y);
+
+      ctx.restore();
+    }
+
+    degreeToPosition(degree) {
+      const frames = 8;
+      const row = 1;
+
+      const slice = 360 / frames;
+
+      const col = Math.floor(degree / slice);
+      const colAdjusted = col - 2;
+
+      if (colAdjusted < 0) {
+        return col + 6;
+      } else if (colAdjusted > 0) {
+        return colAdjusted;
+      } else {
+        return 0;
+      }
     }
   }
   return Rocket;
