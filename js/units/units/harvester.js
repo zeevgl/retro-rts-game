@@ -143,7 +143,7 @@ window["Harvester"] = (() => {
               this.refinery = closestUnit.unit;
             }
             if (this.refinery) {
-              this.moveTo(this.refinery.x, this.refinery.y);
+              this.moveTo(this.refinery.centerX, this.refinery.centerY);
             } else {
               this.harvestingState = HarvesterState.Idle;
             }
