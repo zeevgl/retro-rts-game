@@ -20,8 +20,8 @@ window["Rocket"] = (() => {
 
   const maxHealth = 100;
   const name = "rocket";
-  const width = 55;
-  const height = 117;
+  const width = 35;
+  const height = 55;
   const attackDamage = {
     [UnitClasses.LIGHT]: 6,
     [UnitClasses.MEDIUM]: 25,
@@ -58,7 +58,6 @@ window["Rocket"] = (() => {
       this.animationTick = 0;
       this.spriteRow = 0;
       this.animationFrames = AnimationFrames[UnitStates.IDLE];
-      console.log("this.animationFrames = ", this.animationFrames);
       this.initSprites();
     }
 
