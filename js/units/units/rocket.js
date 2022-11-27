@@ -2,7 +2,7 @@ window["Rocket"] = (() => {
   const AnimationFrames = {
     [UnitStates.IDLE]: {
       start: 0,
-      length: 1,
+      length: 0,
     },
     [UnitStates.MOVING]: {
       start: 1,
@@ -55,7 +55,7 @@ window["Rocket"] = (() => {
         buildTime,
         Barracks
       );
-      this.tick = 0;
+      this.animationTick = 0;
       this.spriteRow = 0;
       this.animationFrames = AnimationFrames[UnitStates.IDLE];
       console.log("this.animationFrames = ", this.animationFrames);
@@ -77,16 +77,26 @@ window["Rocket"] = (() => {
 
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
+      this.updateAnimation(deltaTime, timestamp);
+    }
+
+    updateAnimation(deltaTime, timestamp) {
       this.animationFrames = AnimationFrames[this.state];
 
-      this.tick += deltaTime;
-      if (this.tick > 100) {
-        this.tick = 0;
-        // this.spriteRow = (this.spriteRow + 1) % 29;  //will render all
-        this.spriteRow =
-          (this.spriteRow + this.animationFrames.start) %
-          (this.animationFrames.start + this.animationFrames.length);
-        console.log(this.spriteRow);
+      this.animationTick += deltaTime;
+      if (this.animationTick > 100) {
+        this.animationTick = 0;
+
+        if (this.spriteRow < this.animationFrames.start) {
+          this.spriteRow = this.animationFrames.start;
+        } else if (
+          this.spriteRow >=
+          this.animationFrames.start + this.animationFrames.length
+        ) {
+          this.spriteRow = this.animationFrames.start;
+        } else {
+          this.spriteRow = this.spriteRow + 1;
+        }
       }
     }
 
