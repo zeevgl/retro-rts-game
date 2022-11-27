@@ -9,8 +9,8 @@ const HarvesterState = {
 window["Harvester"] = (() => {
   const maxHealth = 1000;
   const name = "Harvester";
-  const width = 95;
-  const height = 95;
+  const width = 120;
+  const height = 120;
   const visionRange = 250;
   const attackRange = 0;
   const unitClass = UnitClasses.HEAVY;

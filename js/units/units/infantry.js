@@ -22,7 +22,7 @@ window["Infantry"] = (() => {
   const maxHealth = 100;
   const name = "infantry";
   const width = 35;
-  const height = 55;
+  const height = 75;
   const attackDamage = {
     [UnitClasses.LIGHT]: 8,
     [UnitClasses.MEDIUM]: 7,

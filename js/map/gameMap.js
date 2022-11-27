@@ -49,10 +49,10 @@ window["GameMap"] = (() => {
       );
 
       humanPlayer.addUnit(
-        new Infantry(humanPlayer, 130 + x, 140 + y, humanPlayer.color)
+        new Infantry(humanPlayer, 160 + x, 280 + y, humanPlayer.color)
       );
       humanPlayer.addUnit(
-        new Rocket(humanPlayer, 160 + x + 80, 100 + y, humanPlayer.color)
+        new Rocket(humanPlayer, 160 + x + 80, 200 + y, humanPlayer.color)
       );
     }
 
@@ -89,10 +89,28 @@ window["GameMap"] = (() => {
         // player.addUnit(
         //   new Rocket(
         //     aiPlayers,
-        //     positions[index].x - 150,
-        //     100 + positions[index].y,
+        //     300,
+        //     300,
         //     player.color
         //   )
+        // );
+
+        // player.addUnit(
+        //   new Rocket(
+        //     aiPlayers,
+        //     300,
+        //     300,
+        //     player.color
+        //   )
+        // );
+
+        // player.addUnit(
+        //     new Rocket(
+        //         aiPlayers,
+        //         300,
+        //         300,
+        //         player.color
+        //     )
         // );
       });
     }
