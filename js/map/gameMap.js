@@ -42,10 +42,10 @@ window["GameMap"] = (() => {
       );
 
       humanPlayer.addUnit(
-        new Barracks(humanPlayer, x + 120, y + 10, humanPlayer.color)
+        new Barracks(humanPlayer, x + 220, y + 10, humanPlayer.color)
       );
       humanPlayer.addUnit(
-        new Refinery(humanPlayer, x + 220, y + 10, humanPlayer.color)
+        new Refinery(humanPlayer, x + 420, y + 30, humanPlayer.color)
       );
 
       humanPlayer.addUnit(

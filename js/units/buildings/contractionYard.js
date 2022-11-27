@@ -1,8 +1,8 @@
 window["ContractionYard"] = (() => {
   const maxHealth = 1000;
   const name = "ContractionYard";
-  const width = 120;
-  const height = 120;
+  const width = 200;
+  const height = 200;
   const visionRange = 150;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 10000;
@@ -32,11 +32,11 @@ window["ContractionYard"] = (() => {
 
     initSprites() {
       const { positions, sprite } = getSpritePositions(
-        97,
-        86,
+        389,
+        258,
         this.height,
-        1,
-        1,
+        8,
+        11,
         "../assets/units/construction_yard.png"
       );
 
@@ -52,7 +52,7 @@ window["ContractionYard"] = (() => {
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, 0, this.x, this.y);
+      this.sprite.draw(ctx, 46, this.x, this.y);
     }
   }
   return ContractionYard;

@@ -1,8 +1,8 @@
 window["Barracks"] = (() => {
   const maxHealth = 400;
   const name = "Barracks";
-  const width = 75;
-  const height = 75;
+  const width = 150;
+  const height = 150;
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 900;
@@ -32,11 +32,11 @@ window["Barracks"] = (() => {
 
     initSprites() {
       const { positions, sprite } = getSpritePositions(
-          73,
-          73,
+          257,
+          211,
           this.height,
-          2,
-          3,
+          10,
+          4,
           "../assets/units/barracks.png"
       );
 
@@ -52,7 +52,7 @@ window["Barracks"] = (() => {
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, 0, this.x, this.y);
+      this.sprite.draw(ctx, 18, this.x, this.y);
     }
   }
   return Barracks;

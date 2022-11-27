@@ -1,8 +1,8 @@
 window["Refinery"] = (() => {
   const maxHealth = 800;
   const name = "Refinery";
-  const width = 150;
-  const height = 60;
+  const width = 190;
+  const height = 180;
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 1200;
@@ -33,6 +33,20 @@ window["Refinery"] = (() => {
           this.player.productionManager.spawnUnitAtBuilding(item.class, this);
         }
       }
+      this.initSprites();
+    }
+
+    initSprites() {
+      const { positions, sprite } = getSpritePositions(
+        385,
+        368,
+        this.height,
+        12,
+        9,
+        "../assets/units/refinery.png"
+      );
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
@@ -41,14 +55,10 @@ window["Refinery"] = (() => {
 
     draw(ctx) {
       super.draw(ctx);
-      ctx.fillStyle = "black";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.x + this.width / 2,
-        this.y + this.height / 2
-      );
+    }
+
+    drawUnit(ctx) {
+      this.sprite.draw(ctx, 18, this.x, this.y);
     }
   }
   return Refinery;
