@@ -6,22 +6,22 @@ window["Rocket"] = (() => {
     },
     [UnitStates.MOVING]: {
       start: 1,
-      length: 6,
+      length: 4,
     },
     [UnitStates.MOVING_TO_ATTACK]: {
       start: 1,
-      length: 6,
+      length: 4,
     },
     [UnitStates.ATTACK]: {
-      start: 7,
+      start: 5,
       length: 2,
     },
   };
 
   const maxHealth = 100;
   const name = "rocket";
-  const width = 35;
-  const height = 75;
+  const width = 50;
+  const height = 120;
   const attackDamage = {
     [UnitClasses.LIGHT]: 6,
     [UnitClasses.MEDIUM]: 25,
@@ -63,12 +63,12 @@ window["Rocket"] = (() => {
 
     initSprites() {
       const { positions, sprite } = getSpritePositions(
-        30,
-        24,
+        185,
+        147,
         this.height,
         8,
-        29,
-        "../assets/units/trooper.png"
+        11,
+        "../assets/units/rockets3.png"
       );
 
       this.sprite = sprite;
@@ -115,14 +115,12 @@ window["Rocket"] = (() => {
       const slice = 360 / frames;
 
       const col = Math.floor(degree / slice);
-      const colAdjusted = col - 2;
-
-      if (colAdjusted < 0) {
-        return col + 6;
-      } else if (colAdjusted > 0) {
-        return colAdjusted;
+      if (col === 0) {
+        return 2;
+      } else if (col <= 2) {
+        return 2 - col;
       } else {
-        return 0;
+        return 8 - col;
       }
     }
   }
