@@ -14,7 +14,7 @@ window["Rocket"] = (() => {
     },
     [UnitStates.ATTACK]: {
       start: 5,
-      length: 2,
+      length: 5,
     },
   };
 
