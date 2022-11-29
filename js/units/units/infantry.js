@@ -6,11 +6,11 @@ window["Infantry"] = (() => {
     },
     [UnitStates.MOVING]: {
       start: 1,
-      length: 6,
+      length: 5,
     },
     [UnitStates.MOVING_TO_ATTACK]: {
       start: 1,
-      length: 6,
+      length: 5,
     },
     [UnitStates.ATTACK]: {
       start: 7,

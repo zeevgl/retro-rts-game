@@ -26,16 +26,16 @@ window["Projectile"] = (() => {
       const distance = calcDistance(
         this.x,
         this.y,
-        this.targetUnit.x,
-        this.targetUnit.y
+        this.targetUnit.centerX,
+        this.targetUnit.centerY
       );
       this.moves = calcMoves(
         this.speed,
         distance,
         this.x,
         this.y,
-        this.targetUnit.x,
-        this.targetUnit.y
+        this.targetUnit.centerX,
+        this.targetUnit.centerY
       );
     }
 

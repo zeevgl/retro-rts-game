@@ -104,14 +104,14 @@ window["GameMap"] = (() => {
         //   )
         // );
 
-        // player.addUnit(
-        //     new Rocket(
-        //         aiPlayers,
-        //         300,
-        //         300,
-        //         player.color
-        //     )
-        // );
+        player.addUnit(
+            new Rocket(
+                aiPlayers,
+                500,
+                500,
+                player.color
+            )
+        );
       });
     }
   }

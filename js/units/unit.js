@@ -233,8 +233,8 @@ window["Unit"] = (() => {
       ) {
         ctx.setLineDash([5, 3]);
         ctx.beginPath();
-        ctx.moveTo(this.targetUnit.x, this.targetUnit.y);
-        ctx.lineTo(this.x, this.y);
+        ctx.moveTo(this.targetUnit.centerX, this.targetUnit.centerY);
+        ctx.lineTo(this.centerX, this.centerY);
         ctx.strokeStyle = "#ff0000";
         ctx.stroke();
       }
@@ -318,7 +318,7 @@ window["Unit"] = (() => {
           this.projectiles = this.projectiles.slice(0, 1);
         }
         this.projectiles.push(
-          new Bullet(this.x, this.y, enemyUnit, this.attackDamage)
+          new Bullet(this.centerX, this.centerY, enemyUnit, this.attackDamage)
         );
         this.attackCooldownInProgress = this.attackCooldown;
       } else {
