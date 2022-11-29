@@ -29,8 +29,8 @@ window["Infantry"] = (() => {
     [UnitClasses.HEAVY]: 1,
     [UnitClasses.BUILDING]: 6,
   };
-  const visionRange = 150;
-  const attackRange = 100;
+  const visionRange = 300;
+  const attackRange = 200;
   const attackCooldown = 700;
   const unitClass = UnitClasses.LIGHT;
   const speed = 5;

@@ -20,16 +20,16 @@ window["Rocket"] = (() => {
 
   const maxHealth = 100;
   const name = "rocket";
-  const width = 50;
-  const height = 120;
+  const width = 45;
+  const height = 100;
   const attackDamage = {
     [UnitClasses.LIGHT]: 6,
     [UnitClasses.MEDIUM]: 25,
     [UnitClasses.HEAVY]: 25,
     [UnitClasses.BUILDING]: 30,
   };
-  const visionRange = 150;
-  const attackRange = 140;
+  const visionRange = 300;
+  const attackRange = 250;
   const attackCooldown = 2500;
   const unitClass = UnitClasses.LIGHT;
   const speed = 4;
