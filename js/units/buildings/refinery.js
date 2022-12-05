@@ -9,7 +9,7 @@ window["Refinery"] = (() => {
 
   class Refinery extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -18,14 +18,10 @@ window["Refinery"] = (() => {
         height,
         color,
         maxHealth,
-        null,
         visionRange,
-        0,
-        null,
         unitClass,
-        0,
-        buildTime
-      );
+        buildTime,
+      });
 
       if (this.player) {
         const item = this.player.techTree.getHarvester();

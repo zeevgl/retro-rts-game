@@ -20,10 +20,10 @@ window["Barracks"] = (() => {
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 900;
-//TODO:need ot refactor all to be new Barracks({.....}) with defaults and ad demo mode for building placement
+  //TODO:need ot refactor all to be new Barracks({.....}) with defaults and ad demo mode for building placement
   class Barracks extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -32,14 +32,10 @@ window["Barracks"] = (() => {
         height,
         color,
         maxHealth,
-        null,
         visionRange,
-        0,
-        null,
         unitClass,
-        0,
-        buildTime
-      );
+        buildTime,
+      });
       this.initSprites();
       this.initAnimation();
 

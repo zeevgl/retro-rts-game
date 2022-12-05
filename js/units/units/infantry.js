@@ -38,7 +38,7 @@ window["Infantry"] = (() => {
 
   class Infantry extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -54,8 +54,8 @@ window["Infantry"] = (() => {
         unitClass,
         speed,
         buildTime,
-        Barracks
-      );
+        Barracks,
+      });
       this.animationTick = 0;
       this.spriteRow = 0;
       this.animationFrames = AnimationFrames[UnitStates.IDLE];
@@ -64,12 +64,12 @@ window["Infantry"] = (() => {
 
     initSprites() {
       const { positions, sprite } = getSpritePositions(
-          30,
-          24,
-          this.height,
-          8,
-          29,
-          "../assets/units/trooper.png"
+        30,
+        24,
+        this.height,
+        8,
+        29,
+        "../assets/units/trooper.png"
       );
 
       this.sprite = sprite;
@@ -90,8 +90,8 @@ window["Infantry"] = (() => {
         if (this.spriteRow < this.animationFrames.start) {
           this.spriteRow = this.animationFrames.start;
         } else if (
-            this.spriteRow >=
-            this.animationFrames.start + this.animationFrames.length
+          this.spriteRow >=
+          this.animationFrames.start + this.animationFrames.length
         ) {
           this.spriteRow = this.animationFrames.start;
         } else {

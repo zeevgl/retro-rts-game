@@ -2,7 +2,7 @@ window["Unit"] = (() => {
   const selectionMargin = 5;
 
   class Unit {
-    constructor(
+    constructor({
       player,
       name,
       x,
@@ -11,15 +11,15 @@ window["Unit"] = (() => {
       height,
       color,
       maxHealth,
-      attackDamage,
-      visionRange,
-      attackRange,
-      attackCooldown,
+      attackDamage = 0,
+      visionRange = 0,
+      attackRange = 0,
+      attackCooldown = 0,
       unitClass,
-      speed,
+      speed = 0,
       buildTime,
-      buildAt
-    ) {
+      buildAt,
+    }) {
       this.player = player;
       this.id = uuidv4();
       this.name = name;
@@ -242,13 +242,7 @@ window["Unit"] = (() => {
 
     drawAttackRange(ctx) {
       ctx.beginPath();
-      ctx.arc(
-        this.centerX,
-        this.centerY,
-        this.attackRange,
-        0,
-        2 * Math.PI
-      );
+      ctx.arc(this.centerX, this.centerY, this.attackRange, 0, 2 * Math.PI);
       ctx.strokeStyle = "gray";
       ctx.stroke();
     }
@@ -256,13 +250,7 @@ window["Unit"] = (() => {
     drawVisionRange(ctx) {
       ctx.setLineDash([5, 3]);
       ctx.beginPath();
-      ctx.arc(
-        this.centerX,
-        this.centerY,
-        this.visionRange,
-        0,
-        2 * Math.PI
-      );
+      ctx.arc(this.centerX, this.centerY, this.visionRange, 0, 2 * Math.PI);
       ctx.strokeStyle = "purple";
       ctx.stroke();
     }
@@ -275,11 +263,7 @@ window["Unit"] = (() => {
       ctx.fillStyle = "black";
       ctx.font = "12px Arial";
       ctx.textAlign = "center";
-      ctx.fillText(
-        this.name,
-        this.centerX,
-        this.centerY
-      );
+      ctx.fillText(this.name, this.centerX, this.centerY);
     }
 
     inPointInUnit(x, y) {
@@ -296,7 +280,12 @@ window["Unit"] = (() => {
       this.state = UnitStates.MOVING;
       this.moveTargetX = x;
       this.moveTargetY = y;
-      this.degree = getDegree(this.centerX, this.centerY, this.moveTargetX, this.moveTargetY);
+      this.degree = getDegree(
+        this.centerX,
+        this.centerY,
+        this.moveTargetX,
+        this.moveTargetY
+      );
     }
 
     moveToAttack(x, y) {

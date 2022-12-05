@@ -9,7 +9,7 @@ window["ContractionYard"] = (() => {
 
   class ContractionYard extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -18,14 +18,10 @@ window["ContractionYard"] = (() => {
         height,
         color,
         maxHealth,
-        null,
         visionRange,
-        0,
-        null,
         unitClass,
-        0,
-        buildTime
-      );
+        buildTime,
+      });
 
       this.initSprites();
     }

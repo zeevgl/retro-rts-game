@@ -37,7 +37,7 @@ window["Rocket"] = (() => {
 
   class Rocket extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -53,8 +53,8 @@ window["Rocket"] = (() => {
         unitClass,
         speed,
         buildTime,
-        Barracks
-      );
+        Barracks,
+      });
       this.animationTick = 0;
       this.spriteRow = 0;
       this.animationFrames = AnimationFrames[UnitStates.IDLE];

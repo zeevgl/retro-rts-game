@@ -19,7 +19,7 @@ window["Harvester"] = (() => {
 
   class Harvester extends Unit {
     constructor(player, x, y, color) {
-      super(
+      super({
         player,
         name,
         x,
@@ -28,15 +28,13 @@ window["Harvester"] = (() => {
         height,
         color,
         maxHealth,
-        null,
         visionRange,
         attackRange,
-        null,
         unitClass,
         speed,
         buildTime,
-        Refinery
-      );
+        Refinery,
+      });
 
       this.harvestingState = HarvesterState.Idle;
       this.spiceField = null;
