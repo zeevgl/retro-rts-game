@@ -143,12 +143,12 @@ window["ProductionManager"] = (() => {
     }
 
     placeBuilding(x, y) {
-      const newUnit = new this.buildingProduction.item.class(
-        this.player,
+      const newUnit = new this.buildingProduction.item.class({
+        player: this.player,
         x,
         y,
-        this.player.color
-      );
+        color: this.player.color,
+      });
       this.player.addUnit(newUnit);
       this.state = UserInputStates.IDLE;
 
