@@ -17,7 +17,7 @@ window["Unit"] = (() => {
       attackCooldown = 0,
       unitClass,
       speed = 0,
-      buildTime,
+      buildTime = 2000,
       buildAt,
     }) {
       this.player = player;
@@ -35,8 +35,8 @@ window["Unit"] = (() => {
       this.attackCooldown = attackCooldown;
       this.unitClass = unitClass;
       this.speed = speed;
-      this.buildTime = buildTime || 2000;
-      this.buildAt = buildAt || ContractionYard;
+      this.buildTime = buildTime;
+      this.buildAt = buildAt;
 
       //
       this.attackCooldownInProgress = 0;

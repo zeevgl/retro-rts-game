@@ -20,7 +20,7 @@ window["Barracks"] = (() => {
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 900;
-  //TODO:need ot refactor all to be new Barracks({.....}) with defaults and ad demo mode for building placement
+
   class Barracks extends Unit {
     constructor({player, x, y, color}) {
       super({
@@ -57,7 +57,7 @@ window["Barracks"] = (() => {
 
     initAnimation() {
       this.animationTick = 0;
-      this.animationFrame = -1;
+      this.animationFrame = 16;
       this.animationFrames = AnimationFrames[this.state];
     }
 
