@@ -68,9 +68,12 @@ window["EnemyAI"] = (() => {
           }
         });
 
+        const randomX = Math.random() * 500 - 50;
+        const randomY = Math.random() * 100;
+
         aiPlayer.productionManager.placeBuilding(
-          contractionYard.x + contractionYard.width / 2,
-          contractionYard.y + contractionYard.height + 10
+          contractionYard.x + contractionYard.width / 2 + randomX,
+          contractionYard.y + contractionYard.height + 10 + randomY
         );
       } else {
         const items = aiPlayer.techTree.getVisibleBuildings();

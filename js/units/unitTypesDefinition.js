@@ -1,5 +1,6 @@
 const UnitStates = {
   IDLE: "IDLE",
+  SPAWN: "SPAWN",
   ATTACK: "ATTACK",
   MOVING_TO_ATTACK: "MOVING_TO_ATTACK",
   MOVING: "MOVING",
