@@ -18,7 +18,7 @@ window["Harvester"] = (() => {
   const buildTime = 1000;
 
   class Harvester extends Unit {
-    constructor(player, x, y, color) {
+    constructor({ player, x, y, color }) {
       super({
         player,
         name,

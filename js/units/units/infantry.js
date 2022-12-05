@@ -37,7 +37,7 @@ window["Infantry"] = (() => {
   const buildTime = 500;
 
   class Infantry extends Unit {
-    constructor(player, x, y, color) {
+    constructor({ player, x, y, color }) {
       super({
         player,
         name,

@@ -22,7 +22,7 @@ window["Barracks"] = (() => {
   const buildTime = 900;
   //TODO:need ot refactor all to be new Barracks({.....}) with defaults and ad demo mode for building placement
   class Barracks extends Unit {
-    constructor(player, x, y, color) {
+    constructor({player, x, y, color}) {
       super({
         player,
         name,

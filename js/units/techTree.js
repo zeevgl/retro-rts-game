@@ -8,21 +8,21 @@ window["TechTree"] = (() => {
     init() {
       this.buildings = [
         {
-          unit: new ContractionYard(null, 0, 0, "gray"),
+          unit: new ContractionYard({ x: 0, y: 0, color: "gray" }),
           class: ContractionYard,
           isVisible: false,
           isUnlocked: () => false,
           exists: true,
         },
         {
-          unit: new Refinery(null, 0, 0, "gray"),
+          unit: new Refinery({ x: 0, y: 0, color: "gray" }),
           class: Refinery,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([ContractionYard]),
           exists: false,
         },
         {
-          unit: new Barracks(null, 0, 0, "gray"),
+          unit: new Barracks({ x: 0, y: 0, color: "gray" }),
           class: Barracks,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([ContractionYard]),
@@ -32,19 +32,19 @@ window["TechTree"] = (() => {
 
       this.units = [
         {
-          unit: new Infantry(),
+          unit: new Infantry({ x: 0, y: 0, color: "gray" }),
           class: Infantry,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([Barracks]),
         },
         {
-          unit: new Rocket(),
+          unit: new Rocket({ x: 0, y: 0, color: "gray" }),
           class: Rocket,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([Barracks]),
         },
         {
-          unit: new Harvester(),
+          unit: new Harvester({ x: 0, y: 0, color: "gray" }),
           class: Harvester,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([Refinery]),

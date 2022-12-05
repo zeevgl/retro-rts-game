@@ -36,7 +36,7 @@ window["Rocket"] = (() => {
   const buildTime = 600;
 
   class Rocket extends Unit {
-    constructor(player, x, y, color) {
+    constructor({player, x, y, color}) {
       super({
         player,
         name,

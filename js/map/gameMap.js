@@ -38,21 +38,46 @@ window["GameMap"] = (() => {
       const { x, y } = this.level.getHumanPlayerPosition();
 
       humanPlayer.addUnit(
-        new ContractionYard(humanPlayer, x, y, humanPlayer.color)
+        new ContractionYard({
+          player: humanPlayer,
+          x,
+          y,
+          color: humanPlayer.color,
+        })
       );
 
       humanPlayer.addUnit(
-        new Barracks(humanPlayer, x + 220, y + 10, humanPlayer.color)
+        new Barracks({
+          player: humanPlayer,
+          x: x + 220,
+          y: y + 10,
+          color: humanPlayer.color,
+        })
       );
       humanPlayer.addUnit(
-        new Refinery(humanPlayer, x + 420, y + 30, humanPlayer.color)
+        new Refinery({
+          player: humanPlayer,
+          x: x + 420,
+          y: y + 30,
+          color: humanPlayer.color,
+        })
       );
 
       humanPlayer.addUnit(
-        new Infantry(humanPlayer, 160 + x, 280 + y, humanPlayer.color)
+        new Infantry({
+          player: humanPlayer,
+          x: 160 + x,
+          y: 280 + y,
+          color: humanPlayer.color,
+        })
       );
       humanPlayer.addUnit(
-        new Rocket(humanPlayer, 160 + x + 80, 200 + y, humanPlayer.color)
+        new Rocket({
+          player: humanPlayer,
+          x: 160 + x + 80,
+          y: 200 + y,
+          color: humanPlayer.color,
+        })
       );
     }
 
@@ -61,12 +86,12 @@ window["GameMap"] = (() => {
       const positions = this.level.getAiPlayersPositions();
       aiPlayers.forEach((player, index) => {
         player.addUnit(
-          new ContractionYard(
-            aiPlayers,
-            positions[index].x,
-            positions[index].y,
-            player.color
-          )
+          new ContractionYard({
+            player: aiPlayers,
+            x: positions[index].x,
+            y: positions[index].y,
+            color: player.color,
+          })
         );
 
         // player.addUnit(
@@ -105,12 +130,7 @@ window["GameMap"] = (() => {
         // );
 
         player.addUnit(
-            new Rocket(
-                aiPlayers,
-                500,
-                500,
-                player.color
-            )
+          new Rocket({ player: aiPlayers, x: 500, y: 500, color: player.color })
         );
       });
     }
