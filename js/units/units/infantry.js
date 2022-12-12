@@ -54,7 +54,7 @@ window["Infantry"] = (() => {
         unitClass,
         speed,
         buildTime,
-        Barracks,
+        buildAt: Barracks,
       });
       this.animationTick = 0;
       this.spriteRow = 0;

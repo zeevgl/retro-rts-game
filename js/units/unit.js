@@ -18,7 +18,7 @@ window["Unit"] = (() => {
       unitClass,
       speed = 0,
       buildTime = 2000,
-      buildAt,
+      buildAt = null,
     }) {
       this.player = player;
       this.id = uuidv4();
