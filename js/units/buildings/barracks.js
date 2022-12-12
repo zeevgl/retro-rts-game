@@ -22,7 +22,7 @@ window["Barracks"] = (() => {
   const buildTime = 900;
 
   class Barracks extends Unit {
-    constructor({player, x, y, color}) {
+    constructor({ player, x, y, color }) {
       super({
         player,
         name,
@@ -37,9 +37,8 @@ window["Barracks"] = (() => {
         buildTime,
       });
       this.initSprites();
-      this.initAnimation();
-
       this.state = UnitStates.SPAWN;
+      this.initAnimations();
     }
 
     initSprites() {
@@ -55,39 +54,36 @@ window["Barracks"] = (() => {
       this.sprite = sprite;
     }
 
-    initAnimation() {
-      this.animationTick = 0;
-      this.animationFrame = 16;
-      this.animationFrames = AnimationFrames[this.state];
+    initAnimations() {
+      this.activeAnimation = null;
+
+      this.animations = {
+        [UnitStates.SPAWN]: Animation.fromAnimationFrame(
+          this.sprite,
+          AnimationFrames[UnitStates.SPAWN],
+          {
+            frameDuration: 80,
+            onComplete: () => {
+              this.state = AnimationFrames[UnitStates.SPAWN].next;
+              this.activeAnimation = this.animations[this.state];
+              this.activeAnimation.start();
+            },
+          }
+        ),
+        [UnitStates.IDLE]: Animation.fromAnimationFrame(
+          this.sprite,
+          AnimationFrames[UnitStates.IDLE],
+          { frameDuration: 80 }
+        ),
+      };
+
+      this.activeAnimation = this.animations[this.state];
+      this.activeAnimation.start();
     }
 
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
-      this.updateAnimation(deltaTime, timestamp);
-    }
-
-    updateAnimation(deltaTime, timestamp) {
-      this.animationFrames = AnimationFrames[this.state];
-
-      this.animationTick += deltaTime;
-      if (this.animationTick > 80) {
-        this.animationTick = 0;
-
-        if (this.animationFrame < this.animationFrames.start) {
-          this.animationFrame = this.animationFrames.start;
-        } else if (
-          this.animationFrame >=
-          this.animationFrames.start + this.animationFrames.length
-        ) {
-          if (this.animationFrames.loop) {
-            this.animationFrame = this.animationFrames.start;
-          } else if (this.animationFrames.next) {
-            this.state = this.animationFrames.next;
-          }
-        } else {
-          this.animationFrame++;
-        }
-      }
+      this.activeAnimation.update(deltaTime, timestamp);
     }
 
     draw(ctx) {
@@ -95,7 +91,7 @@ window["Barracks"] = (() => {
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, this.animationFrame, this.x, this.y);
+      this.sprite.draw(ctx, this.activeAnimation.getActiveFrame(), this.x, this.y);
     }
   }
   return Barracks;
