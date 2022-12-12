@@ -33,7 +33,7 @@ window["Harvester"] = (() => {
         unitClass,
         speed,
         buildTime,
-        Refinery,
+        buildAt: Refinery,
       });
 
       this.harvestingState = HarvesterState.Idle;
