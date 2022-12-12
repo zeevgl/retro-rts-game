@@ -4,11 +4,13 @@ window["Barracks"] = (() => {
       start: 0,
       length: 18,
       loop: false,
+      frameDuration: 80,
       next: UnitStates.IDLE,
     },
     [UnitStates.IDLE]: {
       start: 20,
       length: 9,
+      frameDuration: 80,
       loop: true,
     },
   };

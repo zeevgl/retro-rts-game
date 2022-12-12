@@ -4,27 +4,34 @@ class FrameAnimator {
     startIndex,
     endIndex,
     loop = false,
-    { onComplete = null, frameDuration = 160 } = {}
+    frameDuration = 80,
+    { onComplete = null } = {}
   ) {
     this.sprite = sprite;
     this.startIndex = startIndex;
     this.endIndex = endIndex;
     this.loop = loop;
+    this.frameDuration = frameDuration; //ms
     this.onComplete = onComplete;
 
     this.imageFrame = null;
     this.isRunning = false;
     this.totalDt = 0;
-
-    this.frameDuration = frameDuration; //ms
   }
 
   static fromAnimationFrame(
     sprite,
-    { start, length, loop },
+    { start, length, loop, frameDuration },
     options = undefined
   ) {
-    return new this(sprite, start, start + length, loop, options);
+    return new this(
+      sprite,
+      start,
+      start + length,
+      loop,
+      frameDuration,
+      options
+    );
   }
 
   update(dt, timestamp) {

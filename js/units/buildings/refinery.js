@@ -4,12 +4,14 @@ window["Refinery"] = (() => {
       start: 0,
       length: 18,
       loop: false,
+      frameDuration: 80,
       next: UnitStates.IDLE,
     },
     [UnitStates.IDLE]: {
       start: 25,
       length: 6,
       loop: true,
+      frameDuration: 80,
     },
   };
 
