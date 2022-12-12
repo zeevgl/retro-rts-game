@@ -128,17 +128,17 @@ window["ProductionManager"] = (() => {
     }
 
     spawnUnitAtBuilding(unitClass, building) {
-      const newUnit = new unitClass(
-        this.player,
-        building.x + building.width / 2,
-        building.y + building.height + 10,
-        this.player.color
-      );
+      const newUnit = new unitClass({
+        player: this.player,
+        x: building.centerX,
+        y: building.centerY,
+        color: this.player.color,
+      });
       this.player.addUnit(newUnit);
       this.resetUnitProduction();
 
       const randomX = Math.random() * 300 - 50;
-      const randomY = Math.random() * 100;
+      const randomY = Math.random() * 100 + 150;
       newUnit.moveTo(newUnit.x + randomX, newUnit.y + randomY);
     }
 
