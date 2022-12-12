@@ -58,7 +58,7 @@ window["Barracks"] = (() => {
       this.activeAnimation = null;
 
       this.animations = {
-        [UnitStates.SPAWN]: Animation.fromAnimationFrame(
+        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
           this.sprite,
           AnimationFrames[UnitStates.SPAWN],
           {
@@ -70,7 +70,7 @@ window["Barracks"] = (() => {
             },
           }
         ),
-        [UnitStates.IDLE]: Animation.fromAnimationFrame(
+        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
           this.sprite,
           AnimationFrames[UnitStates.IDLE],
           { frameDuration: 80 }

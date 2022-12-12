@@ -1,4 +1,4 @@
-class Animation {
+class FrameAnimator {
   constructor(
     sprite,
     startIndex,
