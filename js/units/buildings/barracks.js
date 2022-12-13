@@ -1,5 +1,5 @@
 window["Barracks"] = (() => {
-  const AnimationFrames = {
+  const animationFrames = {
     [UnitStates.SPAWN]: {
       start: 0,
       length: 18,
@@ -39,7 +39,7 @@ window["Barracks"] = (() => {
         buildTime,
       });
       this.initSprites();
-      this.initAnimations();
+      this.initAnimations(animationFrames, this.sprite);
     }
 
     initSprites() {
@@ -55,44 +55,10 @@ window["Barracks"] = (() => {
       this.sprite = sprite;
     }
 
-    initAnimations() {
-      this.activeAnimation = null;
-
-      this.animations = {
-        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.SPAWN],
-          {
-            onComplete: () => {
-              this.state = AnimationFrames[UnitStates.SPAWN].next;
-              this.activeAnimation = this.animations[this.state];
-              this.activeAnimation.start();
-            },
-          }
-        ),
-        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.IDLE]
-        ),
-      };
-
-      this.activeAnimation = this.animations[this.state];
-      this.activeAnimation.start();
-    }
-
-    update(deltaTime, timestamp) {
-      super.update(deltaTime, timestamp);
-      this.activeAnimation.update(deltaTime, timestamp);
-    }
-
-    draw(ctx) {
-      super.draw(ctx);
-    }
-
     drawUnit(ctx) {
       this.sprite.draw(
         ctx,
-        this.activeAnimation.getActiveFrame(),
+        this.activeAnimation?.getActiveFrame(),
         this.x,
         this.y
       );

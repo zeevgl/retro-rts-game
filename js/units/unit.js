@@ -358,19 +358,26 @@ window["Unit"] = (() => {
 
     setState(state) {
       this.state = state;
-
       if (this.animations?.[state]) {
         this.activeAnimation = this.animations[this.state];
         this.activeAnimation.start();
       }
     }
 
-    initAnimations(animationFrames) {
+    initAnimations(animationFrames, sprite) {
       this.activeAnimation = null;
 
       this.animations = Object.entries(animationFrames).reduce((acc, pair) => {
         const [key, value] = pair;
-        acc[key] = FrameAnimator.fromAnimationFrame(this.sprite, value, {});
+        let onComplete;
+        if (value.next) {
+          onComplete = () => {
+            this.setState(value.next);
+          };
+        }
+        acc[key] = FrameAnimator.fromAnimationFrame(sprite, value, {
+          onComplete,
+        });
         return acc;
       }, {});
 

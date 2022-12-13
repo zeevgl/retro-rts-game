@@ -66,7 +66,7 @@ window["Rocket"] = (() => {
       this.animationTick = 0;
       this.spriteRow = 0;
       this.initSprites();
-      this.initAnimations(animationFrames);
+      this.initAnimations(animationFrames, this.sprite);
     }
 
     initSprites() {
@@ -87,7 +87,7 @@ window["Rocket"] = (() => {
       const positionCol = this.degreeToPosition(this.degree);
       this.sprite.draw(
         ctx,
-        positionCol + 8 * this.activeAnimation.getActiveFrame(),
+        positionCol + 8 * this.activeAnimation?.getActiveFrame(),
         this.x,
         this.y
       );

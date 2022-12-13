@@ -1,5 +1,5 @@
 window["ContractionYard"] = (() => {
-  const AnimationFrames = {
+  const animationFrames = {
     [UnitStates.SPAWN]: {
       // start: 17,
       // length: 15,
@@ -42,7 +42,7 @@ window["ContractionYard"] = (() => {
       });
 
       this.initSprites();
-      this.initAnimations();
+      this.initAnimations(animationFrames, this.sprite);
     }
 
     initSprites() {
@@ -58,43 +58,7 @@ window["ContractionYard"] = (() => {
       this.sprite = sprite;
     }
 
-    initAnimations() {
-      this.activeAnimation = null;
-
-      //TODO:maybe do this in onne function?
-      this.animations = {
-        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.SPAWN],
-          {
-            onComplete: () => {
-              this.state = AnimationFrames[UnitStates.SPAWN].next;
-              this.activeAnimation = this.animations[this.state];
-              this.activeAnimation.start();
-            },
-          }
-        ),
-        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.IDLE]
-        ),
-      };
-
-      this.activeAnimation = this.animations[this.state];
-      this.activeAnimation.start();
-    }
-
-    update(deltaTime, timestamp) {
-      super.update(deltaTime, timestamp);
-      this.activeAnimation.update(deltaTime, timestamp);
-    }
-
-    draw(ctx) {
-      super.draw(ctx);
-    }
-
     drawUnit(ctx) {
-      //this.sprite.draw(ctx, 46, this.x, this.y);
       this.sprite.draw(
         ctx,
         this.activeAnimation.getActiveFrame(),

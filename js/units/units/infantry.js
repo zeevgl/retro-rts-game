@@ -1,5 +1,5 @@
 window["Infantry"] = (() => {
-  const AnimationFrames = {
+  const animationFrames = {
     [UnitStates.SPAWN]: {
       start: 0,
       length: 0,
@@ -11,18 +11,19 @@ window["Infantry"] = (() => {
     [UnitStates.MOVING]: {
       start: 1,
       length: 5,
+      loop: true,
     },
     [UnitStates.MOVING_TO_ATTACK]: {
       start: 1,
       length: 5,
+      loop: true,
     },
     [UnitStates.ATTACK]: {
       start: 7,
-      length: 2,
+      length: 4,
     },
   };
 
-  //TODO: change all these consts into static properties of the class
   const maxHealth = 100;
   const name = "infantry";
   const width = 35;
@@ -35,7 +36,7 @@ window["Infantry"] = (() => {
   };
   const visionRange = 300;
   const attackRange = 200;
-  const attackCooldown = 700;
+  const attackCooldown = 500;
   const unitClass = UnitClasses.LIGHT;
   const speed = 5;
   const buildTime = 500;
@@ -60,10 +61,8 @@ window["Infantry"] = (() => {
         buildTime,
         buildAt: Barracks,
       });
-      this.animationTick = 0;
-      this.spriteRow = 0;
-      this.animationFrames = AnimationFrames[UnitStates.IDLE];
       this.initSprites();
+      this.initAnimations(animationFrames, this.sprite);
     }
 
     initSprites() {
@@ -79,39 +78,10 @@ window["Infantry"] = (() => {
       this.sprite = sprite;
     }
 
-    update(deltaTime, timestamp) {
-      super.update(deltaTime, timestamp);
-      this.updateAnimation(deltaTime, timestamp);
-    }
-
-    updateAnimation(deltaTime, timestamp) {
-      this.animationFrames = AnimationFrames[this.state];
-
-      this.animationTick += deltaTime;
-      if (this.animationTick > 100) {
-        this.animationTick = 0;
-
-        if (this.spriteRow < this.animationFrames.start) {
-          this.spriteRow = this.animationFrames.start;
-        } else if (
-          this.spriteRow >=
-          this.animationFrames.start + this.animationFrames.length
-        ) {
-          this.spriteRow = this.animationFrames.start;
-        } else {
-          this.spriteRow = this.spriteRow + 1;
-        }
-      }
-    }
-
-    draw(ctx) {
-      super.draw(ctx);
-    }
-
     drawUnit(ctx) {
       ctx.save();
       const positionCol = this.degreeToPosition(this.degree);
-      this.sprite.draw(ctx, positionCol + 8 * this.spriteRow, this.x, this.y);
+      this.sprite.draw(ctx, positionCol + 8 * this.activeAnimation?.getActiveFrame(), this.x, this.y);
       ctx.restore();
     }
 
