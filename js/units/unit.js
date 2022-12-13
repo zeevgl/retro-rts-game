@@ -43,7 +43,7 @@ window["Unit"] = (() => {
       this.health = maxHealth;
       this.isAlive = true;
       this.isDecaying = false;
-      this.state = UnitStates.IDLE;
+      this.state = this.player ? UnitStates.SPAWN : UnitStates.IDLE;
       this.moveTargetX = null;
       this.moveTargetY = null;
       this.targetUnit = null;

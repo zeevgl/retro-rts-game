@@ -39,7 +39,6 @@ window["Barracks"] = (() => {
         buildTime,
       });
       this.initSprites();
-      this.state = UnitStates.SPAWN;
       this.initAnimations();
     }
 

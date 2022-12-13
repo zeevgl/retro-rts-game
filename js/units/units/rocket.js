@@ -1,5 +1,9 @@
 window["Rocket"] = (() => {
   const AnimationFrames = {
+    [UnitStates.SPAWN]: {
+      start: 0,
+      length: 0,
+    },
     [UnitStates.IDLE]: {
       start: 0,
       length: 0,

@@ -46,8 +46,6 @@ window["Refinery"] = (() => {
         }
       }
       this.initSprites();
-
-      this.state = UnitStates.SPAWN;
       this.initAnimations();
     }
 
@@ -101,7 +99,6 @@ window["Refinery"] = (() => {
     }
 
     drawUnit(ctx) {
-      // this.sprite.draw(ctx, 18, this.x, this.y);
       this.sprite.draw(
         ctx,
         this.activeAnimation.getActiveFrame(),
