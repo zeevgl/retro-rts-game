@@ -22,7 +22,7 @@ window["Rocket"] = (() => {
     [UnitStates.ATTACK]: {
       start: 5,
       length: 5,
-      loop: true,
+      loop: false,
     },
   };
 
@@ -98,23 +98,19 @@ window["Rocket"] = (() => {
         ),
         [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
           this.sprite,
-          AnimationFrames[UnitStates.IDLE],
-          { frameDuration: 80 }
+          AnimationFrames[UnitStates.IDLE]
         ),
         [UnitStates.MOVING]: FrameAnimator.fromAnimationFrame(
           this.sprite,
-          AnimationFrames[UnitStates.MOVING],
-          { frameDuration: 100 }
+          AnimationFrames[UnitStates.MOVING]
         ),
         [UnitStates.MOVING_TO_ATTACK]: FrameAnimator.fromAnimationFrame(
-            this.sprite,
-            AnimationFrames[UnitStates.MOVING_TO_ATTACK],
-            { frameDuration: 100 }
+          this.sprite,
+          AnimationFrames[UnitStates.MOVING_TO_ATTACK]
         ),
         [UnitStates.ATTACK]: FrameAnimator.fromAnimationFrame(
-            this.sprite,
-            AnimationFrames[UnitStates.ATTACK],
-            { frameDuration: 100 }
+          this.sprite,
+          AnimationFrames[UnitStates.ATTACK]
         ),
       };
 
