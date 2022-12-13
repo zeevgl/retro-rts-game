@@ -85,34 +85,40 @@ window["Rocket"] = (() => {
     initAnimations() {
       this.activeAnimation = null;
 
-      this.animations = {
-        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.SPAWN],
-          {
-            frameDuration: 80,
-            onComplete: () => {
-              this.setState(AnimationFrames[UnitStates.SPAWN].next);
-            },
-          }
-        ),
-        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.IDLE]
-        ),
-        [UnitStates.MOVING]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.MOVING]
-        ),
-        [UnitStates.MOVING_TO_ATTACK]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.MOVING_TO_ATTACK]
-        ),
-        [UnitStates.ATTACK]: FrameAnimator.fromAnimationFrame(
-          this.sprite,
-          AnimationFrames[UnitStates.ATTACK]
-        ),
-      };
+      // this.animations = {
+      //   [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
+      //     this.sprite,
+      //     AnimationFrames[UnitStates.SPAWN],
+      //     {
+      //       frameDuration: 80,
+      //       onComplete: () => {
+      //         this.setState(AnimationFrames[UnitStates.SPAWN].next);
+      //       },
+      //     }
+      //   ),
+      //   [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
+      //     this.sprite,
+      //     AnimationFrames[UnitStates.IDLE]
+      //   ),
+      //   [UnitStates.MOVING]: FrameAnimator.fromAnimationFrame(
+      //     this.sprite,
+      //     AnimationFrames[UnitStates.MOVING]
+      //   ),
+      //   [UnitStates.MOVING_TO_ATTACK]: FrameAnimator.fromAnimationFrame(
+      //     this.sprite,
+      //     AnimationFrames[UnitStates.MOVING_TO_ATTACK]
+      //   ),
+      //   [UnitStates.ATTACK]: FrameAnimator.fromAnimationFrame(
+      //     this.sprite,
+      //     AnimationFrames[UnitStates.ATTACK]
+      //   ),
+      // };
+
+      this.animations = Object.entries(AnimationFrames).reduce((acc, pair) => {
+        const [key, value] = pair;
+        acc[key] = FrameAnimator.fromAnimationFrame(this.sprite, value, {});
+        return acc;
+      }, {});
 
       this.activeAnimation = this.animations[this.state];
       this.activeAnimation.start();
