@@ -70,7 +70,6 @@ window["Refinery"] = (() => {
           this.sprite,
           AnimationFrames[UnitStates.SPAWN],
           {
-            frameDuration: 80,
             onComplete: () => {
               this.state = AnimationFrames[UnitStates.SPAWN].next;
               this.activeAnimation = this.animations[this.state];
@@ -80,8 +79,7 @@ window["Refinery"] = (() => {
         ),
         [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
           this.sprite,
-          AnimationFrames[UnitStates.IDLE],
-          { frameDuration: 80 }
+          AnimationFrames[UnitStates.IDLE]
         ),
       };
 

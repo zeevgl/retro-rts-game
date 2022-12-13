@@ -1,5 +1,4 @@
 window["ContractionYard"] = (() => {
-
   const AnimationFrames = {
     [UnitStates.SPAWN]: {
       // start: 17,
@@ -27,7 +26,7 @@ window["ContractionYard"] = (() => {
   const buildTime = 10000;
 
   class ContractionYard extends Unit {
-    constructor({player, x, y, color}) {
+    constructor({ player, x, y, color }) {
       super({
         player,
         name,
@@ -65,21 +64,19 @@ window["ContractionYard"] = (() => {
       //TODO:maybe do this in onne function?
       this.animations = {
         [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
-            this.sprite,
-            AnimationFrames[UnitStates.SPAWN],
-            {
-              frameDuration: AnimationFrames[UnitStates.SPAWN].frameDuration,
-              onComplete: () => {
-                this.state = AnimationFrames[UnitStates.SPAWN].next;
-                this.activeAnimation = this.animations[this.state];
-                this.activeAnimation.start();
-              },
-            }
+          this.sprite,
+          AnimationFrames[UnitStates.SPAWN],
+          {
+            onComplete: () => {
+              this.state = AnimationFrames[UnitStates.SPAWN].next;
+              this.activeAnimation = this.animations[this.state];
+              this.activeAnimation.start();
+            },
+          }
         ),
         [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
-            this.sprite,
-            AnimationFrames[UnitStates.IDLE],
-            { frameDuration: 80 }
+          this.sprite,
+          AnimationFrames[UnitStates.IDLE]
         ),
       };
 
@@ -98,7 +95,12 @@ window["ContractionYard"] = (() => {
 
     drawUnit(ctx) {
       //this.sprite.draw(ctx, 46, this.x, this.y);
-      this.sprite.draw(ctx, this.activeAnimation.getActiveFrame(), this.x, this.y);
+      this.sprite.draw(
+        ctx,
+        this.activeAnimation.getActiveFrame(),
+        this.x,
+        this.y
+      );
     }
   }
   return ContractionYard;

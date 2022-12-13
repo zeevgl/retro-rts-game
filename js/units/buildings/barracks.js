@@ -63,7 +63,6 @@ window["Barracks"] = (() => {
           this.sprite,
           AnimationFrames[UnitStates.SPAWN],
           {
-            frameDuration: 80,
             onComplete: () => {
               this.state = AnimationFrames[UnitStates.SPAWN].next;
               this.activeAnimation = this.animations[this.state];
@@ -73,8 +72,7 @@ window["Barracks"] = (() => {
         ),
         [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
           this.sprite,
-          AnimationFrames[UnitStates.IDLE],
-          { frameDuration: 80 }
+          AnimationFrames[UnitStates.IDLE]
         ),
       };
 
@@ -92,7 +90,12 @@ window["Barracks"] = (() => {
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, this.activeAnimation.getActiveFrame(), this.x, this.y);
+      this.sprite.draw(
+        ctx,
+        this.activeAnimation.getActiveFrame(),
+        this.x,
+        this.y
+      );
     }
   }
   return Barracks;
