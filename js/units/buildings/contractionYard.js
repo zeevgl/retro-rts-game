@@ -1,4 +1,23 @@
 window["ContractionYard"] = (() => {
+
+  const AnimationFrames = {
+    [UnitStates.SPAWN]: {
+      // start: 17,
+      // length: 15,
+      start: 0,
+      length: 32,
+      loop: false,
+      frameDuration: 80,
+      next: UnitStates.IDLE,
+    },
+    [UnitStates.IDLE]: {
+      start: 32,
+      length: 1,
+      frameDuration: 80,
+      loop: true,
+    },
+  };
+
   const maxHealth = 1000;
   const name = "ContractionYard";
   const width = 200;
@@ -24,6 +43,7 @@ window["ContractionYard"] = (() => {
       });
 
       this.initSprites();
+      this.initAnimations();
     }
 
     initSprites() {
@@ -39,8 +59,36 @@ window["ContractionYard"] = (() => {
       this.sprite = sprite;
     }
 
+    initAnimations() {
+      this.activeAnimation = null;
+
+      this.animations = {
+        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
+            this.sprite,
+            AnimationFrames[UnitStates.SPAWN],
+            {
+              frameDuration: AnimationFrames[UnitStates.SPAWN].frameDuration,
+              onComplete: () => {
+                this.state = AnimationFrames[UnitStates.SPAWN].next;
+                this.activeAnimation = this.animations[this.state];
+                this.activeAnimation.start();
+              },
+            }
+        ),
+        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
+            this.sprite,
+            AnimationFrames[UnitStates.IDLE],
+            { frameDuration: 80 }
+        ),
+      };
+
+      this.activeAnimation = this.animations[this.state];
+      this.activeAnimation.start();
+    }
+
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
+      this.activeAnimation.update(deltaTime, timestamp);
     }
 
     draw(ctx) {
@@ -48,7 +96,8 @@ window["ContractionYard"] = (() => {
     }
 
     drawUnit(ctx) {
-      this.sprite.draw(ctx, 46, this.x, this.y);
+      //this.sprite.draw(ctx, 46, this.x, this.y);
+      this.sprite.draw(ctx, this.activeAnimation.getActiveFrame(), this.x, this.y);
     }
   }
   return ContractionYard;
