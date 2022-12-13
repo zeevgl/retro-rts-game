@@ -43,7 +43,7 @@ window["Unit"] = (() => {
       this.health = maxHealth;
       this.isAlive = true;
       this.isDecaying = false;
-      this.state = this.player ? UnitStates.SPAWN : UnitStates.IDLE;
+      this.setState(this.player ? UnitStates.SPAWN : UnitStates.IDLE);
       this.moveTargetX = null;
       this.moveTargetY = null;
       this.targetUnit = null;
@@ -82,7 +82,7 @@ window["Unit"] = (() => {
       ) {
         this.attack(this.targetUnit);
       } else if (Math.floor(distance) <= 3 || distance < this.speed) {
-        this.state = UnitStates.IDLE;
+        this.setState(UnitStates.IDLE);
         return;
       }
 
@@ -111,7 +111,7 @@ window["Unit"] = (() => {
           !activeProjectile.targetUnit.isAlive
         ) {
           // target is dead
-          this.state = UnitStates.IDLE;
+          this.setState(UnitStates.IDLE);
           this.projectiles = [];
         } else if (
           this.state === UnitStates.ATTACK &&
@@ -277,7 +277,7 @@ window["Unit"] = (() => {
     }
 
     moveTo(x, y) {
-      this.state = UnitStates.MOVING;
+      this.setState(UnitStates.MOVING);
       this.moveTargetX = x;
       this.moveTargetY = y;
       this.degree = getDegree(
@@ -290,7 +290,7 @@ window["Unit"] = (() => {
 
     moveToAttack(x, y) {
       this.moveTo(x, y);
-      this.state = UnitStates.MOVING_TO_ATTACK;
+      this.setState(UnitStates.MOVING_TO_ATTACK);
     }
 
     attack(enemyUnit) {
@@ -302,7 +302,7 @@ window["Unit"] = (() => {
 
       const distance = calcDistance(this.x, this.y, enemyUnit.x, enemyUnit.y);
       if (distance <= this.attackRange) {
-        this.state = UnitStates.ATTACK;
+        this.setState(UnitStates.ATTACK);
         if (this.projectiles.length > 1) {
           this.projectiles = this.projectiles.slice(0, 1);
         }
@@ -353,6 +353,10 @@ window["Unit"] = (() => {
       } else {
         return 0;
       }
+    }
+
+    setState(state) {
+      this.state = state;
     }
   }
 

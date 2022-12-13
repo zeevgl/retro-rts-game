@@ -3,6 +3,7 @@ window["Rocket"] = (() => {
     [UnitStates.SPAWN]: {
       start: 0,
       length: 0,
+      next: UnitStates.IDLE,
     },
     [UnitStates.IDLE]: {
       start: 0,
@@ -11,14 +12,17 @@ window["Rocket"] = (() => {
     [UnitStates.MOVING]: {
       start: 1,
       length: 4,
+      loop: true,
     },
     [UnitStates.MOVING_TO_ATTACK]: {
       start: 1,
       length: 4,
+      loop: true,
     },
     [UnitStates.ATTACK]: {
       start: 5,
       length: 5,
+      loop: true,
     },
   };
 
@@ -61,8 +65,8 @@ window["Rocket"] = (() => {
       });
       this.animationTick = 0;
       this.spriteRow = 0;
-      this.animationFrames = AnimationFrames[UnitStates.IDLE];
       this.initSprites();
+      this.initAnimations();
     }
 
     initSprites() {
@@ -78,29 +82,49 @@ window["Rocket"] = (() => {
       this.sprite = sprite;
     }
 
-    update(deltaTime, timestamp) {
-      super.update(deltaTime, timestamp);
-      this.updateAnimation(deltaTime, timestamp);
+    initAnimations() {
+      this.activeAnimation = null;
+
+      this.animations = {
+        [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
+          this.sprite,
+          AnimationFrames[UnitStates.SPAWN],
+          {
+            frameDuration: 80,
+            onComplete: () => {
+              this.setState(AnimationFrames[UnitStates.SPAWN].next);
+            },
+          }
+        ),
+        [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
+          this.sprite,
+          AnimationFrames[UnitStates.IDLE],
+          { frameDuration: 80 }
+        ),
+        [UnitStates.MOVING]: FrameAnimator.fromAnimationFrame(
+          this.sprite,
+          AnimationFrames[UnitStates.MOVING],
+          { frameDuration: 100 }
+        ),
+        [UnitStates.MOVING_TO_ATTACK]: FrameAnimator.fromAnimationFrame(
+            this.sprite,
+            AnimationFrames[UnitStates.MOVING_TO_ATTACK],
+            { frameDuration: 100 }
+        ),
+        [UnitStates.ATTACK]: FrameAnimator.fromAnimationFrame(
+            this.sprite,
+            AnimationFrames[UnitStates.ATTACK],
+            { frameDuration: 100 }
+        ),
+      };
+
+      this.activeAnimation = this.animations[this.state];
+      this.activeAnimation.start();
     }
 
-    updateAnimation(deltaTime, timestamp) {
-      this.animationFrames = AnimationFrames[this.state];
-
-      this.animationTick += deltaTime;
-      if (this.animationTick > 100) {
-        this.animationTick = 0;
-
-        if (this.spriteRow < this.animationFrames.start) {
-          this.spriteRow = this.animationFrames.start;
-        } else if (
-          this.spriteRow >=
-          this.animationFrames.start + this.animationFrames.length
-        ) {
-          this.spriteRow = this.animationFrames.start;
-        } else {
-          this.spriteRow = this.spriteRow + 1;
-        }
-      }
+    update(deltaTime, timestamp) {
+      super.update(deltaTime, timestamp);
+      this.activeAnimation.update(deltaTime, timestamp);
     }
 
     draw(ctx) {
@@ -110,7 +134,12 @@ window["Rocket"] = (() => {
     drawUnit(ctx) {
       ctx.save();
       const positionCol = this.degreeToPosition(this.degree);
-      this.sprite.draw(ctx, positionCol + 8 * this.spriteRow, this.x, this.y);
+      this.sprite.draw(
+        ctx,
+        positionCol + 8 * this.activeAnimation.getActiveFrame(),
+        this.x,
+        this.y
+      );
       ctx.restore();
     }
 
@@ -125,6 +154,14 @@ window["Rocket"] = (() => {
         return 2 - col;
       } else {
         return 8 - col;
+      }
+    }
+
+    setState(state) {
+      super.setState(state);
+      if (this.animations?.[state]) {
+        this.activeAnimation = this.animations[this.state];
+        this.activeAnimation.start();
       }
     }
   }

@@ -43,7 +43,7 @@ class FrameAnimator {
 
     if (this.totalDt >= this.frameDuration) {
       this.imageFrame++;
-      if (this.imageFrame === this.endIndex) {
+      if (this.imageFrame >= this.endIndex) {
         if (this.loop) {
           this.imageFrame = this.startIndex;
         } else {

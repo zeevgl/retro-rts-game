@@ -62,6 +62,7 @@ window["ContractionYard"] = (() => {
     initAnimations() {
       this.activeAnimation = null;
 
+      //TODO:maybe do this in onne function?
       this.animations = {
         [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
             this.sprite,
