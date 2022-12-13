@@ -66,6 +66,7 @@ window["Unit"] = (() => {
       }
 
       this.updateAttack(deltaTime, timestamp);
+      this.activeAnimation?.update(deltaTime, timestamp);
     }
 
     updateMove(deltaTime, timestamp) {
@@ -357,6 +358,24 @@ window["Unit"] = (() => {
 
     setState(state) {
       this.state = state;
+
+      if (this.animations?.[state]) {
+        this.activeAnimation = this.animations[this.state];
+        this.activeAnimation.start();
+      }
+    }
+
+    initAnimations(animationFrames) {
+      this.activeAnimation = null;
+
+      this.animations = Object.entries(animationFrames).reduce((acc, pair) => {
+        const [key, value] = pair;
+        acc[key] = FrameAnimator.fromAnimationFrame(this.sprite, value, {});
+        return acc;
+      }, {});
+
+      this.activeAnimation = this.animations[this.state];
+      this.activeAnimation.start();
     }
   }
 

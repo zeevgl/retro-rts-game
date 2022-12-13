@@ -1,5 +1,5 @@
 window["Rocket"] = (() => {
-  const AnimationFrames = {
+  const animationFrames = {
     [UnitStates.SPAWN]: {
       start: 0,
       length: 0,
@@ -66,7 +66,7 @@ window["Rocket"] = (() => {
       this.animationTick = 0;
       this.spriteRow = 0;
       this.initSprites();
-      this.initAnimations();
+      this.initAnimations(animationFrames);
     }
 
     initSprites() {
@@ -80,57 +80,6 @@ window["Rocket"] = (() => {
       );
 
       this.sprite = sprite;
-    }
-
-    initAnimations() {
-      this.activeAnimation = null;
-
-      // this.animations = {
-      //   [UnitStates.SPAWN]: FrameAnimator.fromAnimationFrame(
-      //     this.sprite,
-      //     AnimationFrames[UnitStates.SPAWN],
-      //     {
-      //       frameDuration: 80,
-      //       onComplete: () => {
-      //         this.setState(AnimationFrames[UnitStates.SPAWN].next);
-      //       },
-      //     }
-      //   ),
-      //   [UnitStates.IDLE]: FrameAnimator.fromAnimationFrame(
-      //     this.sprite,
-      //     AnimationFrames[UnitStates.IDLE]
-      //   ),
-      //   [UnitStates.MOVING]: FrameAnimator.fromAnimationFrame(
-      //     this.sprite,
-      //     AnimationFrames[UnitStates.MOVING]
-      //   ),
-      //   [UnitStates.MOVING_TO_ATTACK]: FrameAnimator.fromAnimationFrame(
-      //     this.sprite,
-      //     AnimationFrames[UnitStates.MOVING_TO_ATTACK]
-      //   ),
-      //   [UnitStates.ATTACK]: FrameAnimator.fromAnimationFrame(
-      //     this.sprite,
-      //     AnimationFrames[UnitStates.ATTACK]
-      //   ),
-      // };
-
-      this.animations = Object.entries(AnimationFrames).reduce((acc, pair) => {
-        const [key, value] = pair;
-        acc[key] = FrameAnimator.fromAnimationFrame(this.sprite, value, {});
-        return acc;
-      }, {});
-
-      this.activeAnimation = this.animations[this.state];
-      this.activeAnimation.start();
-    }
-
-    update(deltaTime, timestamp) {
-      super.update(deltaTime, timestamp);
-      this.activeAnimation.update(deltaTime, timestamp);
-    }
-
-    draw(ctx) {
-      super.draw(ctx);
     }
 
     drawUnit(ctx) {
@@ -156,14 +105,6 @@ window["Rocket"] = (() => {
         return 2 - col;
       } else {
         return 8 - col;
-      }
-    }
-
-    setState(state) {
-      super.setState(state);
-      if (this.animations?.[state]) {
-        this.activeAnimation = this.animations[this.state];
-        this.activeAnimation.start();
       }
     }
   }
