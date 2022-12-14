@@ -281,12 +281,7 @@ window["Unit"] = (() => {
       this.setState(UnitStates.MOVING);
       this.moveTargetX = x;
       this.moveTargetY = y;
-      this.degree = getDegree(
-        this.centerX,
-        this.centerY,
-        this.moveTargetX,
-        this.moveTargetY
-      );
+      this.setDirectionDegree(this.moveTargetX, this.moveTargetY);
     }
 
     moveToAttack(x, y) {
@@ -301,6 +296,8 @@ window["Unit"] = (() => {
 
       this.targetUnit = enemyUnit;
 
+      this.setDirectionDegree(this.targetUnit.centerX, this.targetUnit.centerY);
+
       const distance = calcDistance(this.x, this.y, enemyUnit.x, enemyUnit.y);
       if (distance <= this.attackRange) {
         this.setState(UnitStates.ATTACK);
@@ -314,6 +311,10 @@ window["Unit"] = (() => {
       } else {
         this.moveToAttack(enemyUnit.x, enemyUnit.y);
       }
+    }
+
+    setDirectionDegree(x, y) {
+      this.degree = getDegree(this.centerX, this.centerY, x, y);
     }
 
     isABuilding() {

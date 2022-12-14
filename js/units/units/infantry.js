@@ -89,7 +89,7 @@ window["Infantry"] = (() => {
       const frames = 8;
       const slice = 360 / frames;
 
-      const col = Math.floor(degree / slice);
+      const col = Math.round(degree / slice);
       const colAdjusted = col - 2;
 
       if (colAdjusted < 0) {
