@@ -72,7 +72,7 @@ window["GameMap"] = (() => {
         })
       );
       humanPlayer.addUnit(
-        new Rocket({
+        new Rocketeer({
           player: humanPlayer,
           x: 160 + x + 80,
           y: 200 + y,
@@ -104,7 +104,7 @@ window["GameMap"] = (() => {
         // );
         //
         // player.addUnit(
-        //   new Rocket(
+        //   new Rocketeer(
         //     aiPlayers,
         //     positions[index].x - 100,
         //     positions[index].y,
@@ -112,7 +112,7 @@ window["GameMap"] = (() => {
         //   )
         // );
         // player.addUnit(
-        //   new Rocket(
+        //   new Rocketeer(
         //     aiPlayers,
         //     300,
         //     300,
@@ -121,7 +121,7 @@ window["GameMap"] = (() => {
         // );
 
         // player.addUnit(
-        //   new Rocket(
+        //   new Rocketeer(
         //     aiPlayers,
         //     300,
         //     300,
@@ -130,7 +130,7 @@ window["GameMap"] = (() => {
         // );
 
         player.addUnit(
-          new Rocket({ player: aiPlayers, x: 500, y: 500, color: player.color })
+          new Rocketeer({ player: aiPlayers, x: 500, y: 500, color: player.color })
         );
       });
     }

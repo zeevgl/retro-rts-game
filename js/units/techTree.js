@@ -38,8 +38,8 @@ window["TechTree"] = (() => {
           isUnlocked: () => this.checkDependencies([Barracks]),
         },
         {
-          unit: new Rocket({ x: 0, y: 0, color: "gray" }),
-          class: Rocket,
+          unit: new Rocketeer({ x: 0, y: 0, color: "gray" }),
+          class: Rocketeer,
           isVisible: true,
           isUnlocked: () => this.checkDependencies([Barracks]),
         },

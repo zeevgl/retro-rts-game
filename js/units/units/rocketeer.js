@@ -1,4 +1,4 @@
-window["Rocket"] = (() => {
+window["Rocketeer"] = (() => {
   const animationFrames = {
     [UnitStates.SPAWN]: {
       start: 0,
@@ -27,7 +27,7 @@ window["Rocket"] = (() => {
   };
 
   const maxHealth = 100;
-  const name = "rocket";
+  const name = "Rocketeer";
   const width = 45;
   const height = 100;
   const attackDamage = {
@@ -43,7 +43,7 @@ window["Rocket"] = (() => {
   const speed = 4;
   const buildTime = 600;
 
-  class Rocket extends Unit {
+  class Rocketeer extends Unit {
     constructor({ player, x, y, color }) {
       super({
         player,
@@ -108,5 +108,5 @@ window["Rocket"] = (() => {
       }
     }
   }
-  return Rocket;
+  return Rocketeer;
 })();
