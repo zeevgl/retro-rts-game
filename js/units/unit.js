@@ -15,6 +15,7 @@ window["Unit"] = (() => {
       visionRange = 0,
       attackRange = 0,
       attackCooldown = 0,
+      projectileClass = Bullet,
       unitClass,
       speed = 0,
       buildTime = 2000,
@@ -33,6 +34,7 @@ window["Unit"] = (() => {
       this.visionRange = visionRange;
       this.attackRange = attackRange;
       this.attackCooldown = attackCooldown;
+      this.projectileClass = projectileClass;
       this.unitClass = unitClass;
       this.speed = speed;
       this.buildTime = buildTime;
@@ -305,7 +307,7 @@ window["Unit"] = (() => {
           this.projectiles = this.projectiles.slice(0, 1);
         }
         this.projectiles.push(
-          new Bullet(this.centerX, this.centerY, enemyUnit, this.attackDamage)
+          new this.projectileClass(this.centerX, this.centerY, enemyUnit, this.attackDamage)
         );
         this.attackCooldownInProgress = this.attackCooldown;
       } else {
