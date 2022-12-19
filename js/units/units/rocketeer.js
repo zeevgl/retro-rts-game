@@ -105,7 +105,7 @@ window["Rocketeer"] = (() => {
       } else if (col <= 2) {
         return 2 - col;
       } else {
-        return 10 - col;
+        return 9 - col;
       }
     }
   }
