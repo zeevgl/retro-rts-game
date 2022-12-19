@@ -107,7 +107,9 @@ window["Unit"] = (() => {
       this.updateAttackCoolDown(deltaTime, timestamp);
       if (this.projectiles.length) {
         const activeProjectile = this.projectiles[0];
-        activeProjectile.update(deltaTime, timestamp);
+        if (activeProjectile.isActive) {
+          activeProjectile.update(deltaTime, timestamp);
+        }
 
         if (
           this.state === UnitStates.ATTACK &&
@@ -307,7 +309,12 @@ window["Unit"] = (() => {
           this.projectiles = this.projectiles.slice(0, 1);
         }
         this.projectiles.push(
-          new this.projectileClass(this.centerX, this.centerY, enemyUnit, this.attackDamage)
+          new this.projectileClass(
+            this.centerX,
+            this.centerY,
+            enemyUnit,
+            this.attackDamage
+          )
         );
         this.attackCooldownInProgress = this.attackCooldown;
       } else {

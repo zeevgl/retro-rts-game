@@ -56,7 +56,7 @@ window["Projectile"] = (() => {
           this.drawProjectile(ctx);
           break;
         case ProjectileStates.EXPLODING:
-          this.drawExplosion(ctx);
+          //this.drawExplosion(ctx);
           break;
       }
       ctx.restore();
