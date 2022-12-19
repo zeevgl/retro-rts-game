@@ -40,9 +40,15 @@ function getClosestUnitOfPlayer(
     );
 }
 
-function getDegree(x1, y1, x2, y2) {
+function getDegree360(x1, y1, x2, y2) {
   const radian = Math.atan2(y2 - y1, x2 - x1);
   return radian * (180 / Math.PI) + 180;
+}
+
+function getDegree180(x1, y1, x2, y2) {
+  const radians = Math.atan2(y2 - y1, x2 - x1);
+  const degrees = radians * (180 / Math.PI);
+  return degrees;
 }
 
 function getRadian(x1, y1, x2, y2) {

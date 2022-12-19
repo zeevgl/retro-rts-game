@@ -316,7 +316,7 @@ window["Unit"] = (() => {
     }
 
     setDirectionDegree(x, y) {
-      this.degree = getDegree(this.centerX, this.centerY, x, y);
+      this.degree = getDegree360(this.centerX, this.centerY, x, y);
     }
 
     isABuilding() {

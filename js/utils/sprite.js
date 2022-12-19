@@ -48,10 +48,11 @@ return {
 function getSpritePositions(
   singelItemWidth,
   singelItemHeight,
-  singleItemSize,
+  singleItemSizeWidth,
   cols,
   rows,
-  filePath
+  filePath,
+  singleItemSizeHeight = null
 ) {
   const positions = [];
 
@@ -74,7 +75,8 @@ function getSpritePositions(
     singelItemWidth,
     singelItemHeight,
     positions,
-    singleItemSize
+    singleItemSizeWidth,
+    singleItemSizeHeight
   );
 
   return {

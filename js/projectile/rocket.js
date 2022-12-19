@@ -1,18 +1,50 @@
 window["Rocket"] = (() => {
   const name = "rocket";
-  const width = 5;
-  const height = 15;
+  const width = 15;
+  const height = 32;
   const color = "white";
-  const speed = 1;
+  const speed = 3;
 
   class Rocket extends Projectile {
     constructor(x, y, targetUnit, attackDamage) {
-      super(name, x, y, targetUnit, width, height, color, attackDamage, speed);
+      super(
+        name,
+        x,
+        y - 40,
+        targetUnit,
+        width,
+        height,
+        color,
+        attackDamage,
+        speed
+      );
+
+      this.initSprites();
+      this.degree =
+        getDegree180(
+          this.x,
+          this.y,
+          this.targetUnit.centerX,
+          this.targetUnit.centerY
+        ) + 90;
+    }
+
+    initSprites() {
+      const { positions, sprite } = getSpritePositions(
+        535,
+        2294,
+        this.width,
+        1,
+        1,
+        "../assets/projectiles/missile.png",
+        this.height
+      );
+
+      this.sprite = sprite;
     }
 
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
-      this.degree = getDegree(this.x, this.y, this.targetUnit.centerX, this.targetUnit.centerY) - 180;
     }
 
     draw(ctx) {
@@ -21,10 +53,15 @@ window["Rocket"] = (() => {
 
     drawProjectile(ctx) {
       ctx.save();
-      ctx.beginPath();
-      ctx.ellipse(this.x, this.y, this.width, this.height, this.degree, 0, 2 * Math.PI);
-      ctx.fillStyle = this.color;
-      ctx.fill();
+
+      const cx = this.x + 0.5 * this.width;
+      const cy = this.y + 0.5 * this.height;
+
+      ctx.translate(cx, cy);
+      ctx.rotate((Math.PI / 180) * this.degree);
+      ctx.translate(-cx, -cy);
+
+      this.sprite.draw(ctx, 0, this.x, this.y);
       ctx.restore();
     }
   }
