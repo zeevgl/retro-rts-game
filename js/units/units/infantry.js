@@ -72,7 +72,7 @@ window["Infantry"] = (() => {
         this.height,
         8,
         29,
-        "../assets/units/trooper.png"
+        "./assets/units/trooper.png"
       );
 
       this.sprite = sprite;

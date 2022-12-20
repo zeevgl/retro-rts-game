@@ -49,7 +49,7 @@ window["Barracks"] = (() => {
         this.height,
         10,
         4,
-        "../assets/units/barracks.png"
+        "./assets/units/barracks.png"
       );
 
       this.sprite = sprite;

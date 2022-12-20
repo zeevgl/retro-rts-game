@@ -52,7 +52,7 @@ window["ContractionYard"] = (() => {
         this.height,
         8,
         11,
-        "../assets/units/construction_yard.png"
+        "./assets/units/construction_yard.png"
       );
 
       this.sprite = sprite;

@@ -36,7 +36,7 @@ window["Rocket"] = (() => {
         this.width,
         1,
         1,
-        "../assets/projectiles/missile.png",
+        "./assets/projectiles/missile.png",
         this.height
       );
 

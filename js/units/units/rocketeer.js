@@ -77,7 +77,7 @@ window["Rocketeer"] = (() => {
         this.height,
         8,
         11,
-        "../assets/units/rockets3.png"
+        "./assets/units/rockets3.png"
       );
 
       this.sprite = sprite;
