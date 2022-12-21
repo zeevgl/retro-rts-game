@@ -15,7 +15,7 @@
   - [ ] Building Types
     - [x] Contraction Yard
     - [x] Barracks
-    - [ ] Refinery
+    - [x] Refinery
     - [ ] Power Plant
     - [ ] War Factory
     - [ ] Silo
@@ -28,14 +28,15 @@
 - [ ] Minimap
   - [x] Render buildings
   - [ ] Drag view port
-  - [ ] Click on minimap
-- [ ] Mining resources
-  - [ ] Spice
-- [ ] Spice Fields
-  - [ ] Spice Fields
+  - [x] Click on minimap
+- [x] Mining resources
+  - [x] Spice
+- [x] Spice Fields
+  - [x] Spice Fields
   - [ ] Spice Blooms
 - [x] Hud Menu
 - [ ] Collision detection
   - [ ] unit vs unit
   - [ ] unit spawn, move away from obstacle
   - [ ] unit vs terrain
+- [ ] Don't render units that are out of screen
