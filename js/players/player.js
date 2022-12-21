@@ -14,11 +14,12 @@ class Player {
   update(deltaTime, timestamp) {
     this.units.forEach((unit) => {
       unit.update(deltaTime, timestamp);
+      this.updateUnitAi(unit);
 
       if (!unit.isAlive) {
         if (unit.isDecaying) {
           //TODO: add some decay animation & timer
-          //this.units.splice(this.units.indexOf(unit), 1);
+          this.units.splice(this.units.indexOf(unit), 1);
         } else {
           unit.isDecaying = true;
           this.selectedUnits.splice(this.selectedUnits.indexOf(unit), 1);
@@ -106,6 +107,29 @@ class Player {
       this.selectedUnits.forEach((unit) => {
         unit.attack(enemyUnit);
       });
+    }
+  }
+
+  updateUnitAi(unit) {
+    //WIP...
+    //player needs to know which player is the enemy
+    //should this code even be in player object? maybe in game object? or in unit object?
+
+    let enemy = null;
+    if (this.name === "player 1") {
+      enemy = this.game.aiPlayers[0];
+    } else if (this.name === "player 2") {
+      enemy = this.game.humanPlayer;
+    }
+
+    if (enemy && unit.state === UnitStates.IDLE) {
+      const closestEnemyUnit = getClosestUnitOfPlayer(unit, enemy, {
+        ignoreVisionRange: false,
+      });
+      if (closestEnemyUnit) {
+        //attack directly as unit not a player
+        unit.attack(closestEnemyUnit.unit);
+      }
     }
   }
 }
