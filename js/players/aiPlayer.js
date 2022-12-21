@@ -1,7 +1,7 @@
 window["AiPlayer"] = (() => {
   class AiPlayer extends Player {
-    constructor(name, color, startingPoint) {
-      super(name, color, startingPoint);
+    constructor({ name, color, startingPoint, game }) {
+      super({ name, color, startingPoint, game });
       this.state = AiStates.IDLE;
     }
 

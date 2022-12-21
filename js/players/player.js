@@ -1,7 +1,8 @@
 class Player {
-  constructor(name, color, startingPoint) {
+  constructor({ name, color, startingPoint, game }) {
     this.name = name;
     this.color = color;
+    this.game = game;
     this.units = [];
     this.startingPoint = startingPoint;
     this.selectedUnits = [];
@@ -31,7 +32,11 @@ class Player {
 
   draw(ctx) {
     this.units.forEach((unit) => {
-      unit.draw(ctx);
+      if (
+        this.game.hud.isInsideViewport(unit.x, unit.y, unit.width, unit.height)
+      ) {
+        unit.draw(ctx);
+      }
     });
   }
 

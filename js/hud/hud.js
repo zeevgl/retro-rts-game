@@ -84,7 +84,25 @@ window["Hud"] = (() => {
     }
 
     drawResources(ctx) {
-      drawText(ctx,`Money: ${this.game.humanPlayer.resources.money}`, this.hudX - 100, 20);
+      drawText(
+        ctx,
+        `Money: ${this.game.humanPlayer.resources.money}`,
+        this.hudX - 100,
+        20
+      );
+    }
+
+    isInsideViewport(originalX, originalY, width, height) {
+      const { x, y } = this.game.camera.adjustPointToCamera(
+        originalX,
+        originalY
+      );
+      return (
+        x + width > this.viewport.x &&
+        x < this.viewport.x + this.viewport.width &&
+        y + height > this.viewport.y &&
+        y < this.viewport.y + this.viewport.height
+      );
     }
   }
   return Hud;
