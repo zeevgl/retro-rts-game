@@ -39,4 +39,4 @@
   - [ ] unit vs unit
   - [ ] unit spawn, move away from obstacle
   - [ ] unit vs terrain
-- [ ] Don't render units that are out of screen
+- [x] Don't render units that are out of screen
