@@ -1,19 +1,20 @@
 window["Hud"] = (() => {
-  const viewPortWidthPercent = 0.66;
+  const hudWidthPercent = 0.33;
   const miniMapHeight = 0.4;
+  const maxWidth = 450;
 
   class Hud {
     constructor(game) {
       this.game = game;
 
+      this.initDimensions();
+
       this.viewport = {
         x: 0,
         y: 0,
-        width: this.game.gameWidth * viewPortWidthPercent,
+        width: this.game.gameWidth - this.hudWidth,
         height: this.game.gameHeight,
       };
-
-      this.initDimensions();
 
       this.miniMap = new MiniMap(
         this.game,
@@ -40,7 +41,7 @@ window["Hud"] = (() => {
 
     initDimensions() {
       //outer hud rectangle
-      this.hudWidth = this.game.gameWidth - this.viewport.width;
+      this.hudWidth = Math.min(this.game.gameWidth * hudWidthPercent, maxWidth);
       this.hudHeight = this.game.gameHeight;
       this.hudX = this.game.gameWidth - this.hudWidth;
       this.hudY = this.game.gameHeight - this.hudHeight;
