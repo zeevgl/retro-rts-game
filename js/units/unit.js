@@ -148,6 +148,14 @@ window["Unit"] = (() => {
         ctx.globalAlpha = 0.1;
       }
 
+      //TODO: WIP teams colors
+      if (this.color === "#ff0000") {
+        // ctx.filter = "contrast(1.4) sepia(1)";
+        ctx.filter = " hue-rotate(90deg)";
+      } else {
+        ctx.filter = null;
+      }
+
       this.drawUnit(ctx);
 
       if (this.isAlive) {
