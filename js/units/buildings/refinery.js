@@ -37,6 +37,7 @@ window["Refinery"] = (() => {
         visionRange,
         unitClass,
         buildTime,
+        group: UnitGroups.buildings,
       });
 
       if (this.player) {

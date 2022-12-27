@@ -60,6 +60,7 @@ window["Infantry"] = (() => {
         speed,
         buildTime,
         buildAt: Barracks,
+        group: UnitGroups.fighter,
       });
       this.initSprites();
       this.initAnimations(animationFrames, this.sprite);

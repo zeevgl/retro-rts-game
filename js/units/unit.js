@@ -20,6 +20,7 @@ window["Unit"] = (() => {
       speed = 0,
       buildTime = 2000,
       buildAt = null,
+      group = null,
     }) {
       this.player = player;
       this.id = uuidv4();
@@ -39,6 +40,7 @@ window["Unit"] = (() => {
       this.speed = speed;
       this.buildTime = buildTime;
       this.buildAt = buildAt;
+      this.group = group;
 
       //
       this.attackCooldownInProgress = 0;

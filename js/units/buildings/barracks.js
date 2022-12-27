@@ -37,6 +37,7 @@ window["Barracks"] = (() => {
         visionRange,
         unitClass,
         buildTime,
+        group: UnitGroups.buildings,
       });
       this.initSprites();
       this.initAnimations(animationFrames, this.sprite);

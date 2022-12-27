@@ -63,6 +63,7 @@ window["Rocketeer"] = (() => {
         buildTime,
         buildAt: Barracks,
         projectileClass: Rocket,
+        group: UnitGroups.fighter,
       });
       this.animationTick = 0;
       this.spriteRow = 0;

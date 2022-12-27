@@ -32,7 +32,7 @@ class Game {
       player.update(deltaTime, timestamp);
     });
 
-    //this.enemyAI.performAI();
+    this.enemyAI.update(deltaTime, timestamp);
     this.hud.update(deltaTime, timestamp);
     this.camera.update(deltaTime, timestamp);
   }

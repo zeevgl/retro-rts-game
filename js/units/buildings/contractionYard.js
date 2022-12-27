@@ -39,6 +39,7 @@ window["ContractionYard"] = (() => {
         visionRange,
         unitClass,
         buildTime,
+        group: UnitGroups.buildings,
       });
 
       this.initSprites();

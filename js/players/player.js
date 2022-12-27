@@ -4,6 +4,7 @@ class Player {
     this.color = color;
     this.game = game;
     this.units = [];
+    this.unitByGroups = {}; //UnitGroups
     this.startingPoint = startingPoint;
     this.selectedUnits = [];
     this.techTree = new TechTree(this);
@@ -19,7 +20,7 @@ class Player {
       if (!unit.isAlive) {
         if (unit.isDecaying) {
           //TODO: add some decay animation & timer
-          this.units.splice(this.units.indexOf(unit), 1);
+          this.removeUnit(unit);
         } else {
           unit.isDecaying = true;
           this.selectedUnits.splice(this.selectedUnits.indexOf(unit), 1);
@@ -44,6 +45,19 @@ class Player {
   addUnit(unit) {
     this.units.push(unit);
     this.techTree.updateTechTree(unit);
+    if (!this.unitByGroups[unit.group]) {
+      this.unitByGroups[unit.group] = [];
+    }
+    this.unitByGroups[unit.group].push(unit);
+  }
+
+  removeUnit(unit) {
+    this.units.splice(this.units.indexOf(unit), 1);
+    this.units.splice(this.units.indexOf(unit), 1);
+    this.unitByGroups[unit.group].splice(
+      this.unitByGroups[unit.group].indexOf(unit),
+      1
+    );
   }
 
   attemptToClickUnitAtPoint(x, y) {

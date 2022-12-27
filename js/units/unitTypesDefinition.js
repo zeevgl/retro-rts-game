@@ -14,3 +14,10 @@ const UnitClasses = {
   HEAVY: "HEAVY",
   BUILDING: "BUILDING",
 };
+
+const UnitGroups = {
+  fighter: "fighter",
+  buildings: "buildings",
+  harvesters: "harvesters",
+  defenseBuildings: "defenseBuildings",
+};

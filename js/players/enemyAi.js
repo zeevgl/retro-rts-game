@@ -1,10 +1,18 @@
 window["EnemyAI"] = (() => {
+  const AISpeed = 1000;
   class EnemyAI {
     constructor(game) {
       this.game = game;
+      this.tick = 0;
     }
 
-    update(deltaTime, timestamp) {}
+    update(deltaTime, timestamp) {
+      this.tick += deltaTime;
+      if (this.tick > AISpeed) {
+        this.tick = 0;
+        this.performAI();
+      }
+    }
 
     draw(ctx) {}
 
@@ -29,12 +37,11 @@ window["EnemyAI"] = (() => {
     }
 
     searchAndDestroy(aiPlayer) {
-      aiPlayer.units.forEach((aiUnit) => {
+      aiPlayer.unitByGroups[UnitGroups.fighter].forEach((aiUnit) => {
         if (
-          (!aiUnit.isABuilding() &&
-            aiUnit.isAlive &&
-            aiUnit.state === UnitStates.IDLE) ||
-          aiUnit.state === UnitStates.MOVING
+          aiUnit.isAlive &&
+          (aiUnit.state === UnitStates.IDLE ||
+            aiUnit.state === UnitStates.MOVING)
         ) {
           const closestEnemyUnit = getClosestUnitOfPlayer(
             aiUnit,
@@ -89,8 +96,11 @@ window["EnemyAI"] = (() => {
         const items = aiPlayer.techTree.getVisibleUnits().filter((item) => {
           return item.isUnlocked();
         });
+
+        const randomIndex = Math.floor(Math.random() * items.length);
+
         if (items.length) {
-          aiPlayer.productionManager.startUnit(items[0]);
+          aiPlayer.productionManager.startUnit(items[randomIndex]);
         }
       }
     }
