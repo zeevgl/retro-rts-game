@@ -89,7 +89,10 @@ window["Hud"] = (() => {
         ctx,
         `Money: ${this.game.humanPlayer.resources.money}`,
         this.hudX - 100,
-        20
+        20,
+        "white",
+        "center",
+        "20px Arial"
       );
     }
 
