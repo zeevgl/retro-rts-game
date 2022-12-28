@@ -1,3 +1,11 @@
+const GameStates = {
+  PLAYING: 0,
+  PAUSED: 1,
+  MENU: 2,
+  GAME_OVER: 3,
+  WIN: 4,
+};
+
 class Game {
   constructor(gameWidth, gameHeight, canvas) {
     this.gameWidth = gameWidth;
@@ -27,33 +35,43 @@ class Game {
     [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
       player.resources.addResources(3000);
     });
+
+    this.state = GameStates.PLAYING;
   }
 
   update(deltaTime, timestamp) {
-    [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
-      player.update(deltaTime, timestamp);
-    });
+    if (this.state === GameStates.PLAYING) {
+      [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
+        player.update(deltaTime, timestamp);
+      });
 
-    this.enemyAI.update(deltaTime, timestamp);
-    this.hud.update(deltaTime, timestamp);
-    this.camera.update(deltaTime, timestamp);
+      this.enemyAI.update(deltaTime, timestamp);
+      this.hud.update(deltaTime, timestamp);
+      this.camera.update(deltaTime, timestamp);
+      this.checkWinLoose();
+    }
   }
 
   draw(context) {
     context.save();
 
-    this.camera.draw(context);
+    if (this.state === GameStates.PLAYING) {
+      this.camera.draw(context);
 
-    this.drawBackground(context);
-    this.gameMap.draw(context);
+      this.drawBackground(context);
+      this.gameMap.draw(context);
 
-    this.userInput.draw(context);
+      this.userInput.draw(context);
 
-    [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
-      player.draw(context);
-    });
+      [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
+        player.draw(context);
+      });
 
-    this.hud.draw(context);
+      this.hud.draw(context);
+    } else {
+      this.renderWinLoose(context);
+    }
+
     this.renderWinLoose(context);
     context.restore();
   }
@@ -77,8 +95,16 @@ class Game {
     }
   }
 
-  renderWinLoose(context) {
+  checkWinLoose() {
     if (this.humanPlayer.units.length === 0) {
+      this.state = GameStates.GAME_OVER;
+    } else if (this.aiPlayers.every((player) => player.units.length === 0)) {
+      this.state = GameStates.WIN;
+    }
+  }
+
+  renderWinLoose(context) {
+    if (this.state === GameStates.GAME_OVER) {
       context.fillStyle = "#ffffff";
       context.fillRect(0, 0, this.gameWidth, this.gameHeight);
       drawText(
@@ -90,7 +116,7 @@ class Game {
         "center",
         "50px Arial"
       );
-    } else if (this.aiPlayers.every((player) => player.units.length === 0)) {
+    } else if (this.state === GameStates.WIN) {
       context.fillStyle = "#ffffff";
       context.fillRect(0, 0, this.gameWidth, this.gameHeight);
       drawText(
