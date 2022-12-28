@@ -12,31 +12,44 @@ window["Notifications"] = (() => {
       this.messages = [];
       this.messageTimeout = 3000;
       this.tick = 0;
+
+      this.messageFlashingTick = 0;
+      this.messageFlashingSpped = 500;
+      this.messageFlash = false;
     }
 
     update(deltaTime, timestamp) {
       if (this.messages.length > 0) {
         if (this.tick > this.messageTimeout) {
-          this.messages.pop();
+          this.messages.splice(0, 1);
           this.tick = 0;
         } else {
           this.tick += deltaTime;
+        }
+
+        if (this.messageFlashingTick > this.messageFlashingSpped) {
+          this.messageFlashingTick = 0;
+          this.messageFlash = !this.messageFlash;
+        } else {
+          this.messageFlashingTick += deltaTime;
         }
       }
     }
 
     draw(ctx) {
-      if (this.messages.length > 0) {
+      if (this.messages.length > 0 && this.messageFlash) {
+        console.log('this.messages = ', this.messages);
         const message = this.messages[0];
         ctx.save();
-        ctx.fillStyle = "grey";
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = "lightgrey";
         ctx.fillRect(this.x, this.y, this.width, this.height);
         drawText(
           ctx,
           message,
           this.x + this.width / 2,
           this.y + this.height / 2,
-          "white",
+          "black",
           "center",
           "20px Arial"
         );
@@ -45,6 +58,14 @@ window["Notifications"] = (() => {
     }
 
     notify(message) {
+      this.messageFlash = true;
+      this.messages = [message];
+      this.tick = 0;
+      this.messageFlashingTick = 0;
+    }
+
+    notifyToQueue(message) {
+      this.messageFlash = true;
       this.messages.push(message);
     }
   }

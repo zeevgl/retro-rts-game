@@ -124,8 +124,7 @@ window["UserInput"] = (() => {
     handleActionMenuItem(actionMenuItem) {
 
       if (!actionMenuItem.isUnlocked()) {
-        console.log('not unlocked');
-        this.game.hud.notifications.notify('Not unlocked yet');
+        this.game.hud.notifications.notify('Unit unavailable');
         return;
       }
 

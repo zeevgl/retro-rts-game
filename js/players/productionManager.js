@@ -54,6 +54,7 @@ window["ProductionManager"] = (() => {
       if (!this.isBuildingInProgress()) {
         if (!this.player.resources.canAfford(item.unit.cost)) {
           console.log("not enough resources");
+          this.player.game.hud.notifications.notify('insufficient funds');
           return;
         }
 
@@ -65,6 +66,7 @@ window["ProductionManager"] = (() => {
 
         this.player.resources.deductResources(item.unit.cost);
       } else {
+        this.player.game.hud.notifications.notify('unable to comply building in progress');
         console.log("unable to comply building in progress");
       }
     }
@@ -73,6 +75,7 @@ window["ProductionManager"] = (() => {
       if (!this.isUnitInProgress()) {
         if (!this.player.resources.canAfford(item.unit.cost)) {
           console.log("not enough resources");
+          this.player.game.hud.notifications.notify('insufficient funds');
           return;
         }
 
@@ -84,6 +87,7 @@ window["ProductionManager"] = (() => {
 
         this.player.resources.deductResources(item.unit.cost);
       } else {
+        this.player.game.hud.notifications.notify('unable to comply training in progress');
         console.log("unable to comply training in progress");
       }
     }
