@@ -62,6 +62,8 @@ window["ProductionManager"] = (() => {
           tick: 0,
           state: ProductionStates.IN_PROGRESS,
         };
+
+        this.player.resources.deductResources(item.unit.cost);
       } else {
       }
     }
@@ -78,6 +80,8 @@ window["ProductionManager"] = (() => {
           tick: 0,
           state: ProductionStates.IN_PROGRESS,
         };
+
+        this.player.resources.deductResources(item.unit.cost);
       } else {
         console.log("unable to comply training in progress");
       }
