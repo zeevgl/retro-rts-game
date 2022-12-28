@@ -10,6 +10,8 @@ window["MouseHandler"] = (() => {
         onMouseLeftClicked: null,
         onMouseRightClicked: null,
         onMouseMove: null,
+        onMouseDown: null,
+        onMouseUp: null,
       };
 
       this.game.canvas.addEventListener("click", this.onClick.bind(this));
@@ -18,6 +20,11 @@ window["MouseHandler"] = (() => {
         "mousemove",
         this.handleMouseMove.bind(this)
       );
+      this.game.canvas.addEventListener(
+        "mousedown",
+        this.onMouseDown.bind(this)
+      );
+      this.game.canvas.addEventListener("mouseup", this.onMouseUp.bind(this));
 
       this.setMouseDefault();
     }
@@ -64,6 +71,22 @@ window["MouseHandler"] = (() => {
         y,
       };
       this.handlers.onMouseMove?.(x, y);
+    }
+
+    onMouseDown(event) {
+      event.preventDefault();
+      if (event.button === LEFT_BUTTON) {
+        const { x, y } = this.getXY(event);
+        this.handlers.onMouseDown?.(x, y);
+      }
+    }
+
+    onMouseUp(event) {
+      event.preventDefault();
+      if (event.button === LEFT_BUTTON) {
+        const { x, y } = this.getXY(event);
+        this.handlers.onMouseUp?.(x, y);
+      }
     }
   }
   return MouseHandler;

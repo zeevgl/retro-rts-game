@@ -11,6 +11,13 @@ window["UserInput"] = (() => {
       this.targetXY = null;
       this.state = UserInputStates.IDLE;
       this.initMouseHandlers();
+      this.draggin = {
+        active: false,
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 0,
+      };
     }
 
     initMouseHandlers() {
@@ -19,6 +26,9 @@ window["UserInput"] = (() => {
       this.mouseHandler.handlers.onMouseRightClicked =
         this.onMouseRightClicked.bind(this);
       this.mouseHandler.handlers.onMouseMove = this.onMouseMove.bind(this);
+
+      this.mouseHandler.handlers.onMouseDown = this.onMouseDown.bind(this);
+      this.mouseHandler.handlers.onMouseUp = this.onMouseUp.bind(this);
     }
 
     draw(ctx) {
@@ -36,6 +46,22 @@ window["UserInput"] = (() => {
         newUnit.x = this.mouseHandler.position.x;
         newUnit.y = this.mouseHandler.position.y;
         newUnit.draw(ctx);
+      }
+
+      this.drawSelectionBox(ctx);
+    }
+
+    drawSelectionBox(ctx) {
+      if (this.draggin.active) {
+        ctx.beginPath();
+        ctx.rect(
+          this.draggin.x,
+          this.draggin.y,
+          this.draggin.x2 - this.draggin.x,
+          this.draggin.y2 - this.draggin.y
+        );
+        ctx.strokeStyle = "lightgreen";
+        ctx.stroke();
       }
     }
 
@@ -116,6 +142,11 @@ window["UserInput"] = (() => {
     }
 
     onMouseMove(x, y) {
+      if (this.draggin.active) {
+        this.draggin.x2 = x;
+        this.draggin.y2 = y;
+      }
+
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
       } else if (this.game.humanPlayer.getUnitsInPoint(x, y).length) {
@@ -156,6 +187,19 @@ window["UserInput"] = (() => {
           this.game.hud.notifications.notify(message);
         }
       }
+    }
+
+    onMouseDown(x, y) {
+      this.draggin.active = true;
+      this.draggin.x = x;
+      this.draggin.y = y;
+      this.draggin.x2 = x;
+      this.draggin.y2 = y;
+    }
+
+    onMouseUp(x, y) {
+      this.draggin.active = false;
+      console.log("done = ", this.draggin);
     }
   }
   return UserInput;
