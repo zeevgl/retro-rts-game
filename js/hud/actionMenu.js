@@ -94,6 +94,11 @@ window["ActionMenu"] = (() => {
       ctx.save();
       ctx.beginPath();
 
+
+      const canAfford = this.game.humanPlayer.resources.canAfford(
+        item.unit.cost
+      );
+
       if (
         !item.isUnlocked() ||
         (this.game.humanPlayer.productionManager.isBuildingInProgress() &&
@@ -104,6 +109,8 @@ window["ActionMenu"] = (() => {
             .name !== item.unit.name)
       ) {
         ctx.globalAlpha = 0.2;
+      } else if (!canAfford) {
+        ctx.globalAlpha = 0.6;
       }
 
       ctx.fillStyle = "#b7bd93";
@@ -114,6 +121,13 @@ window["ActionMenu"] = (() => {
       ctx.stroke();
 
       drawText(ctx, item.unit.name, x + width / 2, y + height / 2, "black");
+      drawText(
+        ctx,
+        `${item.unit.cost} $`,
+        x + width / 2,
+        y + 20 + height / 2,
+        canAfford ? "green" : "red"
+      );
 
       this.drawItemInProgress(ctx, item, x, y, width, height);
       this.drawBuildingReadyToPlace(ctx, item, x, y, width, height);
@@ -190,7 +204,10 @@ window["ActionMenu"] = (() => {
     }
 
     getItemAtXy(originalX, originalY) {
-      const { x, y } = this.game.camera.adjustPointToCamera(originalX, originalY);
+      const { x, y } = this.game.camera.adjustPointToCamera(
+        originalX,
+        originalY
+      );
       if (this.isXYInside(x, y)) {
         const itemX = x - this.x;
         const itemY = y - this.y;
@@ -199,7 +216,7 @@ window["ActionMenu"] = (() => {
         const items = isBuilding
           ? this.game.humanPlayer.techTree.getVisibleBuildings()
           : this.game.humanPlayer.techTree.getVisibleUnits();
-        return items.filter((i) => i.isVisible)[itemIndex];
+        return items.filter((i) => i.isVisible)[itemIndex]; //TODO: why do I filter again by isVisible ?
       }
 
       return null;

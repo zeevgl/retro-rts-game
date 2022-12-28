@@ -21,6 +21,7 @@ window["Unit"] = (() => {
       buildTime = 2000,
       buildAt = null,
       group = null,
+      cost = 100,
     }) {
       this.player = player;
       this.id = uuidv4();
@@ -41,6 +42,7 @@ window["Unit"] = (() => {
       this.buildTime = buildTime;
       this.buildAt = buildAt;
       this.group = group;
+      this.cost = cost;
 
       //
       this.attackCooldownInProgress = 0;

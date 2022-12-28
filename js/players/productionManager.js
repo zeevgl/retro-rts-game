@@ -52,18 +52,27 @@ window["ProductionManager"] = (() => {
 
     startBuilding(item) {
       if (!this.isBuildingInProgress()) {
+        if (!this.player.resources.canAfford(item.unit.cost)) {
+          console.log("not enough resources");
+          return;
+        }
+
         this.buildingProduction = {
           item: item,
           tick: 0,
           state: ProductionStates.IN_PROGRESS,
         };
       } else {
-        console.log("unable to comply building in progress");
       }
     }
 
     startUnit(item) {
       if (!this.isUnitInProgress()) {
+        if (!this.player.resources.canAfford(item.unit.cost)) {
+          console.log("not enough resources");
+          return;
+        }
+
         this.unitProduction = {
           item: item,
           tick: 0,

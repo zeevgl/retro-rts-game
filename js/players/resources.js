@@ -35,6 +35,10 @@ window["Resources"] = (() => {
     deductResources(amount) {
       this.increaseAmount -= Math.round(amount);
     }
+
+    canAfford(cost) {
+      return this.money >= cost;
+    }
   }
 
   return Resources;
