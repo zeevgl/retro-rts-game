@@ -22,6 +22,7 @@ window["Refinery"] = (() => {
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 1200;
+  const cost = 1500;
 
   class Refinery extends Unit {
     constructor({ player, x, y, color }) {
@@ -38,6 +39,7 @@ window["Refinery"] = (() => {
         unitClass,
         buildTime,
         group: UnitGroups.buildings,
+        cost,
       });
 
       if (this.player) {

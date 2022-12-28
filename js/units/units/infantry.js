@@ -40,6 +40,7 @@ window["Infantry"] = (() => {
   const unitClass = UnitClasses.LIGHT;
   const speed = 5;
   const buildTime = 500;
+  const cost = 200;
 
   class Infantry extends Unit {
     constructor({ player, x, y, color }) {
@@ -61,6 +62,7 @@ window["Infantry"] = (() => {
         buildTime,
         buildAt: Barracks,
         group: UnitGroups.fighter,
+        cost,
       });
       this.initSprites();
       this.initAnimations(animationFrames, this.sprite);
@@ -82,7 +84,12 @@ window["Infantry"] = (() => {
     drawUnit(ctx) {
       ctx.save();
       const positionCol = this.degreeToPosition(this.degree);
-      this.sprite.draw(ctx, positionCol + 8 * this.activeAnimation?.getActiveFrame(), this.x, this.y);
+      this.sprite.draw(
+        ctx,
+        positionCol + 8 * this.activeAnimation?.getActiveFrame(),
+        this.x,
+        this.y
+      );
       ctx.restore();
     }
 

@@ -42,6 +42,7 @@ window["Rocketeer"] = (() => {
   const unitClass = UnitClasses.LIGHT;
   const speed = 4;
   const buildTime = 600;
+  const cost = 300;
 
   class Rocketeer extends Unit {
     constructor({ player, x, y, color }) {
@@ -64,6 +65,7 @@ window["Rocketeer"] = (() => {
         buildAt: Barracks,
         projectileClass: Rocket,
         group: UnitGroups.fighter,
+        cost,
       });
       this.animationTick = 0;
       this.spriteRow = 0;

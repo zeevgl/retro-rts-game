@@ -46,39 +46,39 @@ window["GameMap"] = (() => {
         })
       );
 
-      humanPlayer.addUnit(
-        new Barracks({
-          player: humanPlayer,
-          x: x + 220,
-          y: y + 10,
-          color: humanPlayer.color,
-        })
-      );
-      humanPlayer.addUnit(
-        new Refinery({
-          player: humanPlayer,
-          x: x + 420,
-          y: y + 30,
-          color: humanPlayer.color,
-        })
-      );
-
-      humanPlayer.addUnit(
-        new Infantry({
-          player: humanPlayer,
-          x: 160 + x,
-          y: 280 + y,
-          color: humanPlayer.color,
-        })
-      );
-      humanPlayer.addUnit(
-        new Rocketeer({
-          player: humanPlayer,
-          x: 160 + x + 80,
-          y: 200 + y,
-          color: humanPlayer.color,
-        })
-      );
+      // humanPlayer.addUnit(
+      //   new Barracks({
+      //     player: humanPlayer,
+      //     x: x + 220,
+      //     y: y + 10,
+      //     color: humanPlayer.color,
+      //   })
+      // );
+      // humanPlayer.addUnit(
+      //   new Refinery({
+      //     player: humanPlayer,
+      //     x: x + 420,
+      //     y: y + 30,
+      //     color: humanPlayer.color,
+      //   })
+      // );
+      //
+      // humanPlayer.addUnit(
+      //   new Infantry({
+      //     player: humanPlayer,
+      //     x: 160 + x,
+      //     y: 280 + y,
+      //     color: humanPlayer.color,
+      //   })
+      // );
+      // humanPlayer.addUnit(
+      //   new Rocketeer({
+      //     player: humanPlayer,
+      //     x: 160 + x + 80,
+      //     y: 200 + y,
+      //     color: humanPlayer.color,
+      //   })
+      // );
     }
 
     initAiPlayer() {
@@ -129,9 +129,9 @@ window["GameMap"] = (() => {
         //   )
         // );
 
-        player.addUnit(
-          new Rocketeer({ player: aiPlayers, x: 500, y: 500, color: player.color })
-        );
+        // player.addUnit(
+        //   new Rocketeer({ player: aiPlayers, x: 500, y: 500, color: player.color })
+        // );
       });
     }
   }

@@ -22,6 +22,7 @@ window["Barracks"] = (() => {
   const visionRange = 100;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 900;
+  const cost = 600;
 
   class Barracks extends Unit {
     constructor({ player, x, y, color }) {
@@ -38,6 +39,7 @@ window["Barracks"] = (() => {
         unitClass,
         buildTime,
         group: UnitGroups.buildings,
+        cost,
       });
       this.initSprites();
       this.initAnimations(animationFrames, this.sprite);

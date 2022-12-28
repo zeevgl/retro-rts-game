@@ -24,6 +24,7 @@ window["ContractionYard"] = (() => {
   const visionRange = 150;
   const unitClass = UnitClasses.BUILDING;
   const buildTime = 10000;
+  const cost = 1000;
 
   class ContractionYard extends Unit {
     constructor({ player, x, y, color }) {
@@ -40,6 +41,7 @@ window["ContractionYard"] = (() => {
         unitClass,
         buildTime,
         group: UnitGroups.buildings,
+        cost,
       });
 
       this.initSprites();

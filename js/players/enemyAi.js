@@ -38,7 +38,7 @@ window["EnemyAI"] = (() => {
     }
 
     searchAndDestroy(aiPlayer) {
-      aiPlayer.unitByGroups[UnitGroups.fighter].forEach((aiUnit) => {
+      aiPlayer.unitByGroups[UnitGroups.fighter]?.forEach((aiUnit) => {
         if (
           aiUnit.isAlive &&
           (aiUnit.state === UnitStates.IDLE ||

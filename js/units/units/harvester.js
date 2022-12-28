@@ -16,6 +16,7 @@ window["Harvester"] = (() => {
   const unitClass = UnitClasses.HEAVY;
   const speed = 2;
   const buildTime = 1000;
+  const cost = 1000;
 
   class Harvester extends Unit {
     constructor({ player, x, y, color }) {
@@ -35,6 +36,7 @@ window["Harvester"] = (() => {
         buildTime,
         buildAt: Refinery,
         group: UnitGroups.harvesters,
+        cost,
       });
 
       this.harvestingState = HarvesterState.Idle;

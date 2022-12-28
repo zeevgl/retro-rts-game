@@ -24,7 +24,9 @@ class Game {
     this.enemyAI = new EnemyAI(this);
     this.gameMap = new GameMap(this);
 
-    this.humanPlayer.resources.addResources(1000);
+    [this.humanPlayer, ...this.aiPlayers].forEach((player) => {
+      player.resources.addResources(3000);
+    });
   }
 
   update(deltaTime, timestamp) {
