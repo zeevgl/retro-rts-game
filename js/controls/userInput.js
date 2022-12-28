@@ -122,6 +122,14 @@ window["UserInput"] = (() => {
     }
 
     handleActionMenuItem(actionMenuItem) {
+
+      if (!actionMenuItem.isUnlocked()) {
+        console.log('not unlocked');
+        this.game.hud.notifications.notify('Not unlocked yet');
+        return;
+      }
+
+
       if (actionMenuItem.unit.isABuilding()) {
         if (
           this.game.humanPlayer.productionManager.isBuildingReadyToBePlace(

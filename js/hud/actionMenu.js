@@ -216,7 +216,7 @@ window["ActionMenu"] = (() => {
         const items = isBuilding
           ? this.game.humanPlayer.techTree.getVisibleBuildings()
           : this.game.humanPlayer.techTree.getVisibleUnits();
-        return items.filter((i) => i.isVisible)[itemIndex]; //TODO: why do I filter again by isVisible ?
+        return items[itemIndex];
       }
 
       return null;

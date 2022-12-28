@@ -37,6 +37,8 @@ window["Hud"] = (() => {
         },
         this.viewport
       );
+
+      this.notifications = new Notifications(this.game, this.viewport)
     }
 
     initDimensions() {
@@ -55,6 +57,7 @@ window["Hud"] = (() => {
 
     update(deltaTime, timestamp) {
       this.actionMenu.update(deltaTime, timestamp);
+      this.notifications.update(deltaTime, timestamp);
     }
 
     draw(ctx) {
@@ -67,6 +70,7 @@ window["Hud"] = (() => {
       this.drawViewport(ctx);
       this.actionMenu.draw(ctx);
       this.drawResources(ctx);
+      this.notifications.draw(ctx);
       ctx.restore();
     }
 

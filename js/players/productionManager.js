@@ -65,6 +65,7 @@ window["ProductionManager"] = (() => {
 
         this.player.resources.deductResources(item.unit.cost);
       } else {
+        console.log("unable to comply building in progress");
       }
     }
 
