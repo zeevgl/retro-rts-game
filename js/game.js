@@ -54,7 +54,7 @@ class Game {
     });
 
     this.hud.draw(context);
-
+    this.renderWinLoose(context);
     context.restore();
   }
 
@@ -74,6 +74,34 @@ class Game {
     for (let i = 0; i < this.gameMap.mapHeight; i++) {
       context.fillStyle = i % 2 === 0 ? "yellow" : "black";
       context.fillRect(0, 50 * i + i * 50, 800, 10);
+    }
+  }
+
+  renderWinLoose(context) {
+    if (this.humanPlayer.units.length === 0) {
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, this.gameWidth, this.gameHeight);
+      drawText(
+        context,
+        "You loose",
+        this.gameWidth / 2,
+        this.gameHeight / 2,
+        "black",
+        "center",
+        "50px Arial"
+      );
+    } else if (this.aiPlayers.every((player) => player.units.length === 0)) {
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, this.gameWidth, this.gameHeight);
+      drawText(
+        context,
+        "You WIN",
+        this.gameWidth / 2,
+        this.gameHeight / 2,
+        "black",
+        "center",
+        "50px Arial"
+      );
     }
   }
 }

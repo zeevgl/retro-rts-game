@@ -34,7 +34,7 @@ window["Rocketeer"] = (() => {
     [UnitClasses.LIGHT]: 6,
     [UnitClasses.MEDIUM]: 25,
     [UnitClasses.HEAVY]: 25,
-    [UnitClasses.BUILDING]: 30,
+    [UnitClasses.BUILDING]: 150,
   };
   const visionRange = 300;
   const attackRange = 250;
