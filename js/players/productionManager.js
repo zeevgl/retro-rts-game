@@ -54,8 +54,7 @@ window["ProductionManager"] = (() => {
       if (!this.isBuildingInProgress()) {
         if (!this.player.resources.canAfford(item.unit.cost)) {
           console.log("not enough resources");
-          this.player.game.hud.notifications.notify('insufficient funds');
-          return;
+          return Messages.insufficientFunds;
         }
 
         this.buildingProduction = {
@@ -66,8 +65,8 @@ window["ProductionManager"] = (() => {
 
         this.player.resources.deductResources(item.unit.cost);
       } else {
-        this.player.game.hud.notifications.notify('unable to comply building in progress');
         console.log("unable to comply building in progress");
+        return Messages.buildingInProgress;
       }
     }
 
@@ -75,8 +74,7 @@ window["ProductionManager"] = (() => {
       if (!this.isUnitInProgress()) {
         if (!this.player.resources.canAfford(item.unit.cost)) {
           console.log("not enough resources");
-          this.player.game.hud.notifications.notify('insufficient funds');
-          return;
+          return Messages.insufficientFunds;
         }
 
         this.unitProduction = {
@@ -87,8 +85,8 @@ window["ProductionManager"] = (() => {
 
         this.player.resources.deductResources(item.unit.cost);
       } else {
-        this.player.game.hud.notifications.notify('unable to comply training in progress');
         console.log("unable to comply training in progress");
+        return Messages.trainingInProgress;
       }
     }
 
@@ -146,18 +144,20 @@ window["ProductionManager"] = (() => {
     }
 
     spawnUnitAtBuilding(unitClass, building) {
-      const newUnit = new unitClass({
-        player: this.player,
-        x: building.centerX,
-        y: building.centerY,
-        color: this.player.color,
-      });
-      this.player.addUnit(newUnit);
-      this.resetUnitProduction();
+      if (building) {
+        const newUnit = new unitClass({
+          player: this.player,
+          x: building.centerX,
+          y: building.centerY,
+          color: this.player.color,
+        });
+        this.player.addUnit(newUnit);
+        this.resetUnitProduction();
 
-      const randomX = Math.random() * 300 - 50;
-      const randomY = Math.random() * 100 + 150;
-      newUnit.moveTo(newUnit.x + randomX, newUnit.y + randomY);
+        const randomX = Math.random() * 300 - 50;
+        const randomY = Math.random() * 100 + 150;
+        newUnit.moveTo(newUnit.x + randomX, newUnit.y + randomY);
+      }
     }
 
     placeBuilding(x, y) {

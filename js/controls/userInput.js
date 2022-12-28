@@ -41,11 +41,17 @@ window["UserInput"] = (() => {
 
     onMouseLeftClicked(x, y) {
       const actionMenuItem = this.game.hud.actionMenu.getItemAtXy(x, y);
-      const positionFromMiniMap = this.game.hud.miniMap.getPositionFromMiniMap(x, y);
+      const positionFromMiniMap = this.game.hud.miniMap.getPositionFromMiniMap(
+        x,
+        y
+      );
       if (actionMenuItem) {
         this.handleActionMenuItem(actionMenuItem);
       } else if (positionFromMiniMap) {
-        this.game.camera.moveCameraTo(positionFromMiniMap.x, positionFromMiniMap.y);
+        this.game.camera.moveCameraTo(
+          positionFromMiniMap.x,
+          positionFromMiniMap.y
+        );
       } else if (this.state === UserInputStates.PLACE_BUILDING) {
         this.game.humanPlayer.productionManager.placeBuilding(x, y);
         this.state = UserInputStates.IDLE;
@@ -122,12 +128,10 @@ window["UserInput"] = (() => {
     }
 
     handleActionMenuItem(actionMenuItem) {
-
       if (!actionMenuItem.isUnlocked()) {
-        this.game.hud.notifications.notify('Unit unavailable');
+        this.game.hud.notifications.notify("Unit unavailable");
         return;
       }
-
 
       if (actionMenuItem.unit.isABuilding()) {
         if (
@@ -137,10 +141,20 @@ window["UserInput"] = (() => {
         ) {
           this.state = UserInputStates.PLACE_BUILDING;
         } else {
-          this.game.humanPlayer.productionManager.startBuilding(actionMenuItem);
+          const message =
+            this.game.humanPlayer.productionManager.startBuilding(
+              actionMenuItem
+            );
+          if (message) {
+            this.game.hud.notifications.notify(message);
+          }
         }
       } else {
-        this.game.humanPlayer.productionManager.startUnit(actionMenuItem);
+        const message =
+          this.game.humanPlayer.productionManager.startUnit(actionMenuItem);
+        if (message) {
+          this.game.hud.notifications.notify(message);
+        }
       }
     }
   }

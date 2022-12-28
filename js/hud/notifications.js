@@ -57,16 +57,23 @@ window["Notifications"] = (() => {
       }
     }
 
-    notify(message) {
+    notifyText(text) {
       this.messageFlash = true;
-      this.messages = [message];
+      this.messages = [text];
       this.tick = 0;
       this.messageFlashingTick = 0;
     }
 
-    notifyToQueue(message) {
+    notify(messageObject) {
       this.messageFlash = true;
-      this.messages.push(message);
+      this.messages = [messageObject.text];
+      this.tick = 0;
+      this.messageFlashingTick = 0;
+    }
+
+    notifyToQueue(messageObject) {
+      this.messageFlash = true;
+      this.messages.push(messageObject.text);
     }
   }
 
