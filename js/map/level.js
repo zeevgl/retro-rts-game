@@ -152,6 +152,19 @@ class Level {
     return {
       type: MapObjects.TERRAIN,
       object: null,
-    }
+    };
+  }
+
+  getClosestSpiceFieldByPosition(x, y) {
+    return this.objects.spiceFields.objects.reduce(
+      (closest, spice) => {
+        const distance = calcDistance(x, y, spice.x, spice.y);
+        if (closest === null || distance < closest.distance) {
+          return { spice, distance };
+        }
+        return closest;
+      },
+      { spice: null, distance: Number.MAX_VALUE }
+    ).spice;
   }
 }

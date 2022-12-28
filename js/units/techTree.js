@@ -64,6 +64,10 @@ window["TechTree"] = (() => {
       return this.units.filter((unit) => unit.isVisible);
     }
 
+    getVisibleFightingUnits() {
+      return this.units.filter((unit) => unit.isVisible && unit.unit.group === UnitGroups.fighter);
+    }
+
     getVisibleBuildings() {
       return this.buildings.filter((building) => building.isVisible);
     }

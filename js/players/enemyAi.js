@@ -1,5 +1,5 @@
 window["EnemyAI"] = (() => {
-  const AISpeed = 1000;
+  const AISpeed = 800;
   class EnemyAI {
     constructor(game) {
       this.game = game;
@@ -32,6 +32,7 @@ window["EnemyAI"] = (() => {
             break;
           }
         }
+        this.sendHarvester(aiPlayer);
         this.searchAndDestroy(aiPlayer);
       });
     }
@@ -67,6 +68,30 @@ window["EnemyAI"] = (() => {
       });
     }
 
+    sendHarvester(aiPlayer) {
+      aiPlayer.unitByGroups[UnitGroups.harvesters]?.forEach((aiUnit) => {
+        if (aiUnit.isAlive && aiUnit.state === UnitStates.IDLE) {
+          const closestSpiceField =
+            this.game.gameMap.level.getClosestSpiceFieldByPosition(
+              aiUnit.x,
+              aiUnit.y
+            );
+
+          const destinationObject = {
+            type: MapObjects.SPICE,
+            object: closestSpiceField,
+          };
+
+          aiPlayer.selectedUnits = [aiUnit];
+          aiPlayer.moveSelectedUnitsToPosition(
+            destinationObject.object.x,
+            destinationObject.object.y,
+            destinationObject
+          );
+        }
+      });
+    }
+
     whatToBuild(aiPlayer) {
       if (aiPlayer.productionManager.isAnyBuildingReadyToBePlace()) {
         const contractionYard = aiPlayer.units.find((unit) => {
@@ -93,9 +118,11 @@ window["EnemyAI"] = (() => {
 
     buildUnits(aiPlayer) {
       if (aiPlayer.units.length < 10) {
-        const items = aiPlayer.techTree.getVisibleUnits().filter((item) => {
-          return item.isUnlocked();
-        });
+        const items = aiPlayer.techTree
+          .getVisibleFightingUnits()
+          .filter((item) => {
+            return item.isUnlocked();
+          });
 
         const randomIndex = Math.floor(Math.random() * items.length);
 
