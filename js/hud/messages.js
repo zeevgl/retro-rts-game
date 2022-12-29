@@ -5,6 +5,10 @@ const MessageType = {
   WARNING: "warning",
 };
 const Messages = {
+  unavailable: {
+    text: "Unit unavailable",
+    type: MessageType.ERROR,
+  },
   insufficientFunds: {
     text: "Insufficient funds",
     type: MessageType.ERROR,

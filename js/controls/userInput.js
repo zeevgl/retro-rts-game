@@ -167,7 +167,7 @@ window["UserInput"] = (() => {
 
     handleActionMenuItem(actionMenuItem) {
       if (!actionMenuItem.isUnlocked()) {
-        this.game.hud.notifications.notify("Unit unavailable");
+        this.game.hud.notifications.notify(Messages.unavailable);
         return;
       }
 
