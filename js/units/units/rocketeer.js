@@ -40,7 +40,7 @@ window["Rocketeer"] = (() => {
   const attackRange = 250;
   const attackCooldown = 2500;
   const unitClass = UnitClasses.LIGHT;
-  const speed = 4;
+  const speed = 1.5;
   const buildTime = 600;
   const cost = 300;
 

@@ -14,7 +14,7 @@ window["Harvester"] = (() => {
   const visionRange = 250;
   const attackRange = 0;
   const unitClass = UnitClasses.HEAVY;
-  const speed = 2;
+  const speed = 1.1;
   const buildTime = 1000;
   const cost = 1000;
 

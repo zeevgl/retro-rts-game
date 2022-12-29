@@ -38,7 +38,7 @@ window["Infantry"] = (() => {
   const attackRange = 200;
   const attackCooldown = 500;
   const unitClass = UnitClasses.LIGHT;
-  const speed = 5;
+  const speed = 2;
   const buildTime = 500;
   const cost = 200;
 
