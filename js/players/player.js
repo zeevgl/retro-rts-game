@@ -77,8 +77,8 @@ class Player {
 
   attemptToSelectUnitsAtRange(x1, y1, x2, y2) {
     const rangeSelectableUnits = [
-      ...this.unitByGroups[UnitGroups.fighter],
-      ...this.unitByGroups[UnitGroups.harvesters],
+      ...(this.unitByGroups[UnitGroups.fighter] || []),
+      ...(this.unitByGroups[UnitGroups.harvesters] || []),
     ];
 
     const unitsInRange = rangeSelectableUnits.filter((unit) => {
