@@ -13,6 +13,7 @@ window["UserInput"] = (() => {
       this.initMouseHandlers();
       this.draggin = {
         active: false,
+        moved: false,
         x: 0,
         y: 0,
         x2: 0,
@@ -66,6 +67,11 @@ window["UserInput"] = (() => {
     }
 
     onMouseLeftClicked(x, y) {
+      if (this.draggin.moved) {
+        this.draggin.moved = false;
+        return;
+      }
+
       const actionMenuItem = this.game.hud.actionMenu.getItemAtXy(x, y);
       const positionFromMiniMap = this.game.hud.miniMap.getPositionFromMiniMap(
         x,
@@ -143,6 +149,7 @@ window["UserInput"] = (() => {
 
     onMouseMove(x, y) {
       if (this.draggin.active) {
+        this.draggin.moved = true;
         this.draggin.x2 = x;
         this.draggin.y2 = y;
       }
@@ -191,6 +198,7 @@ window["UserInput"] = (() => {
 
     onMouseDown(x, y) {
       this.draggin.active = true;
+      this.draggin.moved = false;
       this.draggin.x = x;
       this.draggin.y = y;
       this.draggin.x2 = x;
@@ -199,7 +207,15 @@ window["UserInput"] = (() => {
 
     onMouseUp(x, y) {
       this.draggin.active = false;
-      console.log("done = ", this.draggin);
+      if (this.draggin.moved) {
+
+        const x1 = Math.min(this.draggin.x, this.draggin.x2);
+        const x2 = Math.max(this.draggin.x, this.draggin.x2);
+        const y1 = Math.min(this.draggin.y, this.draggin.y2);
+        const y2 = Math.max(this.draggin.y, this.draggin.y2);
+
+        this.game.humanPlayer.attemptToSelectUnitsAtRange(x1, y1, x2, y2);
+      }
     }
   }
   return UserInput;

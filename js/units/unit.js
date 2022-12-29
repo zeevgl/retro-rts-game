@@ -293,6 +293,24 @@ window["Unit"] = (() => {
       );
     }
 
+    isInsideRect(x1, y1, x2, y2, { fullRect = false } = {}) {
+      if (fullRect) {
+        return (
+          this.x >= x1 &&
+          this.x + this.width <= x2 &&
+          this.y >= y1 &&
+          this.y + this.height <= y2
+        );
+      } else {
+        return (
+          this.centerX >= x1 &&
+          this.centerX <= x2 &&
+          this.centerY >= y1 &&
+          this.centerY <= y2
+        );
+      }
+    }
+
     moveTo(x, y) {
       this.setState(UnitStates.MOVING);
       this.moveTargetX = x;

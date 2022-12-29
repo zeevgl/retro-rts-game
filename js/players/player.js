@@ -63,7 +63,6 @@ class Player {
   attemptToClickUnitAtPoint(x, y) {
     this.deselectAllUnits();
 
-    // const selectedUnits = this.getUnitsInPoint(x, y);
     const unit = this.getUnitInPoint(x, y); //allow only 1 unit selected for now
     const selectedUnits = unit ? [unit] : [];
 
@@ -74,6 +73,27 @@ class Player {
     this.selectedUnits = selectedUnits;
 
     return selectedUnits;
+  }
+
+  attemptToSelectUnitsAtRange(x1, y1, x2, y2) {
+    const rangeSelectableUnits = [
+      ...this.unitByGroups[UnitGroups.fighter],
+      ...this.unitByGroups[UnitGroups.harvesters],
+    ];
+
+    const unitsInRange = rangeSelectableUnits.filter((unit) => {
+      return unit.isAlive && unit.isInsideRect(x1, y1, x2, y2);
+    });
+
+    if (unitsInRange.length) {
+      unitsInRange.forEach((unit) => {
+        unit.isSelected = true;
+      });
+
+      this.selectedUnits = unitsInRange;
+    } else {
+      this.deselectAllUnits();
+    }
   }
 
   getUnitsInPoint(x, y) {
