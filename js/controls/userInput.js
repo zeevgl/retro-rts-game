@@ -197,18 +197,19 @@ window["UserInput"] = (() => {
     }
 
     onMouseDown(x, y) {
-      this.draggin.active = true;
-      this.draggin.moved = false;
-      this.draggin.x = x;
-      this.draggin.y = y;
-      this.draggin.x2 = x;
-      this.draggin.y2 = y;
+      if (this.game.hud.isInsideViewport(x, y, 0, 0)) {
+        this.draggin.active = true;
+        this.draggin.moved = false;
+        this.draggin.x = x;
+        this.draggin.y = y;
+        this.draggin.x2 = x;
+        this.draggin.y2 = y;
+      }
     }
 
     onMouseUp(x, y) {
       this.draggin.active = false;
       if (this.draggin.moved) {
-
         const x1 = Math.min(this.draggin.x, this.draggin.x2);
         const x2 = Math.max(this.draggin.x, this.draggin.x2);
         const y1 = Math.min(this.draggin.y, this.draggin.y2);

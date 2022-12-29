@@ -38,7 +38,6 @@ window["Notifications"] = (() => {
 
     draw(ctx) {
       if (this.messages.length > 0 && this.messageFlash) {
-        console.log('this.messages = ', this.messages);
         const message = this.messages[0];
         ctx.save();
         ctx.globalAlpha = 0.8;
