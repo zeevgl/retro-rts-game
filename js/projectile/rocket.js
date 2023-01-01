@@ -74,7 +74,7 @@ window["Rocket"] = (() => {
       ctx.save();
       this.trail.slice(-45).forEach((trail, index) => {
         if (index % 2 === 0) {
-          ctx.globalAlpha = 0.4;
+          ctx.globalAlpha = 0.3;
           ctx.beginPath();
           ctx.arc(trail.x, trail.y, index * 0.1, 0, 2 * Math.PI);
           ctx.fillStyle = "white";
