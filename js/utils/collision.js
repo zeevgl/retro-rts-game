@@ -16,8 +16,8 @@ function checkCollisionBetweenProjectileAndUnit(projectile, unit) {
     projectile.y,
     projectile.width,
     projectile.height,
-    unit.x,
-    unit.y,
+    unit.centerX,
+    unit.centerY,
     unit.width,
     unit.height
   );

@@ -19,6 +19,9 @@ window["Rocket"] = (() => {
         speed
       );
 
+      this.trail = [];
+      this.pushTrail();
+
       this.initSprites();
       this.degree =
         getDegree180(
@@ -45,6 +48,7 @@ window["Rocket"] = (() => {
 
     update(deltaTime, timestamp) {
       super.update(deltaTime, timestamp);
+      this.pushTrail();
     }
 
     draw(ctx) {
@@ -63,6 +67,29 @@ window["Rocket"] = (() => {
 
       this.sprite.draw(ctx, 0, this.x, this.y);
       ctx.restore();
+      this.drawTrail(ctx);
+    }
+
+    drawTrail(ctx) {
+      ctx.save();
+      this.trail.slice(-45).forEach((trail, index) => {
+        if (index % 2 === 0) {
+          ctx.globalAlpha = 0.4;
+          ctx.beginPath();
+          ctx.arc(trail.x, trail.y, index * 0.1, 0, 2 * Math.PI);
+          ctx.fillStyle = "white";
+          ctx.fill();
+          ctx.closePath();
+        }
+      });
+      ctx.restore();
+    }
+
+    pushTrail() {
+      this.trail.push({
+        x: this.x + this.width / 2,
+        y: this.y + this.height / 2,
+      });
     }
   }
 
