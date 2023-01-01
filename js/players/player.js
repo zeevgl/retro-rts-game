@@ -149,6 +149,10 @@ class Player {
     //player needs to know which player is the enemy
     //should this code even be in player object? maybe in game object? or in unit object?
 
+    if (unit instanceof Harvester) {
+      return; //for now. harvester AI is not implemented
+    }
+
     let enemy = null;
     if (this.name === "player 1") {
       enemy = this.game.aiPlayers[0];
