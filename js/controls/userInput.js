@@ -148,11 +148,7 @@ window["UserInput"] = (() => {
     }
 
     onMouseMove(x, y) {
-      if (this.draggin.active) {
-        this.draggin.moved = true;
-        this.draggin.x2 = x;
-        this.draggin.y2 = y;
-      }
+      this.handleMouseDrag(x, y);
 
       if (this.game.camera.scrollCamera(x, y)) {
         this.mouseHandler.setMouseScroll();
@@ -193,6 +189,20 @@ window["UserInput"] = (() => {
         if (message) {
           this.game.hud.notifications.notify(message);
         }
+      }
+    }
+
+    handleMouseDrag(x,y) {
+      if (this.draggin.active) {
+        if (
+            !this.draggin.moved &&
+            calcDistance(x, y, this.draggin.x, this.draggin.y) > 10
+        ) {
+          this.draggin.moved = true;
+        }
+
+        this.draggin.x2 = x;
+        this.draggin.y2 = y;
       }
     }
 
