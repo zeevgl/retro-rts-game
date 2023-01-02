@@ -91,6 +91,7 @@ window["Projectile"] = (() => {
         this.state = ProjectileStates.EXPLODING;
         this.targetUnit.health -= this.attackDamage[this.targetUnit.unitClass];
         if (this.targetUnit.health <= 0) {
+          //TODO: this should be in unit class
           this.targetUnit.isAlive = false;
           this.targetUnit.isSelected = false;
         }

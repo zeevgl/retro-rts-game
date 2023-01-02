@@ -5,15 +5,13 @@ window["ContractionYard"] = (() => {
       // length: 15,
       start: 0,
       length: 32,
-      loop: false,
       frameDuration: 80,
       next: UnitStates.IDLE,
     },
     [UnitStates.IDLE]: {
       start: 32,
-      length: 1,
+      length: 0,
       frameDuration: 80,
-      loop: true,
     },
   };
 

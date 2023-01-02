@@ -6,6 +6,8 @@ const UnitStates = {
   MOVING_TO_ATTACK: "MOVING_TO_ATTACK",
   MOVING: "MOVING",
   DEFEND: "DEFEND",
+  DYING: "DYING",
+  SQUASHED: "SQUASHED",
 };
 
 const UnitClasses = {

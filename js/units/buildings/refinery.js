@@ -8,8 +8,8 @@ window["Refinery"] = (() => {
       next: UnitStates.IDLE,
     },
     [UnitStates.IDLE]: {
-      start: 25,
-      length: 6,
+      start: 24,
+      length: 5,
       loop: true,
       frameDuration: 80,
     },
