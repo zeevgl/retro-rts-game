@@ -47,8 +47,6 @@ window["Projectile"] = (() => {
       } else if (this.state === ProjectileStates.EXPLODING) {
         this.state = ProjectileStates.INACTIVE;
       }
-
-      //TODO: projectile should be removed (exploded) from the game after a certain time / distance otherwise unit will not fire again
     }
 
     draw(ctx) {
