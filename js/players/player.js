@@ -53,7 +53,6 @@ class Player {
 
   removeUnit(unit) {
     this.units.splice(this.units.indexOf(unit), 1);
-    this.units.splice(this.units.indexOf(unit), 1);
     this.unitByGroups[unit.group].splice(
       this.unitByGroups[unit.group].indexOf(unit),
       1
