@@ -2,7 +2,7 @@ window["Infantry"] = (() => {
   const animationFrames = {
     //TODO:BUG: when loop is false start jumps one frame
     [UnitStates.SPAWN]: {
-      start: 0,  //22 - 26
+      start: 0,
       length: 0,
       loop: false,
     },
@@ -30,6 +30,16 @@ window["Infantry"] = (() => {
       length: 1,
       frameDuration: 1000,
       loop: true,
+    },
+    [UnitStates.SQUASHED]: {
+      start: 27,
+      length: 0,
+    },
+    [UnitStates.DYING]: {
+      //L:23-2  R:25-2
+      start: 23,
+      length: 1,
+      frameDuration: 80,
     },
     [UnitStates.SQUASHED]: {
       start: 27,
