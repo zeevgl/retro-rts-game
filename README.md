@@ -13,3 +13,5 @@ Please note that this game is still a work in progress, and there may be bugs or
 
 
 ![Preview with map and UI](assets/preview.png)
+
+v1 working JS only
